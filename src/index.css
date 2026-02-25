@@ -1,0 +1,95 @@
+@import url("https://fonts.googleapis.com/css2?family=Inria+Serif:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&family=Outfit:wght@100..900&display=swap");
+
+@import "tailwindcss";
+@plugin "@toolwind/corner-shape";
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  /* Colors */
+  --color-royal-gold: #e5d0ac;
+  --color-royal-red: #6d2323;
+  --color-blax: #252525;
+
+  /* Fonts */
+  --font-inria-serif: "Inria Serif", serif;
+  --font-outfit: "Outfit", sans-serif;
+}
+
+/* Side scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(25, 25, 25, 0); /* Track color */
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #6d2323; /* Thumb color */
+  border-radius: 0px;
+}
+
+/* Custom CSS */
+@utility text-outline {
+  -webkit-text-stroke: 1px #252525;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Custom animations */
+@theme {
+  /* Animations */
+  --animate-spin-slow: spin-slow 2s linear infinite;
+  --animate-ping-fast: ping-slow 1s cubic-bezier(0, 0, 0.2, 1) infinite alternate;
+  --animate-ping-slow: ping-slow 3s cubic-bezier(0, 0, 0.2, 1) infinite alternate;
+  --animate-color-fade: color-fade 1s ease-in-out infinite alternate;
+  --animate-pendulum: pendulum 3s cubic-bezier(0.455, 0.03, 0.515, 0.955) infinite;
+  --animate-wiggle: wiggle 1s ease-in-out infinite;
+
+  /* Keyframes */
+  @keyframes spin-slow {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  @keyframes ping-slow {
+    0% {
+      transform: scale(1);
+      opacity: 1;
+    }
+    100% {
+      transform: scale(3.5);
+      opacity: 0.3;
+    }
+  }
+
+  @keyframes color-fade {
+    0%,
+    100% {
+      color: var(--color-royal-gold);
+    }
+    50% {
+      color: var(--color-royal-red);
+    }
+  }
+  @keyframes pendulum {
+    0%,
+    100% {
+      transform: rotate(25deg);
+    }
+    50% {
+      transform: rotate(-25deg);
+    }
+  }
+  @keyframes wiggle {
+    0%,
+    100% {
+      transform: rotate(-3deg);
+    }
+    50% {
+      transform: rotate(3deg);
+    }
+  }
+}
