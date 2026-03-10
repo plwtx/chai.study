@@ -13,6 +13,7 @@
     "@toolwind/corner-shape": "^0.0.8-3",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
+    "dexie": "^4.3.0",
     "i18next": "^25.7.4",
     "lucide-react": "^0.562.0",
     "motion": "^12.26.2",
