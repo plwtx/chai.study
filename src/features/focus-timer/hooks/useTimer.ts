@@ -92,7 +92,55 @@ export function useTimer() {
     useAppStore.getState().setRunning(false);
   }
 
-  function reset() {
+  function endCycle() {
+    const state = useAppStore.getState();
+    const {
+      seconds,
+      timerSettings,
+      pomodoroSetId,
+      overtime,
+      sessionStartedAt,
+      addSession,
+    } = state;
+
+    const minimumSeconds = timerSettings.minimumFocusTime * 60;
+
+    if (overtime) {
+      // During overtime, seconds counts up from pomodoro * 60
+      // The full session (25 min) was already saved when countdown hit zero.
+      // Save only the extra overtime portion if it meets the minimum.
+      const overtimeSeconds = seconds - timerSettings.pomodoro * 60;
+      if (overtimeSeconds >= minimumSeconds) {
+        addSession({
+          id: crypto.randomUUID(),
+          type: "pomodoro",
+          mode: "focus",
+          pomodoroSetId,
+          targetDuration: timerSettings.pomodoro * 60,
+          actualDuration: overtimeSeconds,
+          completedAt: new Date().toISOString(),
+          taskId: null,
+        });
+      }
+    } else if (sessionStartedAt) {
+      // During a normal countdown, save if elapsed time meets the minimum
+      const elapsedSeconds = Math.round(
+        (Date.now() - new Date(sessionStartedAt).getTime()) / 1000,
+      );
+      if (elapsedSeconds >= minimumSeconds) {
+        addSession({
+          id: crypto.randomUUID(),
+          type: "pomodoro",
+          mode: "focus",
+          pomodoroSetId,
+          targetDuration: timerSettings.pomodoro * 60,
+          actualDuration: elapsedSeconds,
+          completedAt: new Date().toISOString(),
+          taskId: null,
+        });
+      }
+    }
+
     timerBridge.reset();
     useAppStore.getState().resetTimer();
   }
@@ -104,8 +152,9 @@ export function useTimer() {
     overtime: store.overtime,
     phase: store.phase,
     pomodoroCount: store.pomodoroCount,
+    timerSettings: store.timerSettings,
     start,
     pause,
-    reset,
+    endCycle,
   };
 }

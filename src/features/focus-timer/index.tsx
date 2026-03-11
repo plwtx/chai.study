@@ -34,7 +34,7 @@ export default function FocusTimer() {
     pomodoroCount,
     start,
     pause,
-    reset,
+    endCycle,
   } = useTimer();
   const { hours, minutes } = useDailyTotal();
 
@@ -75,10 +75,10 @@ export default function FocusTimer() {
 
             {status !== "idle" && (
               <button
-                onClick={reset}
+                onClick={endCycle}
                 className="cursor-pointer rounded-full border border-zinc-800 px-4 py-2 font-mono text-xs text-zinc-500 transition-all duration-150 hover:border-zinc-600 hover:text-zinc-300"
               >
-                reset
+                end cycle
               </button>
             )}
           </div>

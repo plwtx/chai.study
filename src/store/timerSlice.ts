@@ -4,6 +4,7 @@ export interface TimerSettings {
   pomodoro: number; // minutes
   breakDuration: number; // minutes
   longBreak: number; // minutes
+  minimumFocusTime: number; // minutes; minimum to count a session toward daily total
 }
 
 export interface TimerSliceState {
@@ -33,6 +34,7 @@ const DEFAULT_SETTINGS: TimerSettings = {
   pomodoro: 25,
   breakDuration: 5,
   longBreak: 15,
+  minimumFocusTime: 5,
 };
 
 export const createTimerSlice = (set, get, _api?): TimerSlice => ({
