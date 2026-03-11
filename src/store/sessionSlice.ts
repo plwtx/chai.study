@@ -14,22 +14,17 @@ export interface Session {
 
 export interface SessionSliceState {
   sessions: Session[]; // in-memory; hydrated from Dexie on app boot (WILL DO THIS IN FUTURE)
-  pendingQuote: string | null; // shown in the post-session modal; cleared on dismiss
 }
 
 export interface SessionSliceActions {
   addSession: (session: Session) => void;
-  setPendingQuote: (quote: string | null) => void;
 }
 
 export type SessionSlice = SessionSliceState & SessionSliceActions;
 
 export const createSessionSlice = (set, _get, _api?): SessionSlice => ({
   sessions: [],
-  pendingQuote: null,
 
   addSession: (session) =>
     set((state) => ({ sessions: [...state.sessions, session] })),
-
-  setPendingQuote: (quote) => set({ pendingQuote: quote }),
 });

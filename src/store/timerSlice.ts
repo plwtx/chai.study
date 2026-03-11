@@ -1,4 +1,3 @@
-export type TimerMode = "focus" | "chaidoro";
 export type TimerPhase = "focus" | "break" | "long-break";
 
 export interface TimerSettings {
@@ -8,10 +7,10 @@ export interface TimerSettings {
 }
 
 export interface TimerSliceState {
-  timerMode: TimerMode;
   phase: TimerPhase;
   running: boolean;
   seconds: number;
+  overtime: boolean; // true when counting up past the focus target
   pomodoroCount: number; // focus intervals completed in current cycle (0–3)
   pomodoroSetId: string | null;
   sessionStartedAt: string | null; // ISO timestamp; null = idle (not yet started or just reset)
@@ -19,9 +18,9 @@ export interface TimerSliceState {
 }
 
 export interface TimerSliceActions {
-  setTimerMode: (mode: TimerMode) => void;
   setRunning: (running: boolean) => void;
   setSeconds: (seconds: number) => void;
+  setOvertime: (overtime: boolean) => void;
   setSessionStartedAt: (at: string | null) => void;
   setPomodoroSetId: (id: string | null) => void;
   advanceChaidoroPhase: () => void;
@@ -37,30 +36,18 @@ const DEFAULT_SETTINGS: TimerSettings = {
 };
 
 export const createTimerSlice = (set, get, _api?): TimerSlice => ({
-  timerMode: "chaidoro",
   phase: "focus",
   running: false,
   seconds: DEFAULT_SETTINGS.pomodoro * 60,
+  overtime: false,
   pomodoroCount: 0,
   pomodoroSetId: null,
   sessionStartedAt: null,
   timerSettings: DEFAULT_SETTINGS,
 
-  setTimerMode: (mode) => {
-    const { timerSettings } = get();
-    set({
-      timerMode: mode,
-      running: false,
-      seconds: mode === "focus" ? 0 : timerSettings.pomodoro * 60,
-      phase: "focus",
-      pomodoroCount: 0,
-      pomodoroSetId: null,
-      sessionStartedAt: null,
-    });
-  },
-
   setRunning: (running) => set({ running }),
   setSeconds: (seconds) => set({ seconds }),
+  setOvertime: (overtime) => set({ overtime }),
   setSessionStartedAt: (at) => set({ sessionStartedAt: at }),
   setPomodoroSetId: (id) => set({ pomodoroSetId: id }),
 
@@ -100,19 +87,21 @@ export const createTimerSlice = (set, get, _api?): TimerSlice => ({
       pomodoroSetId: newSetId,
       seconds: newSeconds,
       running: false,
+      overtime: false,
       sessionStartedAt: null,
     });
   },
 
   resetTimer: () => {
-    const { timerMode, timerSettings } = get();
+    const { timerSettings } = get();
     set({
       running: false,
-      seconds: timerMode === "focus" ? 0 : timerSettings.pomodoro * 60,
+      seconds: timerSettings.pomodoro * 60,
       phase: "focus",
       pomodoroCount: 0,
       pomodoroSetId: null,
       sessionStartedAt: null,
+      overtime: false,
     });
   },
 });

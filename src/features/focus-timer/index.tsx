@@ -10,25 +10,17 @@ const PHASE_LABELS: Record<string, string> = {
   "long-break": "Long Break",
 };
 
-function QuoteModal() {
-  const pendingQuote = useAppStore((s) => s.pendingQuote);
-  const setPendingQuote = useAppStore((s) => s.setPendingQuote);
+function OvertimeBanner() {
+  const overtime = useAppStore((s) => s.overtime);
 
-  if (!pendingQuote) return null;
+  if (!overtime) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-zinc-950/60 backdrop-blur-sm">
-      <div className="mx-6 flex max-w-sm flex-col items-center gap-6 rounded-2xl bg-zinc-900 p-8 shadow-2xl shadow-zinc-950">
-        <p className="text-center text-sm leading-relaxed font-light text-zinc-300">
-          &ldquo;{pendingQuote}&rdquo;
-        </p>
-        <button
-          onClick={() => setPendingQuote(null)}
-          className="cursor-pointer rounded-full border border-zinc-700 px-6 py-2 font-mono text-sm text-zinc-400 transition-colors duration-150 hover:border-zinc-500 hover:text-zinc-200"
-        >
-          continue
-        </button>
-      </div>
+    <div className="fixed inset-x-0 top-0 z-50 flex items-center justify-center bg-zinc-900/90 px-4 py-3 backdrop-blur-sm">
+      <p className="font-mono text-sm text-zinc-300">
+        You have finished your session. However, you can continue being
+        productive !
+      </p>
     </div>
   );
 }
@@ -37,53 +29,29 @@ export default function FocusTimer() {
   const {
     seconds,
     status,
-    timerMode,
+    overtime,
     phase,
     pomodoroCount,
     start,
     pause,
     reset,
-    toggleMode,
   } = useTimer();
   const { hours, minutes } = useDailyTotal();
 
-  const isChaidoro = timerMode === "chaidoro";
   const isFocusPhase = phase === "focus";
 
   return (
     <>
-      <QuoteModal />
-
-      <div className="h-screen w-full bg-pink-950/15">
+      <OvertimeBanner />
+      <div className="h-screen w-full bg-stone-600/5">
         <div className="flex h-full w-full flex-col items-center justify-center gap-4">
           <DailyFocus hours={hours} minutes={minutes} />
 
-          {/* Mode toggle */}
-          <div className="flex gap-1 rounded-full border border-zinc-800 bg-zinc-900/50 p-1">
-            {(["focus", "chaidoro"] as const).map((mode) => (
-              <button
-                key={mode}
-                onClick={() => {
-                  if (timerMode !== mode) toggleMode();
-                }}
-                className={`cursor-pointer rounded-full px-4 py-1 font-mono text-xs transition-all duration-150 ${
-                  timerMode === mode
-                    ? "bg-zinc-800 text-zinc-50 shadow-sm shadow-zinc-950"
-                    : "text-zinc-900 hover:text-zinc-300"
-                }`}
-              >
-                {mode}
-              </button>
-            ))}
-          </div>
-
-          {/* Phase label (Chaidoro only) */}
-          {isChaidoro && (
-            <p className="font-mono text-xs text-zinc-900">
-              {PHASE_LABELS[phase]}
-              {isFocusPhase && ` ${pomodoroCount + 1}/4`}
-            </p>
-          )}
+          {/* Phase label */}
+          <p className="font-mono text-xs text-zinc-900">
+            {overtime ? "overtime" : PHASE_LABELS[phase]}
+            {isFocusPhase && !overtime && ` ${pomodoroCount + 1}/4`}
+          </p>
 
           <Clock seconds={seconds} />
 
