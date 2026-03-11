@@ -1,5 +1,8 @@
 type InMessage =
-  | { type: "start"; payload: { mode: "countup" | "countdown"; initialSeconds: number } }
+  | {
+      type: "start";
+      payload: { mode: "countup" | "countdown"; initialSeconds: number };
+    }
   | { type: "pause" }
   | { type: "resume" }
   | { type: "reset" };
@@ -15,10 +18,16 @@ let tickMode: "countup" | "countdown" = "countup";
 function tick() {
   if (tickMode === "countup") {
     seconds++;
-    self.postMessage({ type: "tick", payload: { seconds } } satisfies OutMessage);
+    self.postMessage({
+      type: "tick",
+      payload: { seconds },
+    } satisfies OutMessage);
   } else {
     seconds--;
-    self.postMessage({ type: "tick", payload: { seconds } } satisfies OutMessage);
+    self.postMessage({
+      type: "tick",
+      payload: { seconds },
+    } satisfies OutMessage);
     if (seconds <= 0) {
       clearInterval(intervalId!);
       intervalId = null;

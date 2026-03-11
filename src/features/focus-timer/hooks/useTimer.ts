@@ -1,11 +1,6 @@
 import { useEffect } from "react";
 import { useAppStore } from "@/store/index";
 import { timerBridge } from "../services/timerBridge";
-import quotes from "@/lib/quotes.json";
-
-function randomQuote(): string {
-  return quotes[Math.floor(Math.random() * quotes.length)];
-}
 
 export function useTimer() {
   useEffect(() => {
@@ -16,15 +11,12 @@ export function useTimer() {
     const unsubComplete = timerBridge.onComplete(() => {
       const state = useAppStore.getState();
       const {
-        timerMode,
         phase,
         sessionStartedAt,
         timerSettings,
         pomodoroSetId,
-        advanceChaidoroPhase,
         addSession,
-        setPendingQuote,
-        setRunning,
+        setOvertime,
       } = state;
 
       const completedAt = new Date().toISOString();
@@ -33,50 +25,37 @@ export function useTimer() {
         (Date.now() - new Date(startedAt).getTime()) / 1000,
       );
 
-      if (timerMode === "focus") {
+      if (phase === "focus") {
+        // Record the completed focus session
         addSession({
           id: crypto.randomUUID(),
-          type: "focus",
+          type: "pomodoro",
           mode: "focus",
-          pomodoroSetId: null,
-          targetDuration: null,
+          pomodoroSetId,
+          targetDuration: timerSettings.pomodoro * 60,
           actualDuration,
           completedAt,
           taskId: null,
         });
-        setPendingQuote(randomQuote());
-        setRunning(false);
+        // Switch to overtime: count up from the pomodoro target
+        setOvertime(true);
+        timerBridge.start("countup", timerSettings.pomodoro * 60);
       } else {
-        // Chaidoro mode
-        if (phase === "focus") {
-          addSession({
-            id: crypto.randomUUID(),
-            type: "pomodoro",
-            mode: "focus",
-            pomodoroSetId,
-            targetDuration: timerSettings.pomodoro * 60,
-            actualDuration,
-            completedAt,
-            taskId: null,
-          });
-          setPendingQuote(randomQuote());
-        } else {
-          // break or long-break completed — record it but no quote
-          addSession({
-            id: crypto.randomUUID(),
-            type: "pomodoro",
-            mode: phase,
-            pomodoroSetId,
-            targetDuration:
-              phase === "break"
-                ? timerSettings.breakDuration * 60
-                : timerSettings.longBreak * 60,
-            actualDuration,
-            completedAt,
-            taskId: null,
-          });
-        }
-        advanceChaidoroPhase();
+        // break or long-break completed
+        addSession({
+          id: crypto.randomUUID(),
+          type: "pomodoro",
+          mode: phase,
+          pomodoroSetId,
+          targetDuration:
+            phase === "break"
+              ? timerSettings.breakDuration * 60
+              : timerSettings.longBreak * 60,
+          actualDuration,
+          completedAt,
+          taskId: null,
+        });
+        useAppStore.getState().advanceChaidoroPhase();
       }
     });
 
@@ -95,19 +74,12 @@ export function useTimer() {
     if (store.running) return;
 
     if (status === "idle") {
-      // Fresh start — tell the worker to begin
-      if (store.timerMode === "focus") {
-        timerBridge.start("countup", store.seconds);
-      } else {
-        // Ensure a pomodoroSetId exists before starting the first focus interval
-        if (!store.pomodoroSetId && store.phase === "focus") {
-          useAppStore.getState().setPomodoroSetId(crypto.randomUUID());
-        }
-        timerBridge.start("countdown", store.seconds);
+      if (!store.pomodoroSetId && store.phase === "focus") {
+        useAppStore.getState().setPomodoroSetId(crypto.randomUUID());
       }
+      timerBridge.start("countdown", store.seconds);
       useAppStore.getState().setSessionStartedAt(new Date().toISOString());
     } else {
-      // Resuming after a pause
       timerBridge.resume();
     }
 
@@ -120,27 +92,69 @@ export function useTimer() {
     useAppStore.getState().setRunning(false);
   }
 
-  function reset() {
+  function endCycle() {
+    const state = useAppStore.getState();
+    const {
+      seconds,
+      timerSettings,
+      pomodoroSetId,
+      overtime,
+      sessionStartedAt,
+      addSession,
+    } = state;
+
+    const minimumSeconds = timerSettings.minimumFocusTime * 60;
+
+    if (overtime) {
+      // During overtime, seconds counts up from pomodoro * 60
+      // The full session (25 min) was already saved when countdown hit zero.
+      // Save only the extra overtime portion if it meets the minimum.
+      const overtimeSeconds = seconds - timerSettings.pomodoro * 60;
+      if (overtimeSeconds >= minimumSeconds) {
+        addSession({
+          id: crypto.randomUUID(),
+          type: "pomodoro",
+          mode: "focus",
+          pomodoroSetId,
+          targetDuration: timerSettings.pomodoro * 60,
+          actualDuration: overtimeSeconds,
+          completedAt: new Date().toISOString(),
+          taskId: null,
+        });
+      }
+    } else if (sessionStartedAt) {
+      // During a normal countdown, save if elapsed time meets the minimum
+      const elapsedSeconds = Math.round(
+        (Date.now() - new Date(sessionStartedAt).getTime()) / 1000,
+      );
+      if (elapsedSeconds >= minimumSeconds) {
+        addSession({
+          id: crypto.randomUUID(),
+          type: "pomodoro",
+          mode: "focus",
+          pomodoroSetId,
+          targetDuration: timerSettings.pomodoro * 60,
+          actualDuration: elapsedSeconds,
+          completedAt: new Date().toISOString(),
+          taskId: null,
+        });
+      }
+    }
+
     timerBridge.reset();
     useAppStore.getState().resetTimer();
-  }
-
-  function toggleMode() {
-    timerBridge.reset();
-    const next = store.timerMode === "focus" ? "chaidoro" : "focus";
-    useAppStore.getState().setTimerMode(next);
   }
 
   return {
     seconds: store.seconds,
     running: store.running,
     status,
-    timerMode: store.timerMode,
+    overtime: store.overtime,
     phase: store.phase,
     pomodoroCount: store.pomodoroCount,
+    timerSettings: store.timerSettings,
     start,
     pause,
-    reset,
-    toggleMode,
+    endCycle,
   };
 }
