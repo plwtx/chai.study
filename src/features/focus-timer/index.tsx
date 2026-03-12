@@ -2,6 +2,7 @@ import { useAppStore } from "@/store/index";
 import Clock from "@/features/focus-timer/components/clock.tsx";
 import { useTimer } from "./hooks/useTimer";
 import { useDailyTotal } from "./hooks/useDailyTotal";
+import { Button } from "@/components/ui/button";
 import DailyFocus from "./components/daily-focus";
 
 const PHASE_LABELS: Record<string, string> = {
@@ -62,23 +63,20 @@ export default function FocusTimer() {
                 onClick={pause}
                 className="cursor-pointer rounded-full border border-zinc-900 bg-zinc-900 p-3 px-6 font-mono text-zinc-50 shadow-md shadow-zinc-600 transition-all duration-200 hover:scale-110 hover:bg-transparent hover:text-zinc-900"
               >
-                pause
+                Pause
               </button>
             ) : (
-              <button
-                onClick={start}
-                className="cursor-pointer rounded-full border border-zinc-900 bg-zinc-900 p-3 px-6 font-mono text-zinc-50 shadow-md shadow-zinc-600 transition-all duration-200 hover:scale-110 hover:bg-transparent hover:text-zinc-900"
-              >
+              <Button intent="primary" onClick={start} className="">
                 {status === "paused" ? "resume" : "start"}
-              </button>
+              </Button>
             )}
 
             {status !== "idle" && (
               <button
                 onClick={endCycle}
-                className="cursor-pointer rounded-full border border-zinc-800 px-4 py-2 font-mono text-xs text-zinc-500 transition-all duration-150 hover:border-zinc-600 hover:text-zinc-300"
+                className="cursor-pointer rounded-full border border-zinc-800 px-4 py-2 font-mono text-xs text-zinc-600 transition-all duration-150 hover:border-zinc-600 hover:text-zinc-900"
               >
-                end cycle
+                End cycle
               </button>
             )}
           </div>
