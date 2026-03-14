@@ -102,7 +102,7 @@ describe("useTimer — start → pause (9:31 left) → resume → finish × 3", 
    *   → overtime mode active
    *   → endCycle (user exits immediately — 0 overtime seconds < 5-min minimum)
    *
-   * Wall-clock elapsed: 929 + 30 + 571 = 1530 s → expected actualDuration.
+   * Running time: 929 + 571 = 1500 s (pause not counted) → actualDuration == targetDuration.
    */
   function runOneCycle(
     result: ReturnType<
@@ -163,8 +163,9 @@ describe("useTimer — start → pause (9:31 left) → resume → finish × 3", 
     expect(result.current.overtime).toBe(true);
     expect(mockBridge.start).toHaveBeenLastCalledWith("countup", POMODORO_SEC);
 
-    // Focus session recorded with correct wall-clock actualDuration:
-    //   929 s countdown + 30 s paused + 571 s countdown = 1530 s
+    // Focus session recorded with running-time actualDuration:
+    // Countdown completed naturally → actualDuration == targetDuration (1500 s).
+    // Paused time (30 s) is not counted.
     const sessions = useAppStore.getState().sessions;
     const focusSessions = sessions.filter((s) => s.mode === "focus");
     expect(focusSessions).toHaveLength(expectedSessionCount);
@@ -172,7 +173,7 @@ describe("useTimer — start → pause (9:31 left) → resume → finish × 3", 
       type: "pomodoro",
       mode: "focus",
       targetDuration: POMODORO_SEC,
-      actualDuration: 1530,
+      actualDuration: POMODORO_SEC,
     });
 
     // ── End cycle ─────────────────────────────────────────────────────────────
@@ -200,7 +201,7 @@ describe("useTimer — start → pause (9:31 left) → resume → finish × 3", 
     expect(sessions).toHaveLength(3);
     sessions.forEach((s) => {
       expect(s.mode).toBe("focus");
-      expect(s.actualDuration).toBe(1530);
+      expect(s.actualDuration).toBe(POMODORO_SEC);
     });
   });
 });

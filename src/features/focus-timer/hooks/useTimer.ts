@@ -10,30 +10,21 @@ export function useTimer() {
 
     const unsubComplete = timerBridge.onComplete(() => {
       const state = useAppStore.getState();
-      const {
-        phase,
-        sessionStartedAt,
-        timerSettings,
-        pomodoroSetId,
-        addSession,
-        setOvertime,
-      } = state;
+      const { phase, timerSettings, pomodoroSetId, addSession, setOvertime } =
+        state;
 
       const completedAt = new Date().toISOString();
-      const startedAt = sessionStartedAt ?? completedAt;
-      const actualDuration = Math.round(
-        (Date.now() - new Date(startedAt).getTime()) / 1000,
-      );
 
       if (phase === "focus") {
-        // Record the completed focus session
+        // Countdown hit zero — actual == target (no wall-clock delta, no paused time)
+        const targetDuration = timerSettings.pomodoro * 60;
         addSession({
           id: crypto.randomUUID(),
           type: "pomodoro",
           mode: "focus",
           pomodoroSetId,
-          targetDuration: timerSettings.pomodoro * 60,
-          actualDuration,
+          targetDuration,
+          actualDuration: targetDuration,
           completedAt,
           taskId: null,
         });
@@ -42,16 +33,17 @@ export function useTimer() {
         timerBridge.start("countup", timerSettings.pomodoro * 60);
       } else {
         // break or long-break completed
+        const targetDuration =
+          phase === "break"
+            ? timerSettings.breakDuration * 60
+            : timerSettings.longBreak * 60;
         addSession({
           id: crypto.randomUUID(),
           type: "pomodoro",
           mode: phase,
           pomodoroSetId,
-          targetDuration:
-            phase === "break"
-              ? timerSettings.breakDuration * 60
-              : timerSettings.longBreak * 60,
-          actualDuration,
+          targetDuration,
+          actualDuration: targetDuration,
           completedAt,
           taskId: null,
         });
@@ -123,10 +115,9 @@ export function useTimer() {
         });
       }
     } else if (sessionStartedAt) {
-      // During a normal countdown, save if elapsed time meets the minimum
-      const elapsedSeconds = Math.round(
-        (Date.now() - new Date(sessionStartedAt).getTime()) / 1000,
-      );
+      // Use seconds from the store: it pauses/resumes with the worker, so it
+      // accurately reflects running time without counting paused duration.
+      const elapsedSeconds = timerSettings.pomodoro * 60 - seconds;
       if (elapsedSeconds >= minimumSeconds) {
         addSession({
           id: crypto.randomUUID(),
