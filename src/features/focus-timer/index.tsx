@@ -1,3 +1,4 @@
+import { lazy } from "react";
 import { useAppStore } from "@/store/index";
 import Clock from "@/features/focus-timer/components/clock.tsx";
 import { useTimer } from "./hooks/useTimer";
@@ -5,10 +6,14 @@ import { useDailyTotal } from "./hooks/useDailyTotal";
 import { Button } from "@/components/ui/button";
 import DailyFocus from "./components/daily-focus";
 
-function OvertimeBanner() {
-  const overtime = useAppStore((s) => s.overtime);
+const DevSpeedToggle = import.meta.env.DEV
+  ? lazy(() => import("./components/dev-speed-toggle"))
+  : () => null;
 
-  if (!overtime) return null;
+function FinishedBanner() {
+  const status = useAppStore((s) => s.status);
+
+  if (status !== "finished") return null;
 
   return (
     <div className="fixed inset-x-0 top-0 z-50 flex items-center justify-center bg-zinc-900/90 px-4 py-3 backdrop-blur-sm">
@@ -21,12 +26,14 @@ function OvertimeBanner() {
 }
 
 export default function FocusTimer() {
-  const { seconds, status, pomodoroCount, start, pause, endCycle } = useTimer();
+  const { seconds, status, focusCount, start, pause, endCycle } =
+    useTimer();
   const { hours, minutes } = useDailyTotal();
 
   return (
     <>
-      <OvertimeBanner />
+      <FinishedBanner />
+      <DevSpeedToggle />
       <div className="bg-brown-100 h-screen w-full">
         <div className="flex h-full w-full flex-col items-center justify-center gap-4">
           <DailyFocus hours={hours} minutes={minutes} />
@@ -37,7 +44,7 @@ export default function FocusTimer() {
               <div
                 key={i}
                 className={
-                  i < pomodoroCount
+                  i < focusCount
                     ? "bg-brown-600 h-4 w-4 rounded-full"
                     : "bg-brown-300 h-3 w-3 rounded-full"
                 }
@@ -58,7 +65,11 @@ export default function FocusTimer() {
               </button>
             ) : (
               <Button intent="primary" onClick={start} className="">
-                {status === "paused" ? "resume" : "start"}
+                {status === "paused"
+                  ? "resume"
+                  : status === "finished"
+                    ? "next"
+                    : "start"}
               </Button>
             )}
 
