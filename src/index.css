@@ -1,18 +1,28 @@
-/* @import url("https://fonts.googleapis.com/css2?family=Inria+Serif:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&family=Outfit:wght@100..900&display=swap"); */
+@import url("https://fonts.googleapis.com/css2?family=Fragment+Mono:ital@0;1&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
 
 @import "tailwindcss";
 @plugin "@toolwind/corner-shape";
 @custom-variant dark (&:where(.dark, .dark *));
 
 @theme {
-  /* Colors */
-  --color-royal-gold: #e5d0ac;
-  --color-royal-red: #6d2323;
+  /* Additional colors */
   --color-blax: #252525;
 
+  /* Choco colors */
+  --color-brown-900: #1a1818;
+  --color-brown-800: #262423;
+  --color-brown-700: #372e2c;
+  --color-brown-600: #453632;
+  --color-brown-500: #735f59;
+  --color-brown-400: #98817a;
+  --color-brown-300: #bba6a0;
+  --color-brown-200: #dbcbc6;
+  --color-brown-100: #f7efec;
+  --color-brown-50: #fbf8f7;
+
   /* Fonts */
-  /* --font-inria-serif: "Inria Serif", serif;
-  --font-outfit: "Outfit", sans-serif; */
+  --font-poppins: "Poppins", sans-serif;
+  --font-fragment-mono: "Fragment Mono", monospace;
 }
 
 /* Side scrollbar */
