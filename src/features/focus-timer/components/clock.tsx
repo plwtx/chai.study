@@ -10,7 +10,7 @@ function formatTime(totalSeconds: number): string {
 
 export default function Clock({ seconds }: ClockProps) {
   return (
-    <h1 className="font-sans text-9xl font-semibold antialiased">
+    <h1 className="font-poppins text-9xl font-extrabold antialiased">
       {formatTime(seconds)}
     </h1>
   );

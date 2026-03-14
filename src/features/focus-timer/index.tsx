@@ -5,12 +5,6 @@ import { useDailyTotal } from "./hooks/useDailyTotal";
 import { Button } from "@/components/ui/button";
 import DailyFocus from "./components/daily-focus";
 
-const PHASE_LABELS: Record<string, string> = {
-  focus: "Focus",
-  break: "Short Break",
-  "long-break": "Long Break",
-};
-
 function OvertimeBanner() {
   const overtime = useAppStore((s) => s.overtime);
 
@@ -27,19 +21,8 @@ function OvertimeBanner() {
 }
 
 export default function FocusTimer() {
-  const {
-    seconds,
-    status,
-    overtime,
-    phase,
-    pomodoroCount,
-    start,
-    pause,
-    endCycle,
-  } = useTimer();
+  const { seconds, status, pomodoroCount, start, pause, endCycle } = useTimer();
   const { hours, minutes } = useDailyTotal();
-
-  const isFocusPhase = phase === "focus";
 
   return (
     <>
@@ -48,11 +31,19 @@ export default function FocusTimer() {
         <div className="flex h-full w-full flex-col items-center justify-center gap-4">
           <DailyFocus hours={hours} minutes={minutes} />
 
-          {/* Phase label */}
-          <p className="font-mono text-xs text-zinc-900">
-            {overtime ? "overtime" : PHASE_LABELS[phase]}
-            {isFocusPhase && !overtime && ` ${pomodoroCount + 1}/4`}
-          </p>
+          {/* Phase dots */}
+          <div className="flex items-center justify-center gap-3">
+            {[0, 1, 2, 3].map((i) => (
+              <div
+                key={i}
+                className={
+                  i < pomodoroCount
+                    ? "bg-brown-600 h-4 w-4 rounded-full"
+                    : "bg-brown-300 h-3 w-3 rounded-full"
+                }
+              />
+            ))}
+          </div>
 
           <Clock seconds={seconds} />
 

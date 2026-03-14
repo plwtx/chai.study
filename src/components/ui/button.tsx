@@ -3,12 +3,12 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 
 const buttonVariants = cva(
-  "text-center font-normal transition-all duration-300 ease-in-out cursor-pointer",
+  "text-center font-normal font-poppins transition-all duration-300 ease-in-out cursor-pointer",
   {
     variants: {
       intent: {
         primary:
-          "px-3 p-1 bg-brown-500 text-white rounded-full hover:scale-110 hover:bg-transparent hover:text-black capitalize border border-brown-500 border-y-0",
+          "px-3 p-1 bg-brown-500 text-white rounded-full hover:scale-120 hover:bg-transparent hover:text-brown-600 font-semibold tracking-wide",
         secondary: "",
         copy: "",
       },
