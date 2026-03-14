@@ -5,7 +5,8 @@ type InMessage =
     }
   | { type: "pause" }
   | { type: "resume" }
-  | { type: "reset" };
+  | { type: "reset" }
+  | { type: "set-speed"; payload: { speed: number } };
 
 type OutMessage =
   | { type: "tick"; payload: { seconds: number } }
@@ -14,6 +15,7 @@ type OutMessage =
 let intervalId: ReturnType<typeof setInterval> | null = null;
 let seconds = 0;
 let tickMode: "countup" | "countdown" = "countup";
+let speed = 1;
 
 function tick() {
   if (tickMode === "countup") {
@@ -44,7 +46,7 @@ self.onmessage = (e: MessageEvent<InMessage>) => {
       if (intervalId) clearInterval(intervalId);
       tickMode = msg.payload.mode;
       seconds = msg.payload.initialSeconds;
-      intervalId = setInterval(tick, 1000);
+      intervalId = setInterval(tick, 1000 / speed);
       break;
     }
     case "pause": {
@@ -56,7 +58,7 @@ self.onmessage = (e: MessageEvent<InMessage>) => {
     }
     case "resume": {
       if (!intervalId) {
-        intervalId = setInterval(tick, 1000);
+        intervalId = setInterval(tick, 1000 / speed);
       }
       break;
     }
@@ -66,6 +68,14 @@ self.onmessage = (e: MessageEvent<InMessage>) => {
         intervalId = null;
       }
       seconds = 0;
+      break;
+    }
+    case "set-speed": {
+      speed = msg.payload.speed;
+      if (intervalId) {
+        clearInterval(intervalId);
+        intervalId = setInterval(tick, 1000 / speed);
+      }
       break;
     }
   }
