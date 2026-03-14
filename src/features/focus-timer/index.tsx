@@ -44,7 +44,7 @@ export default function FocusTimer() {
   return (
     <>
       <OvertimeBanner />
-      <div className="h-screen w-full bg-stone-600/5">
+      <div className="bg-brown-100 h-screen w-full">
         <div className="flex h-full w-full flex-col items-center justify-center gap-4">
           <DailyFocus hours={hours} minutes={minutes} />
 

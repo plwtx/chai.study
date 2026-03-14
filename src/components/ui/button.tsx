@@ -8,7 +8,7 @@ const buttonVariants = cva(
     variants: {
       intent: {
         primary:
-          "px-3 p-1 bg-black text-white rounded-full hover:scale-110 hover:bg-transparent hover:text-black capitalize border border-black border-y-0",
+          "px-3 p-1 bg-brown-500 text-white rounded-full hover:scale-110 hover:bg-transparent hover:text-black capitalize border border-brown-500 border-y-0",
         secondary: "",
         copy: "",
       },

@@ -4,7 +4,7 @@ import { cn } from "@/lib/utils";
 
 const DEFAULT_BLOB_COLORS = {
   first: "bg-white",
-  second: "bg-royal-red",
+  second: "bg-black",
   third: "bg-white",
 };
 
