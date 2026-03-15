@@ -3,8 +3,8 @@ import { useAppStore } from "@/store/index";
 import Clock from "@/features/focus-timer/components/clock.tsx";
 import { useTimer } from "./hooks/useTimer";
 import { useDailyTotal } from "./hooks/useDailyTotal";
-import { Button } from "@/components/ui/button";
 import DailyFocus from "./components/daily-focus";
+import { AnimatePresence, motion } from "motion/react";
 
 const DevSpeedToggle = import.meta.env.DEV
   ? lazy(() => import("./components/dev-speed-toggle"))
@@ -26,8 +26,7 @@ function FinishedBanner() {
 }
 
 export default function FocusTimer() {
-  const { seconds, status, focusCount, start, pause, endCycle } =
-    useTimer();
+  const { seconds, status, focusCount, start, pause, endCycle } = useTimer();
   const { hours, minutes } = useDailyTotal();
 
   return (
@@ -55,32 +54,123 @@ export default function FocusTimer() {
           <Clock seconds={seconds} />
 
           {/* Controls */}
-          <div className="flex items-center gap-3">
-            {status === "running" ? (
-              <button
-                onClick={pause}
-                className="cursor-pointer rounded-full border border-zinc-900 bg-zinc-900 p-3 px-6 font-mono text-zinc-50 shadow-md shadow-zinc-600 transition-all duration-200 hover:scale-110 hover:bg-transparent hover:text-zinc-900"
-              >
-                Pause
-              </button>
-            ) : (
-              <Button intent="primary" onClick={start} className="">
-                {status === "paused"
-                  ? "resume"
-                  : status === "finished"
-                    ? "next"
-                    : "start"}
-              </Button>
-            )}
+          <div className="relative flex items-center justify-center">
+            <AnimatePresence mode="wait">
+              {status === "idle" || status === "finished" ? (
+                <motion.button
+                  key="start"
+                  onClick={start}
+                  className="bg-brown-500 cursor-pointer rounded-full px-10 py-3 font-poppins font-semibold tracking-wide text-white"
+                  initial={{ scale: 0.5, opacity: 0, filter: "blur(8px)" }}
+                  animate={{ scale: 1, opacity: 1, filter: "blur(0px)" }}
+                  exit={{
+                    scale: 1.15,
+                    opacity: 0,
+                    filter: "blur(6px)",
+                    transition: { duration: 0.25, ease: "easeIn" },
+                  }}
+                  transition={{
+                    type: "spring",
+                    stiffness: 300,
+                    damping: 22,
+                  }}
+                  whileHover={{ scale: 1.08 }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  {status === "finished" ? "next" : "start"}
+                </motion.button>
+              ) : (
+                <motion.div
+                  key="split"
+                  className="flex items-center gap-3"
+                  initial="hidden"
+                  animate="visible"
+                  exit="exit"
+                  variants={{
+                    hidden: {},
+                    visible: {
+                      transition: {
+                        staggerChildren: 0.06,
+                      },
+                    },
+                    exit: {
+                      transition: {
+                        staggerChildren: 0.04,
+                        staggerDirection: -1,
+                      },
+                    },
+                  }}
+                >
+                  <motion.button
+                    onClick={status === "running" ? pause : start}
+                    className="bg-brown-500 cursor-pointer rounded-full px-8 py-3 font-poppins font-semibold tracking-wide text-white"
+                    variants={{
+                      hidden: {
+                        x: 40,
+                        scale: 0.3,
+                        opacity: 0,
+                        filter: "blur(10px)",
+                      },
+                      visible: {
+                        x: 0,
+                        scale: 1,
+                        opacity: 1,
+                        filter: "blur(0px)",
+                      },
+                      exit: {
+                        x: 40,
+                        scale: 0.3,
+                        opacity: 0,
+                        filter: "blur(10px)",
+                      },
+                    }}
+                    transition={{
+                      type: "spring",
+                      stiffness: 280,
+                      damping: 24,
+                    }}
+                    whileHover={{ scale: 1.06 }}
+                    whileTap={{ scale: 0.95 }}
+                  >
+                    {status === "running" ? "pause" : "resume"}
+                  </motion.button>
 
-            {status !== "idle" && (
-              <button
-                onClick={endCycle}
-                className="cursor-pointer rounded-full border border-zinc-800 px-4 py-2 font-mono text-xs text-zinc-600 transition-all duration-150 hover:border-zinc-600 hover:text-zinc-900"
-              >
-                End cycle
-              </button>
-            )}
+                  <motion.button
+                    onClick={endCycle}
+                    className="border-brown-400 text-brown-600 hover:border-brown-600 hover:text-brown-800 cursor-pointer rounded-full border px-5 py-2.5 font-poppins text-sm"
+                    variants={{
+                      hidden: {
+                        x: -40,
+                        scale: 0.3,
+                        opacity: 0,
+                        filter: "blur(10px)",
+                      },
+                      visible: {
+                        x: 0,
+                        scale: 1,
+                        opacity: 1,
+                        filter: "blur(0px)",
+                      },
+                      exit: {
+                        x: -40,
+                        scale: 0.3,
+                        opacity: 0,
+                        filter: "blur(10px)",
+                      },
+                    }}
+                    transition={{
+                      type: "spring",
+                      stiffness: 280,
+                      damping: 24,
+                    }}
+                    whileHover={{ scale: 1.06 }}
+                    whileTap={{ scale: 0.95 }}
+                  >
+                    end cycle
+                  </motion.button>
+                </motion.div>
+              )}
+            </AnimatePresence>
           </div>
         </div>
       </div>
