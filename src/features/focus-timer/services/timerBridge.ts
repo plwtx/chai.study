@@ -43,6 +43,13 @@ class TimerBridge {
     this.worker?.postMessage({ type: "reset" });
   }
 
+  setSpeed(speed: number) {
+    this.ensureWorker().postMessage({
+      type: "set-speed",
+      payload: { speed },
+    });
+  }
+
   onTick(cb: TickCallback): () => void {
     this.tickCallbacks.add(cb);
     return () => this.tickCallbacks.delete(cb);
