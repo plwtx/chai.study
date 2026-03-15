@@ -9,6 +9,9 @@ export const DEFAULT_SETTINGS: Settings = {
   longBreakInterval: 4,
   features: { taskManager: false, statistics: false },
   theme: "system",
+  timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+  lastActiveDate: new Date().toLocaleDateString("en-CA"),
+  dailyFocusCount: 0,
 };
 
 export interface SettingsSliceState {

@@ -47,4 +47,7 @@ export interface Settings {
   longBreakInterval: number;
   features: Features;
   theme: "light" | "dark" | "system";
+  timezone: string;
+  lastActiveDate: string;
+  dailyFocusCount: number;
 }

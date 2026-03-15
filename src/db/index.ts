@@ -21,6 +21,9 @@ export class ChaidoroDB extends Dexie {
       tasks: "id, status, project",
       settings: "key",
     });
+    this.version(2).stores({
+      tasks: "id, status, project, createdAt",
+    });
   }
 }
 
