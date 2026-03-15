@@ -89,7 +89,10 @@ export function useTimer() {
   }
 
   return {
-    seconds: Math.max(0, store.targetDuration - store.elapsed),
+    seconds:
+      store.status === "idle"
+        ? getDuration(store.mode, store.settings)
+        : Math.max(0, store.targetDuration - store.elapsed),
     status: store.status,
     mode: store.mode,
     elapsed: store.elapsed,
