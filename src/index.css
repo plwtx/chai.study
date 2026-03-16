@@ -20,6 +20,12 @@
   --color-brown-100: #f7efec;
   --color-brown-50: #fbf8f7;
 
+  /* Dark colors */
+  --color-dark-900: #1b1a19;
+  --color-dark-600: #262524;
+  --color-dark-100: #9b9191;
+  /* --color-brown-600: #453632;  USED AS SHADOW*/
+
   /* Fonts */
   --font-poppins: "Poppins", sans-serif;
   --font-fragment-mono: "Fragment Mono", monospace;
