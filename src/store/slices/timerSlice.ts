@@ -128,6 +128,7 @@ export const createTimerSlice = (set, get): TimerSlice => ({
   reset: () => {
     set({
       status: "idle",
+      mode: "focus",
       elapsed: 0,
       targetDuration: 0,
       taskId: null,

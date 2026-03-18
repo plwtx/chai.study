@@ -6,7 +6,7 @@ import type { TimerMode } from "@/types";
 function getNextMode(
   currentMode: TimerMode,
   focusCount: number,
-  longBreakInterval: number,
+  longBreakInterval: number
 ): TimerMode {
   if (currentMode === "focus") {
     return focusCount >= longBreakInterval ? "long-break" : "break";
@@ -14,7 +14,14 @@ function getNextMode(
   return "focus";
 }
 
-function getDuration(mode: TimerMode, settings: { focusDuration: number; shortBreakDuration: number; longBreakDuration: number }): number {
+function getDuration(
+  mode: TimerMode,
+  settings: {
+    focusDuration: number;
+    shortBreakDuration: number;
+    longBreakDuration: number;
+  }
+): number {
   switch (mode) {
     case "focus":
       return settings.focusDuration;
@@ -25,7 +32,7 @@ function getDuration(mode: TimerMode, settings: { focusDuration: number; shortBr
   }
 }
 
-export function useTimer() {
+export function useTimerBridge() {
   useEffect(() => {
     const unsubTick = timerBridge.onTick(() => {
       useAppStore.getState().tick();
@@ -40,7 +47,9 @@ export function useTimer() {
       unsubComplete();
     };
   }, []);
+}
 
+export function useTimer() {
   const store = useAppStore();
 
   function start() {
@@ -59,7 +68,7 @@ export function useTimer() {
       mode = getNextMode(
         state.mode,
         state.focusCount,
-        state.settings.longBreakInterval,
+        state.settings.longBreakInterval
       );
     } else {
       mode = state.mode;
@@ -80,12 +89,25 @@ export function useTimer() {
     const state = useAppStore.getState();
     if (state.status === "idle") return;
 
+    const currentMode = state.mode;
+
     if (state.status !== "finished" && state.elapsed > 0) {
       state.finish();
     }
 
     timerBridge.reset();
     useAppStore.getState().reset();
+
+    // After ending focus, transition to break ;-;
+    if (currentMode === "focus") {
+      const s = useAppStore.getState();
+      const nextMode = getNextMode(
+        "focus",
+        s.focusCount,
+        s.settings.longBreakInterval
+      );
+      useAppStore.setState({ mode: nextMode });
+    }
   }
 
   return {

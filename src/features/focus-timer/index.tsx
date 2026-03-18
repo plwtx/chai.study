@@ -13,21 +13,26 @@ const DevSpeedToggle = import.meta.env.DEV
 
 function FinishedBanner() {
   const status = useAppStore((s) => s.status);
+  const mode = useAppStore((s) => s.mode);
 
   if (status !== "finished") return null;
+
+  const isBreak = mode === "break" || mode === "long-break";
 
   return (
     <div className="fixed inset-x-0 top-0 z-50 flex items-center justify-center bg-zinc-900/90 px-4 py-3 backdrop-blur-sm">
       <p className="font-mono text-sm text-zinc-300">
-        You have finished your session. However, you can continue being
-        productive !
+        {isBreak
+          ? "Break is over, you can start your next session."
+          : "You have finished your session. However, you can continue being productive !"}
       </p>
     </div>
   );
 }
 
 export default function FocusTimer() {
-  const { seconds, status, focusCount, start, pause, endCycle } = useTimer();
+  const { seconds, status, mode, focusCount, start, pause, endCycle } =
+    useTimer();
   const { hours, minutes } = useDailyTotal();
 
   return (
@@ -168,7 +173,9 @@ export default function FocusTimer() {
                     whileHover={{ scale: 1.06 }}
                     whileTap={{ scale: 0.95 }}
                   >
-                    end cycle
+                    {mode === "break" || mode === "long-break"
+                      ? "skip break"
+                      : "end cycle"}
                   </motion.button>
                 </motion.div>
               )}
