@@ -1,0 +1,52 @@
+import { useNavigate, useLocation } from "react-router";
+import { AnimatePresence, motion } from "motion/react";
+import { useAppStore } from "@/store/index";
+import { cn } from "@/lib/utils";
+
+function formatTime(totalSeconds: number): string {
+  const m = Math.floor(totalSeconds / 60);
+  const s = totalSeconds % 60;
+  return `${String(m).padStart(2, "0")}:${String(s).padStart(2, "0")}`;
+}
+
+export default function TimerIsland() {
+  const navigate = useNavigate();
+  const { pathname } = useLocation();
+
+  const status = useAppStore((s) => s.status);
+  const elapsed = useAppStore((s) => s.elapsed);
+  const targetDuration = useAppStore((s) => s.targetDuration);
+  const mode = useAppStore((s) => s.mode);
+
+  const isActive = status === "running" || status === "paused";
+  const show = isActive && pathname !== "/";
+  const remaining = Math.max(0, targetDuration - elapsed);
+
+  return (
+    <AnimatePresence>
+      {show && (
+        <motion.button
+          initial={{ opacity: 0, scale: 0.6, filter: "blur(4px)" }}
+          animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
+          exit={{ opacity: 0, scale: 0.6, filter: "blur(4px)" }}
+          transition={{ duration: 0.2, ease: "easeOut" }}
+          onClick={() => navigate("/")}
+          className="flex cursor-pointer items-center gap-2 rounded-full bg-zinc-900 px-4 py-1.5 shadow-lg"
+        >
+          <span
+            className={cn(
+              "size-1.5 rounded-full",
+              status === "running"
+                ? "animate-pulse bg-green-400"
+                : "bg-yellow-400",
+            )}
+          />
+          <span className="font-mono text-xs text-zinc-400">{mode}</span>
+          <span className="font-mono text-xs font-medium text-white">
+            {formatTime(remaining)}
+          </span>
+        </motion.button>
+      )}
+    </AnimatePresence>
+  );
+}

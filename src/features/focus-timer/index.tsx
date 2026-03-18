@@ -6,28 +6,32 @@ import { useDailyTotal } from "./hooks/useDailyTotal";
 import DailyFocus from "./components/daily-focus";
 import { AnimatePresence, motion } from "motion/react";
 
-
 const DevSpeedToggle = import.meta.env.DEV
   ? lazy(() => import("./components/dev-speed-toggle"))
   : () => null;
 
 function FinishedBanner() {
   const status = useAppStore((s) => s.status);
+  const mode = useAppStore((s) => s.mode);
 
   if (status !== "finished") return null;
+
+  const isBreak = mode === "break" || mode === "long-break";
 
   return (
     <div className="fixed inset-x-0 top-0 z-50 flex items-center justify-center bg-zinc-900/90 px-4 py-3 backdrop-blur-sm">
       <p className="font-mono text-sm text-zinc-300">
-        You have finished your session. However, you can continue being
-        productive !
+        {isBreak
+          ? "Break is over, you can start your next session."
+          : "You have finished your session. However, you can continue being productive !"}
       </p>
     </div>
   );
 }
 
 export default function FocusTimer() {
-  const { seconds, status, focusCount, start, pause, endCycle } = useTimer();
+  const { seconds, status, mode, focusCount, start, pause, endCycle } =
+    useTimer();
   const { hours, minutes } = useDailyTotal();
 
   return (
@@ -35,7 +39,7 @@ export default function FocusTimer() {
       <FinishedBanner />
       <DevSpeedToggle />
 
-      <div className="bg-brown-100 h-screen w-full">
+      <div className="bg-brown-50 h-screen w-full">
         <div className="flex h-full w-full flex-col items-center justify-center gap-4">
           <DailyFocus hours={hours} minutes={minutes} />
 
@@ -168,7 +172,9 @@ export default function FocusTimer() {
                     whileHover={{ scale: 1.06 }}
                     whileTap={{ scale: 0.95 }}
                   >
-                    end cycle
+                    {mode === "break" || mode === "long-break"
+                      ? "skip break"
+                      : "end cycle"}
                   </motion.button>
                 </motion.div>
               )}
