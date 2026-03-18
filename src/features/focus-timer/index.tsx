@@ -6,7 +6,6 @@ import { useDailyTotal } from "./hooks/useDailyTotal";
 import DailyFocus from "./components/daily-focus";
 import { AnimatePresence, motion } from "motion/react";
 
-
 const DevSpeedToggle = import.meta.env.DEV
   ? lazy(() => import("./components/dev-speed-toggle"))
   : () => null;
@@ -40,7 +39,7 @@ export default function FocusTimer() {
       <FinishedBanner />
       <DevSpeedToggle />
 
-      <div className="bg-brown-100 h-screen w-full">
+      <div className="bg-brown-50 h-screen w-full">
         <div className="flex h-full w-full flex-col items-center justify-center gap-4">
           <DailyFocus hours={hours} minutes={minutes} />
 
