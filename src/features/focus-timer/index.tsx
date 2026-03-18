@@ -5,7 +5,7 @@ import { useTimer } from "./hooks/useTimer";
 import { useDailyTotal } from "./hooks/useDailyTotal";
 import DailyFocus from "./components/daily-focus";
 import { AnimatePresence, motion } from "motion/react";
-import NavBar from "@/features/navbar/index";
+
 
 const DevSpeedToggle = import.meta.env.DEV
   ? lazy(() => import("./components/dev-speed-toggle"))
@@ -34,7 +34,7 @@ export default function FocusTimer() {
     <>
       <FinishedBanner />
       <DevSpeedToggle />
-      <NavBar />
+
       <div className="bg-brown-100 h-screen w-full">
         <div className="flex h-full w-full flex-col items-center justify-center gap-4">
           <DailyFocus hours={hours} minutes={minutes} />

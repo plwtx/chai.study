@@ -1,4 +1,4 @@
-export default function TaskManager() {
+export default function Settings() {
   return (
     <>
       <div className="bg-brown-100 h-screen w-full">
