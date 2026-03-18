@@ -6,6 +6,7 @@ import { useDailyTotal } from "./hooks/useDailyTotal";
 import DailyFocus from "./components/daily-focus";
 import { AnimatePresence, motion } from "motion/react";
 
+
 const DevSpeedToggle = import.meta.env.DEV
   ? lazy(() => import("./components/dev-speed-toggle"))
   : () => null;
@@ -33,6 +34,7 @@ export default function FocusTimer() {
     <>
       <FinishedBanner />
       <DevSpeedToggle />
+
       <div className="bg-brown-100 h-screen w-full">
         <div className="flex h-full w-full flex-col items-center justify-center gap-4">
           <DailyFocus hours={hours} minutes={minutes} />
@@ -60,7 +62,7 @@ export default function FocusTimer() {
                 <motion.button
                   key="start"
                   onClick={start}
-                  className="bg-brown-500 cursor-pointer rounded-full px-10 py-3 font-poppins font-semibold tracking-wide text-white"
+                  className="bg-brown-500 font-poppins cursor-pointer rounded-full px-10 py-3 font-semibold tracking-wide text-white"
                   initial={{ scale: 0.5, opacity: 0, filter: "blur(8px)" }}
                   animate={{ scale: 1, opacity: 1, filter: "blur(0px)" }}
                   exit={{
@@ -103,7 +105,7 @@ export default function FocusTimer() {
                 >
                   <motion.button
                     onClick={status === "running" ? pause : start}
-                    className="bg-brown-500 cursor-pointer rounded-full px-8 py-3 font-poppins font-semibold tracking-wide text-white"
+                    className="bg-brown-500 font-poppins cursor-pointer rounded-full px-8 py-3 font-semibold tracking-wide text-white"
                     variants={{
                       hidden: {
                         x: 40,
@@ -137,7 +139,7 @@ export default function FocusTimer() {
 
                   <motion.button
                     onClick={endCycle}
-                    className="border-brown-400 text-brown-600 hover:border-brown-600 hover:text-brown-800 cursor-pointer rounded-full border px-5 py-2.5 font-poppins text-sm"
+                    className="border-brown-400 text-brown-600 hover:border-brown-600 hover:text-brown-800 font-poppins cursor-pointer rounded-full border px-5 py-2.5 text-sm"
                     variants={{
                       hidden: {
                         x: -40,

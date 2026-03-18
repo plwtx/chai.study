@@ -1,9 +1,6 @@
-import Clockpage from "@/pages/clock.tsx";
+import { RouterProvider } from "react-router";
+import { router } from "@/router";
 
 export default function App() {
-  return (
-    <>
-      <Clockpage />
-    </>
-  );
+  return <RouterProvider router={router} />;
 }
