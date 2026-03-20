@@ -3,7 +3,7 @@ export default function Settings() {
     <>
       <div className="font-poppins h-full w-full p-9">
         {/* Title */}
-        <h1 className="font-poppins px-3 text-2xl font-semibold">Clock</h1>
+        <h1 className="font-poppins px-3 text-2xl font-semibold">Theme</h1>
       </div>
     </>
   );
