@@ -1,4 +1,5 @@
 import { ChevronsRight } from "lucide-react";
+import ClockSettings from "./components/settings-clock";
 
 export default function Settings() {
   interface SettingsCategories {
@@ -50,7 +51,9 @@ export default function Settings() {
                 </ul>
               </aside>
               {/* Settings menu: */}
-              <main className="bg-brown-300/75 shadow-brown-800 h-full w-full rounded-2xl shadow-inner"></main>
+              <main className="bg-brown-300/75 shadow-brown-800 h-full w-full rounded-2xl shadow-inner">
+                <ClockSettings />
+              </main>
             </div>
           </div>
         </div>
