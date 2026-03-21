@@ -1,4 +1,4 @@
-import type { Settings, Features } from "@/types";
+import type { Settings, Features, Theme } from "@/types";
 import { db } from "@/db";
 
 export const DEFAULT_SETTINGS: Settings = {
@@ -9,6 +9,8 @@ export const DEFAULT_SETTINGS: Settings = {
   longBreakInterval: 4,
   features: { taskManager: false, statistics: false },
   theme: "system",
+  accentColor: "#a78bfa",
+  backgroundImageKey: null,
   timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
   lastActiveDate: new Date().toLocaleDateString("en-CA"),
   dailyFocusCount: 0,
@@ -22,6 +24,9 @@ export interface SettingsSliceActions {
   loadSettings: () => Promise<void>;
   updateSettings: (patch: Partial<Settings>) => Promise<void>;
   toggleFeature: (feature: keyof Features) => void;
+  setTheme: (theme: Theme) => Promise<void>;
+  setAccentColor: (color: string) => Promise<void>;
+  setBackgroundImageKey: (key: number | null) => Promise<void>;
 }
 
 export type SettingsSlice = SettingsSliceState & SettingsSliceActions;
@@ -55,5 +60,17 @@ export const createSettingsSlice = (set, get): SettingsSlice => ({
     };
     db.settings.put(next);
     set({ settings: next });
+  },
+
+  setTheme: async (theme) => {
+    await get().updateSettings({ theme });
+  },
+
+  setAccentColor: async (color) => {
+    await get().updateSettings({ accentColor: color });
+  },
+
+  setBackgroundImageKey: async (key) => {
+    await get().updateSettings({ backgroundImageKey: key });
   },
 });

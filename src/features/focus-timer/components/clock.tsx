@@ -1,4 +1,3 @@
-import FlipClock from "./clock/flip-clock";
 import SlideClock from "./clock/slide-clock";
 import BlurClock from "./clock/blur-clock";
 import MorphClock from "./clock/morph-clock";
@@ -6,7 +5,7 @@ import MatrixClock from "./clock/matrix-clock";
 
 const CLOCK_VARIANT: ClockVariant = "slide";
 
-type ClockVariant = "flip" | "slide" | "blur" | "morph" | "matrix" | "default";
+type ClockVariant = "slide" | "blur" | "morph" | "matrix" | "default";
 
 interface ClockProps {
   seconds: number;
@@ -20,8 +19,6 @@ function formatTime(totalSeconds: number): string {
 
 export default function Clock({ seconds }: ClockProps) {
   switch (CLOCK_VARIANT) {
-    case "flip":
-      return <FlipClock seconds={seconds} />;
     case "slide":
       return <SlideClock seconds={seconds} />;
     case "blur":

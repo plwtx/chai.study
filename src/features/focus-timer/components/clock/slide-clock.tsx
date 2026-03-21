@@ -26,7 +26,7 @@ function SlideDigit({ digit }: SlideDigitProps) {
         <motion.span
           key={digit}
           custom={direction}
-          className="text-brown-900 absolute select-none"
+          className="absolute select-none"
           variants={{
             enter: (d: number) => ({
               y: `${d * 100}%`,
@@ -75,7 +75,7 @@ export default function SlideClock({ seconds }: SlideClockProps) {
   const digits = formatDigits(seconds);
 
   return (
-    <div className="font-poppins flex items-center text-9xl font-extrabold antialiased">
+    <div className="font-poppins text-brown-800 dark:text-dark-100 flex items-center text-9xl font-extrabold antialiased">
       {digits.map((char, i) =>
         char === ":" ? (
           <span key="colon" className="mx-1 select-none">

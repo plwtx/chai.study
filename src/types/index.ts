@@ -1,6 +1,7 @@
 export type TimerStatus = "idle" | "running" | "paused" | "finished";
 export type TimerMode = "focus" | "break" | "long-break";
 export type TaskStatus = "todo" | "in-progress" | "done";
+export type Theme = "light" | "dark" | "system";
 
 export interface Features {
   taskManager: boolean;
@@ -46,8 +47,16 @@ export interface Settings {
   longBreakDuration: number;
   longBreakInterval: number;
   features: Features;
-  theme: "light" | "dark" | "system";
+  theme: Theme;
+  accentColor: string;
+  backgroundImageKey: number | null;
   timezone: string;
   lastActiveDate: string;
   dailyFocusCount: number;
+}
+
+export interface BackgroundImage {
+  key?: number;
+  blob: Blob;
+  createdAt: number;
 }

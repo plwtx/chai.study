@@ -1,10 +1,9 @@
-export default function Settings() {
+import Error from "./settings-error";
+
+export default function Information() {
   return (
     <>
-      <div className="font-poppins h-full w-full p-9">
-        {/* Title */}
-        <h1 className="font-poppins px-3 text-2xl font-semibold">Information</h1>
-      </div>
+      <Error />
     </>
   );
 }

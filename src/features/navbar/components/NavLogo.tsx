@@ -1,3 +1,3 @@
 export default function NavLogo() {
-  return <div className="bg-brown-600 size-6 rounded-full" />;
+  return <div className="bg-accent size-6 rounded-full" />;
 }

@@ -19,7 +19,7 @@ function FinishedBanner() {
   const isBreak = mode === "break" || mode === "long-break";
 
   return (
-    <div className="fixed inset-x-0 top-0 z-50 flex items-center justify-center bg-zinc-900/90 px-4 py-3 backdrop-blur-sm">
+    <div className="fixed inset-x-0 top-0 z-50 flex items-center justify-center bg-black/90 px-4 py-3 backdrop-blur-sm">
       <p className="font-mono text-sm text-zinc-300">
         {isBreak
           ? "Break is over, you can start your next session."
@@ -38,8 +38,8 @@ export default function FocusTimer() {
     <>
       <FinishedBanner />
       <DevSpeedToggle />
-
-      <div className="bg-brown-50 h-screen w-full">
+      {/* CLOCK SCREEN */}
+      <div className="bg-brown-50 dark:bg-dark-600 h-screen w-full">
         <div className="flex h-full w-full flex-col items-center justify-center gap-4">
           <DailyFocus hours={hours} minutes={minutes} />
 
@@ -50,8 +50,8 @@ export default function FocusTimer() {
                 key={i}
                 className={
                   i < focusCount
-                    ? "bg-brown-600 h-4 w-4 rounded-full"
-                    : "bg-brown-300 h-3 w-3 rounded-full"
+                    ? "bg-brown-600 dark:bg-dark-100 h-4 w-4 rounded-full"
+                    : "bg-brown-300 h-3 w-3 rounded-full dark:bg-black"
                 }
               />
             ))}
@@ -66,7 +66,7 @@ export default function FocusTimer() {
                 <motion.button
                   key="start"
                   onClick={start}
-                  className="bg-brown-500 font-poppins cursor-pointer rounded-full px-10 py-3 font-semibold tracking-wide text-white"
+                  className="bg-brown-500 dark:bg-dark-900 font-poppins dark:text-dark-100 cursor-pointer rounded-full px-10 py-3 font-semibold tracking-wide text-white"
                   initial={{ scale: 0.5, opacity: 0, filter: "blur(8px)" }}
                   animate={{ scale: 1, opacity: 1, filter: "blur(0px)" }}
                   exit={{
@@ -109,7 +109,7 @@ export default function FocusTimer() {
                 >
                   <motion.button
                     onClick={status === "running" ? pause : start}
-                    className="bg-brown-500 font-poppins cursor-pointer rounded-full px-8 py-3 font-semibold tracking-wide text-white"
+                    className="bg-brown-500 dark:bg-dark-100 font-poppins cursor-pointer rounded-full px-8 py-3 font-semibold tracking-wide text-white dark:hover:text-white"
                     variants={{
                       hidden: {
                         x: 40,
@@ -143,7 +143,7 @@ export default function FocusTimer() {
 
                   <motion.button
                     onClick={endCycle}
-                    className="border-brown-400 text-brown-600 hover:border-brown-600 hover:text-brown-800 font-poppins cursor-pointer rounded-full border px-5 py-2.5 text-sm"
+                    className="border-brown-400 dark:border-dark-100 text-brown-600 dark:text-dark-100 hover:border-brown-600 hover:text-brown-800 font-poppins cursor-pointer rounded-full border px-5 py-2.5 text-sm dark:hover:border-white dark:hover:text-white"
                     variants={{
                       hidden: {
                         x: -40,
