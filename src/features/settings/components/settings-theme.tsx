@@ -3,12 +3,13 @@ import { Check, Cog, Upload, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useAppStore } from "@/store";
 import { db } from "@/db";
+import HeaderDescription from "@/components/ui/header-description";
+import SubHeaderDescription from "@/components/ui/sub-header-description";
+
 export default function ThemeSettings() {
   const theme = useAppStore((s) => s.settings.theme);
   const accentColor = useAppStore((s) => s.settings.accentColor);
-  const backgroundImageKey = useAppStore(
-    (s) => s.settings.backgroundImageKey
-  );
+  const backgroundImageKey = useAppStore((s) => s.settings.backgroundImageKey);
   const setTheme = useAppStore((s) => s.setTheme);
   const setAccentColor = useAppStore((s) => s.setAccentColor);
   const setBackgroundImageKey = useAppStore((s) => s.setBackgroundImageKey);
@@ -20,7 +21,6 @@ export default function ThemeSettings() {
     const file = e.target.files?.[0];
     if (!file) return;
 
-    // Delete old background image if exists
     if (backgroundImageKey) {
       await db.backgroundImages.delete(backgroundImageKey);
     }
@@ -31,7 +31,6 @@ export default function ThemeSettings() {
     });
     await setBackgroundImageKey(key as number);
 
-    // Reset input so same file can be re-selected
     if (fileInputRef.current) fileInputRef.current.value = "";
   };
 
@@ -44,28 +43,24 @@ export default function ThemeSettings() {
 
   return (
     <div className="font-poppins h-full w-full text-sm">
-      {/* Title */}
-      <h1 className="font-poppins text-lg font-medium">Appearance</h1>
-      {/* Description */}
-      <p className="text-brown-600 font-fragment-mono py-3 leading-6">
-        Chaidoro is already themed by me (Len) however feel free to
-        customize it to reflect your personality ! ... or perhaps you love
-        my picks and do not want to ruin it{" "}
-        <span className="bg-brown-200 text-brown-900 border-brown-700 rounded-lg border p-1 px-3 text-xs">
-          o( ❛ᴗ❛ )o
-        </span>
-        .
-      </p>
+      <HeaderDescription
+        header={"Appearance"}
+        description={
+          "Chaidoro is already themed by me (Len) however feel free to customize it to reflect your personality ! ... or perhaps you love my picks and do not want to ruin it"
+        }
+        kaomoji={"o( ❛ᴗ❛ )o"}
+      />
       {/* Divider line */}
       <div className="bg-brown-300 mx-auto my-3 h-px w-full rounded-full" />
       {/* Categories */}
-      <div className="flex flex-col gap-6 py-6">
+      <div className="text-brown-800 dark:text-dark-100 flex flex-col gap-6 py-6">
         {/* Color mode */}
         <section>
-          <h3 className="text-base font-medium">Color mode</h3>
-          <p className="font-fragment-mono text-xs">
-            Dark / Light / Auto (system)
-          </p>
+          <SubHeaderDescription
+            header={"Color mode"}
+            description={"Dark / Light / Auto (system)"}
+          />
+
           {/* Visuals */}
           <div className="flex w-full items-center justify-start gap-3 py-6">
             {/* Light mode */}
@@ -75,7 +70,7 @@ export default function ThemeSettings() {
             >
               <div
                 className={cn(
-                  "bg-brown-100 shadow-brown-300 relative flex h-32 w-32 flex-col items-center justify-between rounded-xl border p-3 shadow-md",
+                  "bg-brown-100 shadow-brown-300 text-brown-800 dark:shadow-dark-900 relative flex h-32 w-32 flex-col items-center justify-between rounded-xl border p-3 shadow-md",
                   theme === "light"
                     ? "border-brown-800 border-2"
                     : "border-brown-600"
@@ -88,7 +83,7 @@ export default function ThemeSettings() {
                   start
                 </h6>
               </div>
-              <p className="text-brown-600 mt-3 flex items-center gap-2 font-medium">
+              <p className="mt-3 flex items-center gap-2 font-medium">
                 {theme === "light" && <Check size={16} />} Light
               </p>
             </section>
@@ -99,7 +94,7 @@ export default function ThemeSettings() {
             >
               <div
                 className={cn(
-                  "bg-dark-600 text-dark-100 shadow-brown-300 relative flex h-32 w-32 flex-col items-center justify-between rounded-xl border p-3 shadow-md",
+                  "bg-dark-600 text-dark-100 shadow-brown-300 dark:shadow-dark-900 dark:border-dark-100 relative flex h-32 w-32 flex-col items-center justify-between rounded-xl border p-3 shadow-md",
                   theme === "dark"
                     ? "border-brown-800 border-2"
                     : "border-brown-600"
@@ -112,7 +107,7 @@ export default function ThemeSettings() {
                   start
                 </h6>
               </div>
-              <p className="text-brown-600 mt-3 flex items-center gap-2 font-medium">
+              <p className="mt-3 flex items-center gap-2 font-medium">
                 {theme === "dark" && <Check size={16} />} Dark
               </p>
             </section>
@@ -123,7 +118,7 @@ export default function ThemeSettings() {
             >
               <div
                 className={cn(
-                  "bg-brown-100 shadow-brown-300 relative flex h-32 w-full flex-col items-center justify-center overflow-clip rounded-xl border p-3 shadow-md",
+                  "bg-brown-100 dark:bg-dark-600 shadow-brown-300 dark:shadow-dark-600 dark:border-dark-900 relative flex h-32 w-full flex-col items-center justify-center overflow-clip rounded-xl border p-3 shadow-md",
                   theme === "system"
                     ? "border-brown-800 border-2"
                     : "border-brown-600"
@@ -131,7 +126,7 @@ export default function ThemeSettings() {
               >
                 <h6 className="font-fragment-mono z-10 text-sm font-light">
                   system{" "}
-                  <span className="bg-dark-600 text-dark-100 shadow-dark-600/45 rounded-lg p-1 px-3 font-semibold shadow-md">
+                  <span className="bg-dark-600 text-dark-100 shadow-dark-600/45 dark:bg-brown-600 rounded-lg p-1 px-3 font-semibold shadow-md">
                     AUTO
                   </span>
                 </h6>
@@ -141,7 +136,7 @@ export default function ThemeSettings() {
                 {/* Dark cog */}
                 <Cog className="shadow-dark-600 bg-dark-600 text-dark-100 absolute -right-12 -bottom-9 size-32 rotate-45 rounded-full stroke-[0.3px] shadow-md group-hover:animate-spin" />
               </div>
-              <p className="text-brown-600 mt-3 flex items-center gap-2 font-medium">
+              <p className="mt-3 flex items-center gap-2 font-medium">
                 {theme === "system" && <Check size={16} />} Auto (system
                 default)
               </p>
@@ -151,22 +146,21 @@ export default function ThemeSettings() {
 
         {/* Accent color */}
         <section>
-          <h3 className="text-base font-medium">Accent color</h3>
-          <p className="font-fragment-mono text-xs">
-            Personalize the accent color used across the app
-          </p>
+          <SubHeaderDescription
+            header={"Accent color"}
+            description={"Personalize the accent color used across the app"}
+          />
+
           <div className="flex items-center gap-4 py-4">
             <button
               onClick={() => setColorPickerOpen(!colorPickerOpen)}
-              className="border-brown-600 shadow-brown-300 flex items-center gap-3 rounded-lg border p-2 px-4 shadow-md"
+              className="border-brown-600 shadow-brown-300 dark:shadow-dark-900 dark:border-dark-900 flex cursor-pointer items-center gap-3 rounded-lg border p-2 px-4 shadow-md"
             >
               <div
                 className="h-6 w-6 rounded-full border border-black/10"
                 style={{ backgroundColor: accentColor }}
               />
-              <span className="font-fragment-mono text-xs">
-                {accentColor}
-              </span>
+              <span className="font-fragment-mono text-xs">{accentColor}</span>
             </button>
             {colorPickerOpen && (
               <input
@@ -181,10 +175,11 @@ export default function ThemeSettings() {
 
         {/* Background image */}
         <section>
-          <h3 className="text-base font-medium">Background image</h3>
-          <p className="font-fragment-mono text-xs">
-            Set a custom background image for the app
-          </p>
+          <SubHeaderDescription
+            header={"Background image"}
+            description={"Set a custom background image for the app"}
+          />
+
           <div className="flex items-center gap-3 py-4">
             <input
               ref={fileInputRef}
@@ -195,7 +190,7 @@ export default function ThemeSettings() {
             />
             <button
               onClick={() => fileInputRef.current?.click()}
-              className="border-brown-600 shadow-brown-300 flex items-center gap-2 rounded-lg border p-2 px-4 text-xs shadow-md"
+              className="border-brown-600 dark:shadow-dark-900 dark:border-dark-900 shadow-brown-300 flex cursor-pointer items-center gap-2 rounded-lg border p-2 px-4 text-xs shadow-md"
             >
               <Upload size={14} />
               Upload image
@@ -203,7 +198,7 @@ export default function ThemeSettings() {
             {backgroundImageKey && (
               <button
                 onClick={handleRemoveBackground}
-                className="border-brown-600 text-brown-600 flex items-center gap-2 rounded-lg border p-2 px-4 text-xs"
+                className="border-brown-600 dark:border-dark-100/15 dark:text-dark-100/75 text-brown-600 flex items-center gap-2 rounded-lg border p-2 px-4 text-xs"
               >
                 <X size={14} />
                 Remove
