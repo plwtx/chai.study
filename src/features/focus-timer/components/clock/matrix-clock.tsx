@@ -47,7 +47,7 @@ function MatrixDigit({ digit }: MatrixDigitProps) {
   }, [digit]);
 
   return (
-    <span className="text-brown-900 inline-block w-[0.62em] text-center select-none">
+    <span className="inline-block w-[0.62em] text-center select-none">
       {display}
     </span>
   );
@@ -68,15 +68,15 @@ export default function MatrixClock({ seconds }: MatrixClockProps) {
   const digits = formatDigits(seconds);
 
   return (
-    <div className="font-fragment-mono flex items-center text-9xl font-extrabold antialiased">
+    <div className="font-fragment-mono text-brown-800 dark:text-dark-100 flex items-center text-9xl font-extrabold antialiased">
       {digits.map((char, i) =>
         char === ":" ? (
-          <span key="colon" className="text-brown-500 mx-1 select-none">
+          <span key="colon" className="mx-1 select-none">
             :
           </span>
         ) : (
           <MatrixDigit key={i} digit={char} />
-        ),
+        )
       )}
     </div>
   );

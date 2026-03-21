@@ -10,7 +10,7 @@ function BlurDigit({ digit }: BlurDigitProps) {
       <AnimatePresence mode="popLayout">
         <motion.span
           key={digit}
-          className="text-brown-900 absolute select-none"
+          className="absolute select-none"
           initial={{
             opacity: 0,
             filter: "blur(12px)",
@@ -53,15 +53,15 @@ export default function BlurClock({ seconds }: BlurClockProps) {
   const digits = formatDigits(seconds);
 
   return (
-    <div className="font-poppins flex items-center text-9xl font-extrabold antialiased">
+    <div className="font-poppins text-brown-800 dark:text-dark-100 flex items-center text-9xl font-extrabold antialiased">
       {digits.map((char, i) =>
         char === ":" ? (
-          <span key="colon" className="text-brown-500 mx-1 select-none">
+          <span key="colon" className="mx-1 select-none">
             :
           </span>
         ) : (
           <BlurDigit key={i} digit={char} />
-        ),
+        )
       )}
     </div>
   );
