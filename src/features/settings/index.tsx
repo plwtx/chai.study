@@ -28,7 +28,7 @@ export default function Settings() {
   const ActivePanel = CATEGORY_COMPONENTS[activeId];
 
   return (
-    <div className="bg-brown-50 font-poppins h-dvh w-full p-9">
+    <div className="bg-brown-50 dark:bg-dark-600 font-poppins h-dvh w-full p-9">
       <div className="flex h-full w-full flex-col items-center justify-center">
         <div className="mt-19 flex h-dvh w-full max-w-7xl items-center justify-center">
           <div className="flex h-full w-full">
