@@ -37,7 +37,7 @@ export default function Settings() {
               activeId={activeId}
               onSelect={setActiveId}
             />
-            <main className="bg-brown-300/35 shadow-brown-800 h-full w-full overflow-hidden rounded-2xl shadow-inner">
+            <main className="bg-brown-200/45 shadow-brown-800 h-full w-full overflow-hidden rounded-2xl p-6 shadow-inner">
               <AnimatePresence mode="wait">
                 <motion.div
                   key={activeId}
