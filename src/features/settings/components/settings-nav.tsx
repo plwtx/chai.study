@@ -30,7 +30,7 @@ export default function SettingsNav({
               className={cn(
                 "flex items-center justify-between rounded-lg p-2 pl-5 transition-transform active:scale-95",
                 isActive
-                  ? "bg-brown-300/70 shadow-brown-500/45 font-medium shadow-md"
+                  ? "bg-brown-200/75 shadow-brown-500/45 font-medium shadow-md"
                   : "hover:bg-brown-100/75 group cursor-pointer"
               )}
             >

@@ -4,6 +4,7 @@ import type {
   SessionDraft,
   Task,
   Settings,
+  BackgroundImage,
 } from "@/types";
 
 export class ChaidoroDB extends Dexie {
@@ -11,6 +12,7 @@ export class ChaidoroDB extends Dexie {
   sessionDraft!: Table<SessionDraft, string>;
   tasks!: Table<Task, string>;
   settings!: Table<Settings, string>;
+  backgroundImages!: Table<BackgroundImage, number>;
 
   constructor() {
     super("ChaidoroDB");
@@ -23,6 +25,9 @@ export class ChaidoroDB extends Dexie {
     });
     this.version(2).stores({
       tasks: "id, status, project, createdAt",
+    });
+    this.version(3).stores({
+      backgroundImages: "++key, createdAt",
     });
   }
 }

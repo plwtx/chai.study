@@ -45,6 +45,11 @@
   border-radius: 0px;
 }
 
+:root {
+  --accent: #6d2323;
+  --bg-image: none;
+}
+
 /* Custom CSS */
 @utility text-outline {
   -webkit-text-stroke: 1px #252525;

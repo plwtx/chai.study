@@ -38,8 +38,8 @@ export default function FocusTimer() {
     <>
       <FinishedBanner />
       <DevSpeedToggle />
-
-      <div className="bg-brown-50 h-screen w-full">
+      {/* CLOCK SCREEN */}
+      <div className="bg-brown-50 dark:bg-dark-600 h-screen w-full">
         <div className="flex h-full w-full flex-col items-center justify-center gap-4">
           <DailyFocus hours={hours} minutes={minutes} />
 

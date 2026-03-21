@@ -2,9 +2,11 @@ import Navbar from "@/features/navbar";
 import AnimatedRoutes from "@/features/router/AnimatedRoutes";
 import TimerIsland from "@/features/focus-timer/components/timer-island";
 import { useTimerBridge } from "@/features/focus-timer/hooks/useTimer";
+import { useThemeSync } from "@/features/settings/hooks/useThemeSync";
 
 export default function RootLayout() {
   useTimerBridge();
+  useThemeSync();
 
   return (
     <div className="bg-brown-50 relative h-screen w-full">
