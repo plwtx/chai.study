@@ -5,7 +5,7 @@ export default function HeaderDescription({
 }: {
   header: string;
   description: string;
-  kaomoji: string;
+  kaomoji: string | null;
 }) {
   return (
     <>
@@ -16,9 +16,12 @@ export default function HeaderDescription({
         {/* Description */}
         <p className="text-brown-600 dark:text-dark-100/55 font-fragment-mono py-3 leading-6">
           {description}
-          <span className="bg-brown-200 dark:bg-dark-900 dark:text-dark-100 text-brown-900 border-brown-700 mx-3 inline rounded-lg border p-1 px-3 text-xs text-nowrap dark:border-black">
-            {kaomoji}
-          </span>
+
+          {kaomoji && (
+            <p className="bg-brown-200 dark:bg-dark-900 dark:text-dark-100 text-brown-900 border-brown-700 mx-3 inline rounded-lg border p-1 px-3 text-xs text-nowrap dark:border-black">
+              {kaomoji}
+            </p>
+          )}
         </p>
       </div>
     </>

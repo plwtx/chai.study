@@ -11,7 +11,9 @@ export default function SubHeaderDescription({
         {/* Title */}
         <h3 className="text-base font-medium">{header}</h3>
         {/* Description */}
-        <p className="font-fragment-mono text-xs">{description}</p>
+        <p className="font-fragment-mono text-brown-900/75 dark:text-dark-100/65 text-xs">
+          {description}
+        </p>
       </div>
     </>
   );
