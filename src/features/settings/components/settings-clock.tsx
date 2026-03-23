@@ -41,12 +41,13 @@ function DurationEditor({
   };
 
   return (
-    <div className="flex flex-col items-center gap-2">
-      <div className="flex items-center gap-1">
+    <div className="flex h-full w-full flex-col items-center justify-center gap-2">
+      <div className="z-10 flex flex-1 flex-col items-center justify-center gap-1">
+        {/* Input field */}
         <input
           type="number"
           min={1}
-          max={120}
+          max={90}
           value={value}
           onChange={(e) => setValue(e.target.value)}
           onKeyDown={(e) => {
@@ -54,22 +55,28 @@ function DurationEditor({
             if (e.key === "Escape") onCancel();
           }}
           autoFocus
-          className="bg-brown-100 dark:bg-dark-600 border-brown-500 dark:border-dark-100/25 font-poppins w-16 rounded-lg border p-1 text-center text-2xl font-bold outline-none"
+          className="bg-brown-500 shadow-brown-900 dark:bg-dark-600 border-brown-500 dark:border-dark-900 font-poppins text-brown-50 dark:text-dark-100 z-20 flex-1 [appearance:textfield] self-stretch overflow-clip rounded-lg border p-1 text-center text-3xl font-bold shadow-inner outline-none dark:shadow-black [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
         />
         <span className="font-fragment-mono text-brown-600 dark:text-dark-100/45 text-sm">
-          min
+          minutes
         </span>
       </div>
-      <div className="flex gap-2">
+
+      {/* Buttons */}
+      <div className="relative mt-auto mb-3 flex w-full flex-col gap-2 px-3">
+        {/* Decoration */}
+        <div className="dark:border-dark-100/45 border-brown-600 absolute top-0 left-1/2 z-0 h-24 w-50 -translate-x-1/2 -translate-y-23 rounded-t-lg border border-b-0" />
+        {/* Save button */}
         <button
           onClick={handleSubmit}
-          className="bg-brown-700 text-brown-50 dark:bg-dark-100 dark:text-dark-900 cursor-pointer rounded-md px-3 py-1 text-xs font-medium"
+          className="bg-brown-700 text-brown-50 dark:bg-dark-100 dark:text-dark-900 hover:bg-brown-900 shadow-brown-800 dark:hover:bg-dark-900 dark:hover:text-dark-100 dark:hover:border-dark-100 dark:border-dark-100 border-brown-700 hover:border-brown-900 z-10 w-full cursor-pointer rounded-md border p-3 text-xs font-medium shadow-sm active:scale-95"
         >
           Save
         </button>
+        {/* Cancel button */}
         <button
           onClick={onCancel}
-          className="border-brown-500 dark:border-dark-100/25 cursor-pointer rounded-md border px-3 py-1 text-xs"
+          className="border-brown-500 dark:hover:bg-dark-100/5 dark:hover:text-dark-100 dark:border-dark-100/35 hover:bg-brown-300 z-10 w-full cursor-pointer rounded-md border px-3 py-1 text-xs"
         >
           Cancel
         </button>
@@ -102,9 +109,9 @@ function TimerDurationCard({
   return (
     <section
       className={cn(
-        "border-brown-500 shadow-brown-600 dark:shadow-dark-900 dark:border-dark-900 dark:text-dark-100 flex h-64 w-2/7 flex-col items-center justify-center rounded-xl border shadow-sm",
+        "border-brown-500 shadow-brown-600 dark:shadow-dark-900 dark:border-dark-900 dark:text-dark-100 relative flex h-64 w-2/7 flex-col items-center justify-center rounded-xl border shadow-sm",
         !isTimerActive && "group relative overflow-clip",
-        bgClass,
+        bgClass
       )}
     >
       <h3 className="font-fragment-mono text-brown-600 dark:text-dark-100/45 font-light">
@@ -122,9 +129,9 @@ function TimerDurationCard({
           {isTimerActive ? (
             <button
               aria-label="Locked"
-              className="absolute top-2 left-2 flex h-9 w-9 items-center justify-center rounded-full opacity-50"
+              className="absolute top-2 left-2 flex h-9 w-9 items-center justify-center rounded-full opacity-100"
             >
-              <Lock className="size-5 stroke-1" />
+              <Lock className="stroke-brown-500 dark:stroke-dark-100/65 size-5 stroke-2" />
             </button>
           ) : (
             <button
@@ -162,22 +169,15 @@ function AutomationToggle({
         <h3 className="font-semibold">{label}</h3>
         <p className="text-sm opacity-75">{description}</p>
       </div>
-      <ToggleSwitch
-        checked={checked}
-        onChange={() => toggleAutoStart(field)}
-      />
+      <ToggleSwitch checked={checked} onChange={() => toggleAutoStart(field)} />
     </div>
   );
 }
 
 export default function ClockSettings() {
   const focusDuration = useAppStore((s) => s.settings.focusDuration);
-  const shortBreakDuration = useAppStore(
-    (s) => s.settings.shortBreakDuration,
-  );
-  const longBreakDuration = useAppStore(
-    (s) => s.settings.longBreakDuration,
-  );
+  const shortBreakDuration = useAppStore((s) => s.settings.shortBreakDuration);
+  const longBreakDuration = useAppStore((s) => s.settings.longBreakDuration);
   const timerStatus = useAppStore((s) => s.status);
 
   const isTimerActive = timerStatus !== "idle";
@@ -225,7 +225,7 @@ export default function ClockSettings() {
           seconds={longBreakDuration}
           field="longBreakDuration"
           isTimerActive={isTimerActive}
-          bgClass="bg-brown-200/25 dark:bg-dark-900/35"
+          bgClass="bg-brown-200/25 dark:bg-dark-900/15"
         />
       </div>
 
