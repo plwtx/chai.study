@@ -1,13 +1,17 @@
+import { cn } from "@/lib/utils";
+
 export default function SubHeaderDescription({
   header,
   description,
+  className,
 }: {
   header: string;
   description: string;
+  className?: string;
 }) {
   return (
     <>
-      <div className="text-brown-900 dark:text-dark-100">
+      <div className={cn("text-brown-900 dark:text-dark-100", className)}>
         {/* Title */}
         <h3 className="text-base font-medium">{header}</h3>
         {/* Description */}

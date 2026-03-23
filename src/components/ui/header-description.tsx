@@ -1,20 +1,24 @@
+import { cn } from "@/lib/utils";
+
 export default function HeaderDescription({
   header,
   description,
   kaomoji,
+  className,
 }: {
   header: string;
   description: string;
-  kaomoji: string | null;
+  kaomoji?: string | null;
+  className?: string;
 }) {
   return (
     <>
-      <div className="text-brown-900 dark:text-dark-100">
+      <div className={cn("text-brown-900 dark:text-dark-100", className)}>
         {/* Title */}
         <h1 className="font-poppins text-lg font-medium">{header}</h1>
 
         {/* Description */}
-        <p className="text-brown-600 dark:text-dark-100/55 font-fragment-mono py-3 leading-6">
+        <p className="text-brown-600 dark:text-dark-100/55 font-fragment-mono py-3 text-sm leading-6">
           {description}
 
           {kaomoji && (
