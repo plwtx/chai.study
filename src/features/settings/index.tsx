@@ -41,9 +41,9 @@ export default function Settings() {
               <AnimatePresence mode="wait">
                 <motion.div
                   key={activeId}
-                  initial={{ opacity: 0, x: 12 }}
+                  initial={{ opacity: 0, x: -12 }}
                   animate={{ opacity: 1, x: 0 }}
-                  exit={{ opacity: 0, x: -12 }}
+                  exit={{ opacity: 0, x: 12 }}
                   transition={{ duration: 0.15, ease: "easeInOut" }}
                   className="h-full w-full"
                 >

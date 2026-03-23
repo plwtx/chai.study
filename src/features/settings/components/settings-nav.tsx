@@ -30,7 +30,7 @@ export default function SettingsNav({
               key={category.id}
               onClick={() => onSelect(category.id)}
               className={cn(
-                "text-brown-800 dark:text-dark-100 flex items-center justify-between rounded-lg p-2 pl-5 transition-transform active:scale-95",
+                "text-brown-800 dark:text-dark-100 flex items-center justify-between rounded-lg p-2 pl-5 transition-transform active:scale-90",
                 isActive
                   ? "bg-brown-200/75 dark:bg-dark-900 dark:shadow-dark-900 shadow-brown-500/45 font-medium shadow-md"
                   : "hover:bg-brown-100/75 dark:hover:bg-dark-900/75 group cursor-pointer"

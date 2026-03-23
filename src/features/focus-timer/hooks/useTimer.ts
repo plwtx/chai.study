@@ -39,7 +39,28 @@ export function useTimerBridge() {
     });
 
     const unsubComplete = timerBridge.onComplete(() => {
-      useAppStore.getState().finish();
+      const pre = useAppStore.getState();
+      const finishedMode = pre.mode;
+      pre.finish();
+
+      const state = useAppStore.getState();
+      const { settings } = state;
+
+      const shouldAutoStart =
+        finishedMode === "focus"
+          ? settings.autoStartBreak
+          : settings.autoStartFocus;
+
+      if (shouldAutoStart) {
+        const nextMode = getNextMode(
+          finishedMode,
+          state.focusCount,
+          settings.longBreakInterval,
+        );
+        const duration = getDuration(nextMode, settings);
+        timerBridge.start("countdown", duration);
+        state.start(nextMode, duration, state.taskId);
+      }
     });
 
     return () => {

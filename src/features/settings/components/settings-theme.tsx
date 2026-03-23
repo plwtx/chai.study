@@ -70,16 +70,22 @@ export default function ThemeSettings() {
             >
               <div
                 className={cn(
-                  "bg-brown-100 shadow-brown-300 text-brown-800 dark:shadow-dark-900 relative flex h-32 w-32 flex-col items-center justify-between rounded-xl border p-3 shadow-md",
+                  "bg-brown-100 shadow-brown-300 text-brown-800 dark:shadow-dark-900 relative flex h-32 w-32 flex-col items-center justify-between rounded-xl border p-3 shadow-md transition-transform active:scale-95",
                   theme === "light"
                     ? "border-brown-800 border-2"
                     : "border-brown-600"
                 )}
               >
-                <h6 className="text-[9px] font-light">today</h6>
-                <h6 className="text-[10px] font-medium">00 hr. 31 min.</h6>
-                <h6 className="text-3xl font-semibold">25:00</h6>
-                <h6 className="bg-brown-600 text-brown-50 shadow-brown-600 border-brown-700 w-full rounded-lg border border-b-8 p-1 px-3 text-center text-xs font-medium shadow-md">
+                <h6 className="touch-none text-[9px] font-light select-none">
+                  today
+                </h6>
+                <h6 className="touch-none text-[10px] font-medium select-none">
+                  00 hr. 31 min.
+                </h6>
+                <h6 className="touch-none text-3xl font-semibold select-none">
+                  25:00
+                </h6>
+                <h6 className="bg-brown-600 text-brown-50 shadow-brown-600 border-brown-700 w-full touch-none rounded-lg border border-b-8 p-1 px-3 text-center text-xs font-medium shadow-md select-none">
                   start
                 </h6>
               </div>
@@ -94,16 +100,22 @@ export default function ThemeSettings() {
             >
               <div
                 className={cn(
-                  "bg-dark-600 text-dark-100 shadow-brown-300 dark:shadow-dark-900 dark:border-dark-100 relative flex h-32 w-32 flex-col items-center justify-between rounded-xl border p-3 shadow-md",
+                  "bg-dark-600 text-dark-100 shadow-brown-300 dark:shadow-dark-900 dark:border-dark-100 relative flex h-32 w-32 flex-col items-center justify-between rounded-xl border p-3 shadow-md transition-transform active:scale-95",
                   theme === "dark"
                     ? "border-brown-800 border-2"
                     : "border-brown-600"
                 )}
               >
-                <h6 className="text-[9px] font-light">today</h6>
-                <h6 className="text-[10px] font-medium">00 hr. 31 min.</h6>
-                <h6 className="text-3xl font-semibold">25:00</h6>
-                <h6 className="bg-dark-900 text-dark-100 shadow-dark-900 w-full rounded-lg border border-b-8 border-black p-1 px-3 text-center text-xs font-medium shadow-md">
+                <h6 className="touch-none text-[9px] font-light select-none">
+                  today
+                </h6>
+                <h6 className="touch-none text-[10px] font-medium select-none">
+                  00 hr. 31 min.
+                </h6>
+                <h6 className="touch-none text-3xl font-semibold select-none">
+                  25:00
+                </h6>
+                <h6 className="bg-dark-900 text-dark-100 shadow-dark-900 w-full touch-none rounded-lg border border-b-8 border-black p-1 px-3 text-center text-xs font-medium shadow-md select-none">
                   start
                 </h6>
               </div>
@@ -118,7 +130,7 @@ export default function ThemeSettings() {
             >
               <div
                 className={cn(
-                  "bg-brown-100 dark:bg-dark-600 shadow-brown-300 dark:shadow-dark-600 dark:border-dark-900 relative flex h-32 w-full flex-col items-center justify-center overflow-clip rounded-xl border p-3 shadow-md",
+                  "bg-brown-100 dark:bg-dark-600 shadow-brown-300 dark:shadow-dark-600 dark:border-dark-900 relative flex h-32 w-full flex-col items-center justify-center overflow-clip rounded-xl border p-3 shadow-md transition-transform active:scale-95",
                   theme === "system"
                     ? "border-brown-800 border-2"
                     : "border-brown-600"
