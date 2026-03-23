@@ -7,6 +7,8 @@ export const DEFAULT_SETTINGS: Settings = {
   shortBreakDuration: 300,
   longBreakDuration: 900,
   longBreakInterval: 4,
+  autoStartBreak: false,
+  autoStartFocus: false,
   features: { taskManager: false, statistics: false },
   theme: "system",
   accentColor: "#a78bfa",
@@ -27,6 +29,11 @@ export interface SettingsSliceActions {
   setTheme: (theme: Theme) => Promise<void>;
   setAccentColor: (color: string) => Promise<void>;
   setBackgroundImageKey: (key: number | null) => Promise<void>;
+  setDuration: (
+    field: "focusDuration" | "shortBreakDuration" | "longBreakDuration",
+    seconds: number,
+  ) => Promise<void>;
+  toggleAutoStart: (field: "autoStartBreak" | "autoStartFocus") => Promise<void>;
 }
 
 export type SettingsSlice = SettingsSliceState & SettingsSliceActions;
@@ -72,5 +79,14 @@ export const createSettingsSlice = (set, get): SettingsSlice => ({
 
   setBackgroundImageKey: async (key) => {
     await get().updateSettings({ backgroundImageKey: key });
+  },
+
+  setDuration: async (field, seconds) => {
+    await get().updateSettings({ [field]: seconds });
+  },
+
+  toggleAutoStart: async (field) => {
+    const current = get().settings[field];
+    await get().updateSettings({ [field]: !current });
   },
 });

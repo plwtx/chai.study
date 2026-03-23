@@ -46,6 +46,8 @@ export interface Settings {
   shortBreakDuration: number;
   longBreakDuration: number;
   longBreakInterval: number;
+  autoStartBreak: boolean;
+  autoStartFocus: boolean;
   features: Features;
   theme: Theme;
   accentColor: string;
