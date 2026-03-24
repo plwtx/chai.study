@@ -5,6 +5,7 @@ import HeaderDescription from "@/components/ui/header-description";
 import SubHeaderDescription from "@/components/ui/sub-header-description";
 import TimerDurationCard, { type DurationField } from "./timer-duration-card";
 import AutomationToggle from "./automation-toggle";
+import ToastNotification from "./toast-notification";
 
 export default function ClockSettings() {
   const focusDuration = useAppStore((s) => s.settings.focusDuration);
@@ -91,6 +92,8 @@ export default function ClockSettings() {
           field="autoStartFocus"
         />
       </section>
+      {/* Button */}
+      <ToastNotification />
     </div>
   );
 }
