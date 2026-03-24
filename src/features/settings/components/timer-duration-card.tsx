@@ -3,6 +3,7 @@ import { Pencil, Lock } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useAppStore } from "@/store";
 import DurationEditor from "./duration-editor";
+import { showSettingsToast } from "./settings-toast";
 
 export type DurationField =
   | "focusDuration"
@@ -45,6 +46,7 @@ export default function TimerDurationCard({
 
   const handleSave = async (newSeconds: number) => {
     await setDuration(field, newSeconds);
+    showSettingsToast(`${label} set to ${Math.floor(newSeconds / 60)} minutes.`);
     onClose();
   };
 

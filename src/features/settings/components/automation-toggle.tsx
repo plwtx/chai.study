@@ -1,5 +1,6 @@
 import { useAppStore } from "@/store";
 import ToggleSwitch from "@/components/ui/toggle-switch";
+import { showSettingsToast } from "./settings-toast";
 
 export default function AutomationToggle({
   label,
@@ -19,7 +20,13 @@ export default function AutomationToggle({
         <h3 className="font-semibold">{label}</h3>
         <p className="text-sm opacity-75">{description}</p>
       </div>
-      <ToggleSwitch checked={checked} onChange={() => toggleAutoStart(field)} />
+      <ToggleSwitch
+        checked={checked}
+        onChange={() => {
+          toggleAutoStart(field);
+          showSettingsToast(`${label} ${checked ? "disabled" : "enabled"}.`);
+        }}
+      />
     </div>
   );
 }

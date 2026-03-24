@@ -92,7 +92,7 @@ export default function ClockSettings() {
           field="autoStartFocus"
         />
       </section>
-      {/* Button */}
+      {/* Toast Render Button */}
       <ToastNotification />
     </div>
   );
