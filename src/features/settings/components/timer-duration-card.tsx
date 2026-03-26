@@ -46,7 +46,9 @@ export default function TimerDurationCard({
 
   const handleSave = async (newSeconds: number) => {
     await setDuration(field, newSeconds);
-    showSettingsToast(`${label} set to ${Math.floor(newSeconds / 60)} minutes.`);
+    showSettingsToast(
+      `${label} set to ${Math.floor(newSeconds / 60)} minutes.`
+    );
     onClose();
   };
 

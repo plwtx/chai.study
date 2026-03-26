@@ -178,7 +178,7 @@ export default function ThemeSettings() {
           <div className="flex items-center gap-4 py-4">
             <button
               onClick={() => setColorPickerOpen(!colorPickerOpen)}
-              className="border-brown-600 shadow-brown-300 dark:shadow-dark-900 dark:border-dark-900 flex cursor-pointer items-center gap-3 rounded-lg border p-2 px-4 shadow-md"
+              className="border-brown-200/75 shadow-brown-300 dark:bg-dark-900/45 bg-brown-100 dark:border-dark-900 flex cursor-pointer items-center gap-3 rounded-lg border p-2 px-4 shadow-sm dark:shadow-black"
             >
               <div
                 className="h-6 w-6 rounded-full border border-black/10"
@@ -214,7 +214,7 @@ export default function ThemeSettings() {
             />
             <button
               onClick={() => fileInputRef.current?.click()}
-              className="border-brown-600 dark:shadow-dark-900 dark:border-dark-900 shadow-brown-300 flex cursor-pointer items-center gap-2 rounded-lg border p-2 px-4 text-xs shadow-md"
+              className="border-brown-200/75 shadow-brown-300 dark:bg-dark-900/45 bg-brown-100 dark:border-dark-900 flex cursor-pointer items-center gap-3 rounded-lg border p-2 px-4 shadow-sm dark:shadow-black"
             >
               <Upload size={14} />
               Upload image

@@ -7,6 +7,7 @@ import TimerDurationCard, {
   type DurationField,
 } from "../components/timer-duration-card";
 import AutomationToggle from "../components/automation-toggle";
+import ClockStyles from "../components/clock-styles.tsx";
 
 export default function ClockSettings() {
   const focusDuration = useAppStore((s) => s.settings.focusDuration);
@@ -73,6 +74,14 @@ export default function ClockSettings() {
         />
       </div>
 
+      <HorizontalDivider className="my-9" />
+      {/* Clock styles */}
+      <SubHeaderDescription
+        header={"Clock style"}
+        description={"Pick one of the styles to match your aesthetic."}
+        className="mt-6"
+      />
+      <ClockStyles />
       <HorizontalDivider className="my-9" />
 
       <SubHeaderDescription
