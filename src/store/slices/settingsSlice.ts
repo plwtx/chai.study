@@ -1,4 +1,4 @@
-import type { Settings, Features, Theme } from "@/types";
+import type { Settings, Features, Theme, ClockVariant } from "@/types";
 import { db } from "@/db";
 
 export const DEFAULT_SETTINGS: Settings = {
@@ -13,6 +13,7 @@ export const DEFAULT_SETTINGS: Settings = {
   theme: "system",
   accentColor: "#a78bfa",
   backgroundImageKey: null,
+  clockVariant: "slide",
   timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
   lastActiveDate: new Date().toLocaleDateString("en-CA"),
   dailyFocusCount: 0,
@@ -29,6 +30,7 @@ export interface SettingsSliceActions {
   setTheme: (theme: Theme) => Promise<void>;
   setAccentColor: (color: string) => Promise<void>;
   setBackgroundImageKey: (key: number | null) => Promise<void>;
+  setClockVariant: (variant: ClockVariant) => Promise<void>;
   setDuration: (
     field: "focusDuration" | "shortBreakDuration" | "longBreakDuration",
     seconds: number,
@@ -79,6 +81,10 @@ export const createSettingsSlice = (set, get): SettingsSlice => ({
 
   setBackgroundImageKey: async (key) => {
     await get().updateSettings({ backgroundImageKey: key });
+  },
+
+  setClockVariant: async (variant) => {
+    await get().updateSettings({ clockVariant: variant });
   },
 
   setDuration: async (field, seconds) => {

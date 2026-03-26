@@ -18,7 +18,10 @@ export default function SettingsNav({
   onSelect,
 }: SettingsNavProps) {
   return (
-    <aside className="w-78" aria-label="Settings category selection sidebar.">
+    <aside
+      className="h-full w-78"
+      aria-label="Settings category selection sidebar."
+    >
       <h1 className="font-poppins text-brown-800 dark:text-dark-100 px-3 text-xl font-semibold">
         Settings
       </h1>

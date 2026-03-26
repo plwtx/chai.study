@@ -3,8 +3,11 @@ import { useAppStore } from "@/store";
 import HorizontalDivider from "@/components/ui/horizontal-divider-line";
 import HeaderDescription from "@/components/ui/header-description";
 import SubHeaderDescription from "@/components/ui/sub-header-description";
-import TimerDurationCard, { type DurationField } from "./timer-duration-card";
-import AutomationToggle from "./automation-toggle";
+import TimerDurationCard, {
+  type DurationField,
+} from "../components/timer-duration-card";
+import AutomationToggle from "../components/automation-toggle";
+import ClockStyles from "../components/clock-styles.tsx";
 
 export default function ClockSettings() {
   const focusDuration = useAppStore((s) => s.settings.focusDuration);
@@ -71,6 +74,16 @@ export default function ClockSettings() {
         />
       </div>
 
+      <HorizontalDivider className="my-9" />
+      {/* Clock styles */}
+      <SubHeaderDescription
+        header={"Clock animation style"}
+        description={
+          "When cycle starts the numbers transition according to the animation style selected."
+        }
+        className="mt-6"
+      />
+      <ClockStyles />
       <HorizontalDivider className="my-9" />
 
       <SubHeaderDescription

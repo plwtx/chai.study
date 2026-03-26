@@ -33,7 +33,7 @@
 
 /* Side scrollbar */
 ::-webkit-scrollbar {
-  width: 6px;
+  width: 3px;
 }
 
 ::-webkit-scrollbar-track {
@@ -41,12 +41,16 @@
 }
 
 ::-webkit-scrollbar-thumb {
-  background-color: #6d2323; /* Thumb color */
-  border-radius: 0px;
+  background-color: #bba6a0; /* Light mode */
+  border-radius: 9px;
+}
+
+.dark ::-webkit-scrollbar-thumb {
+  background-color: #1b1a19; /* Dark mode */
 }
 
 :root {
-  --accent: #6d2323;
+  --accent: #453632;
   --bg-image: none;
 }
 

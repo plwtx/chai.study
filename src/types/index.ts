@@ -2,6 +2,7 @@ export type TimerStatus = "idle" | "running" | "paused" | "finished";
 export type TimerMode = "focus" | "break" | "long-break";
 export type TaskStatus = "todo" | "in-progress" | "done";
 export type Theme = "light" | "dark" | "system";
+export type ClockVariant = "slide" | "blur" | "morph" | "matrix" | "default";
 
 export interface Features {
   taskManager: boolean;
@@ -52,6 +53,7 @@ export interface Settings {
   theme: Theme;
   accentColor: string;
   backgroundImageKey: number | null;
+  clockVariant: ClockVariant;
   timezone: string;
   lastActiveDate: string;
   dailyFocusCount: number;
