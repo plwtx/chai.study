@@ -77,8 +77,10 @@ export default function ClockSettings() {
       <HorizontalDivider className="my-9" />
       {/* Clock styles */}
       <SubHeaderDescription
-        header={"Clock style"}
-        description={"Pick one of the styles to match your aesthetic."}
+        header={"Clock animation style"}
+        description={
+          "When cycle starts the numbers transition according to the animation style selected."
+        }
         className="mt-6"
       />
       <ClockStyles />
