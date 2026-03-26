@@ -1,11 +1,11 @@
 import { useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import SettingsNav, { type SettingsCategory } from "./components/settings-nav";
-import GeneralSettings from "./components/settings-general";
-import ClockSettings from "./components/settings-clock";
-import ThemeSettings from "./components/settings-theme";
-import StorageSettings from "./components/settings-storage";
-import InformationSettings from "./components/settings-information";
+import GeneralSettings from "./pages/settings-general";
+import ClockSettings from "./pages/settings-clock";
+import ThemeSettings from "./pages/settings-theme";
+import StorageSettings from "./pages/settings-storage";
+import InformationSettings from "./pages/settings-information";
 
 const CATEGORIES: SettingsCategory[] = [
   { id: "general", name: "General" },

@@ -5,7 +5,7 @@ import { useAppStore } from "@/store";
 import { db } from "@/db";
 import HeaderDescription from "@/components/ui/header-description";
 import SubHeaderDescription from "@/components/ui/sub-header-description";
-import { showSettingsToast } from "./settings-toast";
+import { showSettingsToast } from "../components/settings-toast";
 
 export default function ThemeSettings() {
   const theme = useAppStore((s) => s.settings.theme);
@@ -69,7 +69,10 @@ export default function ThemeSettings() {
             {/* Light mode */}
             <section
               className="flex cursor-pointer flex-col items-center justify-center"
-              onClick={() => { setTheme("light"); showSettingsToast("Theme changed to light."); }}
+              onClick={() => {
+                setTheme("light");
+                showSettingsToast("Theme changed to light.");
+              }}
             >
               <div
                 className={cn(
@@ -99,7 +102,10 @@ export default function ThemeSettings() {
             {/* Dark mode */}
             <section
               className="flex cursor-pointer flex-col items-center justify-center"
-              onClick={() => { setTheme("dark"); showSettingsToast("Theme changed to dark."); }}
+              onClick={() => {
+                setTheme("dark");
+                showSettingsToast("Theme changed to dark.");
+              }}
             >
               <div
                 className={cn(
@@ -129,7 +135,10 @@ export default function ThemeSettings() {
             {/* Auto (system) mode */}
             <section
               className="group flex w-md cursor-pointer flex-col items-center justify-center"
-              onClick={() => { setTheme("system"); showSettingsToast("Theme set to system default."); }}
+              onClick={() => {
+                setTheme("system");
+                showSettingsToast("Theme set to system default.");
+              }}
             >
               <div
                 className={cn(
