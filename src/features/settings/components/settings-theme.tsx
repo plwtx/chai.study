@@ -5,6 +5,7 @@ import { useAppStore } from "@/store";
 import { db } from "@/db";
 import HeaderDescription from "@/components/ui/header-description";
 import SubHeaderDescription from "@/components/ui/sub-header-description";
+import { showSettingsToast } from "./settings-toast";
 
 export default function ThemeSettings() {
   const theme = useAppStore((s) => s.settings.theme);
@@ -30,6 +31,7 @@ export default function ThemeSettings() {
       createdAt: Date.now(),
     });
     await setBackgroundImageKey(key as number);
+    showSettingsToast("Background image updated.");
 
     if (fileInputRef.current) fileInputRef.current.value = "";
   };
@@ -38,6 +40,7 @@ export default function ThemeSettings() {
     if (backgroundImageKey) {
       await db.backgroundImages.delete(backgroundImageKey);
       await setBackgroundImageKey(null);
+      showSettingsToast("Background image removed.");
     }
   };
 
@@ -66,7 +69,7 @@ export default function ThemeSettings() {
             {/* Light mode */}
             <section
               className="flex cursor-pointer flex-col items-center justify-center"
-              onClick={() => setTheme("light")}
+              onClick={() => { setTheme("light"); showSettingsToast("Theme changed to light."); }}
             >
               <div
                 className={cn(
@@ -96,7 +99,7 @@ export default function ThemeSettings() {
             {/* Dark mode */}
             <section
               className="flex cursor-pointer flex-col items-center justify-center"
-              onClick={() => setTheme("dark")}
+              onClick={() => { setTheme("dark"); showSettingsToast("Theme changed to dark."); }}
             >
               <div
                 className={cn(
@@ -126,7 +129,7 @@ export default function ThemeSettings() {
             {/* Auto (system) mode */}
             <section
               className="group flex w-md cursor-pointer flex-col items-center justify-center"
-              onClick={() => setTheme("system")}
+              onClick={() => { setTheme("system"); showSettingsToast("Theme set to system default."); }}
             >
               <div
                 className={cn(

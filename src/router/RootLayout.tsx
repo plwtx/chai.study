@@ -1,3 +1,4 @@
+import { Toaster } from "sonner";
 import Navbar from "@/features/navbar";
 import AnimatedRoutes from "@/features/router/AnimatedRoutes";
 import TimerIsland from "@/features/focus-timer/components/timer-island";
@@ -15,6 +16,7 @@ export default function RootLayout() {
         <Navbar />
       </div>
       <AnimatedRoutes />
+      <Toaster position="bottom-center" />
     </div>
   );
 }
