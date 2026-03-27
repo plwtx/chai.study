@@ -1,6 +1,8 @@
 import HeaderDescription from "@/components/ui/header-description";
 import SubHeaderDescription from "@/components/ui/sub-header-description";
 import StoragePieChart from "@/features/settings/components/storage-pie-chart";
+import HorizontalDivider from "@/components/ui/horizontal-divider-line";
+import { Download, Upload } from "lucide-react";
 
 export default function Settings() {
   return (
@@ -17,16 +19,36 @@ export default function Settings() {
         <div className="bg-brown-300 dark:bg-dark-100/20 mx-auto my-6 h-px w-full rounded-full" />
         <SubHeaderDescription
           header={"Used storage"}
-          description={"Total used storage in your browser."}
+          description={
+            "Total used storage in your browser's local storage (IndexedDB)."
+          }
         />
 
         {/* Pie chart and Imp/Exp buttons */}
-        <section className="h-fit w-full">
-          {/* Export button */}
-          {/* Import button */}
-
+        <section className="flex h-full w-full items-center justify-between">
           <StoragePieChart />
+
+          <div className="flex h-full w-fit flex-col justify-between gap-6">
+            {/* Export button */}
+            <button
+              // onClick={}
+              className="border-brown-200/75 shadow-brown-300 dark:bg-dark-900/45 bg-brown-100 dark:border-dark-900 flex w-full min-w-45 cursor-pointer items-center justify-between gap-6 rounded-lg border p-2 px-4 text-left font-medium shadow-sm active:scale-95 dark:shadow-black"
+            >
+              <span>Download</span>
+              <Download className="size-4" />
+            </button>
+            {/* Import button */}
+            <button
+              // onClick={}
+              className="border-brown-200/75 shadow-brown-300 dark:bg-dark-900/45 bg-brown-100 dark:border-dark-900 flex w-full min-w-45 cursor-pointer items-center justify-between gap-6 rounded-lg border p-2 px-4 text-left font-medium shadow-sm active:scale-95 dark:shadow-black"
+            >
+              <span>Upload</span>
+              <Upload className="size-4" />
+            </button>
+          </div>
         </section>
+        {/* Divider */}
+        <HorizontalDivider />
       </div>
     </>
   );
