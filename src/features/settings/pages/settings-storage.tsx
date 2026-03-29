@@ -32,7 +32,7 @@ export default function Settings() {
             {/* Export button */}
             <button
               // onClick={}
-              className="border-brown-200/75 shadow-brown-300 dark:bg-dark-900/45 bg-brown-100 dark:border-dark-900 flex w-full min-w-45 cursor-pointer items-center justify-between gap-6 rounded-lg border p-2 px-4 text-left font-medium shadow-sm active:scale-95 dark:shadow-black"
+              className="border-brown-200/75 shadow-brown-300 dark:bg-dark-900/45 bg-brown-100 dark:border-dark-900 hover:bg-brown-200/55 flex w-full min-w-45 cursor-pointer items-center justify-between gap-6 rounded-lg border p-2 px-4 text-left font-medium shadow-sm transition-all duration-150 ease-in-out active:scale-95 dark:shadow-black hover:dark:bg-black/50"
             >
               <span>Download</span>
               <Download className="size-4" />
@@ -40,7 +40,7 @@ export default function Settings() {
             {/* Import button */}
             <button
               // onClick={}
-              className="border-brown-200/75 shadow-brown-300 dark:bg-dark-900/45 bg-brown-100 dark:border-dark-900 flex w-full min-w-45 cursor-pointer items-center justify-between gap-6 rounded-lg border p-2 px-4 text-left font-medium shadow-sm active:scale-95 dark:shadow-black"
+              className="border-brown-200/75 shadow-brown-300 dark:bg-dark-900/45 bg-brown-100 dark:border-dark-900 hover:bg-brown-200/55 flex w-full min-w-45 cursor-pointer items-center justify-between gap-6 rounded-lg border p-2 px-4 text-left font-medium shadow-sm transition-all duration-150 ease-in-out active:scale-95 dark:shadow-black hover:dark:bg-black/50"
             >
               <span>Upload</span>
               <Upload className="size-4" />

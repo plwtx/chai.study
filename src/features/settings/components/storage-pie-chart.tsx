@@ -12,7 +12,7 @@ const StorageTooltip = ({ active, payload }: any) => {
   return (
     <div
       className={cn(
-        "bg-brown-50 dark:bg-dark-600 border-brown-200 dark:border-dark-900 rounded-md border px-3 py-2 text-xs shadow-sm"
+        "bg-brown-50 dark:bg-dark-600 rounded-md border px-3 py-2 text-xs shadow-sm"
       )}
     >
       <p>
@@ -27,13 +27,13 @@ export default function StoragePieChart() {
     useStorageEstimate();
 
   const pieData = [
-    { name: "Used", value: usedMB, fill: "var(--accent)" },
-    { name: "Available", value: availableMB, fill: "#bba6a0" },
+    { name: "Used", value: usedMB, fill: "var(--chart-used)" },
+    { name: "Available", value: availableMB, fill: "var(--chart-avail)" },
   ];
 
   return (
     <div className="mt-4 flex items-center gap-6">
-      <PieChart width={160} height={160}>
+      <PieChart width={160} height={160} style={{ outline: "none" }}>
         <Pie
           data={pieData}
           cx="50%"
@@ -43,6 +43,7 @@ export default function StoragePieChart() {
           dataKey="value"
           startAngle={90}
           endAngle={-270}
+          stroke="none"
         />
 
         <Tooltip content={<StorageTooltip />} />
@@ -52,12 +53,15 @@ export default function StoragePieChart() {
         <div className="flex items-center gap-2">
           <span
             className="inline-block h-2.5 w-2.5 rounded-full"
-            style={{ background: "var(--accent)" }}
+            style={{ background: "var(--chart-used)" }}
           />
           <span>Used: {formatMB(usedMB)}</span>
         </div>
         <div className="flex items-center gap-2">
-          <span className="bg-brown-300 inline-block h-2.5 w-2.5 rounded-full" />
+          <span
+            className="inline-block h-2.5 w-2.5 rounded-full"
+            style={{ background: "var(--chart-avail)" }}
+          />
           <span>Available: {formatMB(availableMB)}</span>
         </div>
         <p className="text-brown-400 dark:text-dark-100/50 pt-1 text-[10px]">
