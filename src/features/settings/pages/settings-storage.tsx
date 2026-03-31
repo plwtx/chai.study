@@ -2,7 +2,7 @@ import { useState } from "react";
 import HeaderDescription from "@/components/ui/header-description";
 import SubHeaderDescription from "@/components/ui/sub-header-description";
 import HorizontalDivider from "@/components/ui/horizontal-divider-line";
-import StorageBackup from "@/features/settings/components/storage-backup";
+import PieChartStorageBackup from "@/features/settings/components/storage-backup";
 import EventLog from "@/features/settings/components/event-log";
 import ConfirmModal from "@/features/settings/components/confirm-modal";
 import { showSettingsToast } from "@/features/settings/components/settings-toast";
@@ -47,7 +47,7 @@ export default function Settings() {
         />
 
         {/* Pie chart + Import/Export buttons */}
-        <StorageBackup />
+        <PieChartStorageBackup />
 
         {/* Divider */}
         <HorizontalDivider />

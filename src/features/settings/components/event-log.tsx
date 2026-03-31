@@ -34,14 +34,8 @@ export default function EventLog() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // liveQuery re-runs automatically on any sessions table change
-    // (per-row delete, clear log, clear all, import all trigger this)
     const subscription = liveQuery(() =>
-      db.sessions
-        .where("mode")
-        .equals("focus")
-        .reverse()
-        .sortBy("completedAt")
+      db.sessions.where("mode").equals("focus").reverse().sortBy("completedAt")
     ).subscribe({
       next: (result) => {
         setSessions(result);
@@ -73,7 +67,7 @@ export default function EventLog() {
   }
 
   return (
-    <div className="flex max-h-64 flex-col gap-3 overflow-y-auto pr-1">
+    <div className="flex max-h-64 flex-col gap-3 overflow-y-auto pt-3 pr-3">
       <AnimatePresence initial={false}>
         {sessions.map((session) => (
           <motion.div
@@ -83,7 +77,7 @@ export default function EventLog() {
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.15 }}
-            className="group border-brown-200/50 dark:border-dark-600/50 flex items-center justify-between gap-4 rounded-lg border px-3 py-2"
+            className="group border-brown-200/50 dark:border-dark-900/90 flex items-center justify-between gap-4 rounded-lg border px-3 py-2"
           >
             <div className="font-fragment-mono flex w-96 items-center justify-stretch gap-6 text-xs">
               <span className="text-brown-500 dark:text-dark-100/50 w-20 text-nowrap">
