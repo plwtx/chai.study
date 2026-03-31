@@ -128,3 +128,7 @@ export async function clearAllData(): Promise<void> {
 export async function deleteSession(id: string): Promise<void> {
   await db.sessions.delete(id);
 }
+
+export async function clearFocusSessions(): Promise<void> {
+  await db.sessions.clear();
+}

@@ -18,7 +18,7 @@ export default function ColorModeSelector() {
       <div className="flex w-full items-center justify-start gap-3 pt-6">
         {/* Light mode */}
         <section
-          className="flex cursor-pointer flex-col items-center justify-center"
+          className="flex cursor-pointer flex-col items-center justify-center dark:brightness-80 dark:contrast-75"
           onClick={() => {
             setTheme("light");
             showSettingsToast("Theme changed to light.");
@@ -29,7 +29,7 @@ export default function ColorModeSelector() {
               "bg-brown-100 shadow-brown-300 text-brown-800 dark:shadow-dark-900 relative flex h-32 w-32 flex-col items-center justify-between rounded-xl border p-3 shadow-md transition-transform active:scale-95",
               theme === "light"
                 ? "border-brown-800 border-2"
-                : "border-brown-600",
+                : "border-brown-600"
             )}
           >
             <h6 className="touch-none text-[9px] font-light select-none">
@@ -63,7 +63,7 @@ export default function ColorModeSelector() {
               "bg-dark-600 text-dark-100 shadow-brown-300 dark:shadow-dark-900 dark:border-dark-100 relative flex h-32 w-32 flex-col items-center justify-between rounded-xl border p-3 shadow-md transition-transform active:scale-95",
               theme === "dark"
                 ? "border-brown-800 border-2"
-                : "border-brown-600",
+                : "border-brown-600"
             )}
           >
             <h6 className="touch-none text-[9px] font-light select-none">
@@ -86,7 +86,7 @@ export default function ColorModeSelector() {
 
         {/* Auto (system) mode */}
         <section
-          className="group flex w-md cursor-pointer flex-col items-center justify-center"
+          className="group flex w-md cursor-pointer flex-col items-center justify-center dark:brightness-90 dark:contrast-90"
           onClick={() => {
             setTheme("system");
             showSettingsToast("Theme set to system default.");
@@ -97,7 +97,7 @@ export default function ColorModeSelector() {
               "bg-brown-100 dark:bg-dark-600 shadow-brown-300 dark:shadow-dark-600 dark:border-dark-900 relative flex h-32 w-full flex-col items-center justify-center overflow-clip rounded-xl border p-3 shadow-md transition-transform active:scale-95",
               theme === "system"
                 ? "border-brown-800 border-2"
-                : "border-brown-600",
+                : "border-brown-600"
             )}
           >
             <h6 className="font-fragment-mono z-10 text-sm font-light">
