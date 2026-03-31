@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { liveQuery } from "dexie";
 import { db } from "@/db";
 
 interface StorageEstimate {
@@ -42,42 +43,41 @@ export function useStorageEstimate(): StorageEstimate {
   });
 
   useEffect(() => {
-    let cancelled = false;
+    let totalMB = FALLBACK_TOTAL_MB;
+    let quotaAvailable = false;
+    let latestUsedMB = 0;
 
-    async function compute() {
-      const actualBytes = await getActualDataSizeBytes();
-      const usedMB = actualBytes / (1024 * 1024);
-
+    const initQuota = async () => {
       if (navigator.storage?.estimate) {
         const { quota } = await navigator.storage.estimate();
         if (quota && quota > 0) {
-          const totalMB = quota / (1024 * 1024);
-          if (!cancelled) {
-            setEstimate({
-              usedMB,
-              availableMB: Math.max(0, totalMB - usedMB),
-              usedPercent: (usedMB / totalMB) * 100,
-              quotaAvailable: true,
-            });
-          }
-          return;
+          totalMB = quota / (1024 * 1024);
+          quotaAvailable = true;
+
+          setEstimate({
+            usedMB: latestUsedMB,
+            availableMB: Math.max(0, totalMB - latestUsedMB),
+            usedPercent: (latestUsedMB / totalMB) * 100,
+            quotaAvailable,
+          });
         }
       }
-
-      if (!cancelled) {
-        setEstimate({
-          usedMB,
-          availableMB: Math.max(0, FALLBACK_TOTAL_MB - usedMB),
-          usedPercent: (usedMB / FALLBACK_TOTAL_MB) * 100,
-          quotaAvailable: false,
-        });
-      }
-    }
-
-    compute();
-    return () => {
-      cancelled = true;
     };
+    initQuota();
+
+    const subscription = liveQuery(getActualDataSizeBytes).subscribe({
+      next: (bytes) => {
+        latestUsedMB = bytes / (1024 * 1024);
+        setEstimate({
+          usedMB: latestUsedMB,
+          availableMB: Math.max(0, totalMB - latestUsedMB),
+          usedPercent: (latestUsedMB / totalMB) * 100,
+          quotaAvailable,
+        });
+      },
+    });
+
+    return () => subscription.unsubscribe();
   }, []);
 
   return estimate;

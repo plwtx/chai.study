@@ -16,7 +16,6 @@ import { Trash2 } from "lucide-react";
 export default function Settings() {
   const [clearModalOpen, setClearModalOpen] = useState(false);
   const [clearLogModalOpen, setClearLogModalOpen] = useState(false);
-  const [eventLogKey, setEventLogKey] = useState(0);
 
   const handleClearAll = async () => {
     await clearAllData();
@@ -25,7 +24,6 @@ export default function Settings() {
 
   const handleClearLog = async () => {
     await clearFocusSessions();
-    setEventLogKey((k) => k + 1);
     showSettingsToast("Focus log cleared.");
   };
 
@@ -94,7 +92,7 @@ export default function Settings() {
         </div>
         {/* Event Log */}
         <section className="dark:bg-dark-900/25 bg-brown-300/10 border-brown-200 dark:border-dark-900/75 my-6 rounded-xl border p-1 px-3">
-          <EventLog key={eventLogKey} />
+          <EventLog />
         </section>
       </div>
 
