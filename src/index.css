@@ -52,6 +52,13 @@
 :root {
   --accent: #453632;
   --bg-image: none;
+  --chart-used: #735f59;
+  --chart-avail: #dbcbc6;
+}
+
+.dark {
+  --chart-used: #bba6a0;
+  --chart-avail: #1b1a19;
 }
 
 /* Custom CSS */
