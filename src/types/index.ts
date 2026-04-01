@@ -56,6 +56,7 @@ export interface Settings {
   clockVariant: ClockVariant;
   reducedMotion: boolean;
   dynamicTitlebar: boolean;
+  titlebarSeparator: string;
   timezone: string;
   lastActiveDate: string;
   dailyFocusCount: number;

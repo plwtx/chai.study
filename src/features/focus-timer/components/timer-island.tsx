@@ -31,14 +31,14 @@ export default function TimerIsland() {
           exit={{ opacity: 0, scale: 0.6, filter: "blur(4px)" }}
           transition={{ duration: 0.2, ease: "easeOut" }}
           onClick={() => navigate("/")}
-          className="flex cursor-pointer items-center gap-2 rounded-full bg-zinc-900 px-4 py-1.5 shadow-lg"
+          className="bg-brown-700 dark:bg-dark-900 flex cursor-pointer items-center gap-2 rounded-full px-4 py-1.5 shadow-lg"
         >
           <span
             className={cn(
               "size-1.5 rounded-full",
               status === "running"
                 ? "animate-pulse bg-green-400"
-                : "bg-yellow-400",
+                : "bg-yellow-400"
             )}
           />
           <span className="font-mono text-xs text-zinc-400">{mode}</span>

@@ -16,6 +16,7 @@ export const DEFAULT_SETTINGS: Settings = {
   clockVariant: "slide",
   reducedMotion: false,
   dynamicTitlebar: true,
+  titlebarSeparator: "-",
   timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
   lastActiveDate: new Date().toLocaleDateString("en-CA"),
   dailyFocusCount: 0,

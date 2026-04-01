@@ -13,6 +13,7 @@ const FINISHED_MESSAGES = ["Beep! Beeep!", "TIME IS UP !!!"];
 
 export function useDynamicTitlebarSync() {
   const enabled = useAppStore((s) => s.settings.dynamicTitlebar);
+  const separator = useAppStore((s) => s.settings.titlebarSeparator);
   const status = useAppStore((s) => s.status);
   const mode = useAppStore((s) => s.mode);
   const elapsed = useAppStore((s) => s.elapsed);
@@ -45,7 +46,7 @@ export function useDynamicTitlebarSync() {
       const secs = remaining % 60;
       const time = `${String(mins).padStart(2, "0")}:${String(secs).padStart(2, "0")}`;
       const label = MODE_LABELS[mode] ?? "Focus";
-      document.title = `${time} 🫪 ${label}`;
+      document.title = `${time} ${separator} ${label}`;
       return;
     }
 
@@ -59,11 +60,10 @@ export function useDynamicTitlebarSync() {
       return;
     }
 
-    // idle
+    // idle title
     document.title = DEFAULT_TITLE;
-  }, [enabled, status, mode, elapsed, targetDuration]);
+  }, [enabled, separator, status, mode, elapsed, targetDuration]);
 
-  // Reset title when hook unmounts
   useEffect(() => {
     return () => {
       document.title = DEFAULT_TITLE;
