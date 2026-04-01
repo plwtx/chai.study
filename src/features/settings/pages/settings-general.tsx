@@ -52,17 +52,24 @@ export default function General() {
               <div className="text-base">
                 <h3 className="font-semibold">Custom titlebar separator</h3>
                 <p className="text-sm opacity-75">
-                  Separates time and mode in the titlebar. Default is{" "}
-                  <span className="font-mono">-</span>.
+                  Separates time and mode in the titlebar. You can choose from:{" "}
+                  <br />
+                  <span className="font-mono text-xs">
+                    🕂 🕇 ❖ ✼ ✤ ✡ ✢ ✣ ⛨ ⚇ ⚜ ⚨ ⚧ ⚢ ♨ ☭ ☧ ☮ ☯☣ 🞬{" "}
+                  </span>{" "}
+                  <br />
+                  <span className="font-mono text-[9px]">
+                    * I HAVE NO IDEA WHAT THOSE SYMBOLS ABOVE MEAN ＼(٥⁀▽⁀ )／
+                  </span>
                 </p>
               </div>
-              <div className="flex items-center gap-2">
+              <div className="flex h-9 w-fit items-center justify-center gap-2">
                 <input
                   type="text"
                   value={separatorDraft}
                   maxLength={5}
                   onChange={(e) => setSeparatorDraft(e.target.value)}
-                  className="bg-brown-200 dark:bg-dark-900/75 text-brown-900 dark:text-dark-100 w-16 rounded px-2 py-1 text-center font-mono text-sm outline-none"
+                  className="bg-brown-200 dark:bg-dark-900/75 text-brown-900 dark:text-dark-100 shadow-brown-700 border-brown-300 h-full w-16 rounded-xl border px-3 py-1 text-center font-mono text-xs shadow-inner outline-none dark:border-black dark:shadow-black"
                   aria-label="Titlebar separator"
                 />
                 <button
@@ -72,7 +79,7 @@ export default function General() {
                     updateSettings({ titlebarSeparator: value });
                     showSettingsToast("Titlebar seperator saved as: " + value);
                   }}
-                  className="bg-brown-300 dark:bg-dark-900/75 text-brown-900 dark:text-dark-100 rounded px-3 py-1 text-sm hover:opacity-80"
+                  className="border-brown-200/75 shadow-brown-300 dark:bg-dark-900/45 bg-brown-100 dark:border-dark-900 hover:bg-brown-200/55 flex h-full w-32 cursor-pointer items-center justify-between gap-6 rounded-lg border p-2 px-4 text-left text-sm font-medium shadow-sm transition-all duration-150 ease-in-out active:scale-95 dark:shadow-black hover:dark:bg-black/50"
                 >
                   Save
                 </button>
