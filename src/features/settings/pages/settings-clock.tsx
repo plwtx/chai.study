@@ -7,12 +7,16 @@ import TimerDurationCard, {
   type DurationField,
 } from "../components/timer-duration-card";
 import AutomationToggle from "../components/automation-toggle";
+import { showSettingsToast } from "../components/settings-toast";
 import ClockStyles from "../components/clock-styles.tsx";
 
 export default function ClockSettings() {
   const focusDuration = useAppStore((s) => s.settings.focusDuration);
   const shortBreakDuration = useAppStore((s) => s.settings.shortBreakDuration);
   const longBreakDuration = useAppStore((s) => s.settings.longBreakDuration);
+  const autoStartBreak = useAppStore((s) => s.settings.autoStartBreak);
+  const autoStartFocus = useAppStore((s) => s.settings.autoStartFocus);
+  const toggleAutoStart = useAppStore((s) => s.toggleAutoStart);
   const timerStatus = useAppStore((s) => s.status);
 
   const isTimerActive = timerStatus !== "idle";
@@ -76,14 +80,16 @@ export default function ClockSettings() {
 
       <HorizontalDivider className="my-9" />
       {/* Clock styles */}
-      <SubHeaderDescription
-        header={"Clock animation style"}
-        description={
-          "When cycle starts the numbers transition according to the animation style selected."
-        }
-        className="mt-6"
-      />
-      <ClockStyles />
+      <section className="flex w-full items-center justify-between gap-3">
+        <SubHeaderDescription
+          header={"Clock animation style"}
+          description={
+            "When cycle starts the numbers transition according to the animation style selected."
+          }
+          className="mt-6"
+        />
+        <ClockStyles />
+      </section>
       <HorizontalDivider className="my-9" />
 
       <SubHeaderDescription
@@ -95,13 +101,25 @@ export default function ClockSettings() {
         <AutomationToggle
           label="Break cycle: Auto start"
           description="Automatically start a break cycle when you end a focus session."
-          field="autoStartBreak"
+          checked={autoStartBreak}
+          onChange={() => {
+            toggleAutoStart("autoStartBreak");
+            showSettingsToast(
+              `Break cycle: Auto start ${autoStartBreak ? "disabled" : "enabled"}.`
+            );
+          }}
         />
         <HorizontalDivider className="opacity-25" />
         <AutomationToggle
           label="Focus cycle: Auto start"
           description="Automatically start the next focus cycle when your break ends."
-          field="autoStartFocus"
+          checked={autoStartFocus}
+          onChange={() => {
+            toggleAutoStart("autoStartFocus");
+            showSettingsToast(
+              `Focus cycle: Auto start ${autoStartFocus ? "disabled" : "enabled"}.`
+            );
+          }}
         />
       </section>
     </div>

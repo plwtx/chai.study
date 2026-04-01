@@ -54,6 +54,9 @@ export interface Settings {
   accentColor: string;
   backgroundImageKey: number | null;
   clockVariant: ClockVariant;
+  reducedMotion: boolean;
+  dynamicTitlebar: boolean;
+  titlebarSeparator: string;
   timezone: string;
   lastActiveDate: string;
   dailyFocusCount: number;

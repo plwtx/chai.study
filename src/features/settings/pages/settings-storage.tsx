@@ -2,7 +2,7 @@ import { useState } from "react";
 import HeaderDescription from "@/components/ui/header-description";
 import SubHeaderDescription from "@/components/ui/sub-header-description";
 import HorizontalDivider from "@/components/ui/horizontal-divider-line";
-import StorageBackup from "@/features/settings/components/storage-backup";
+import PieChartStorageBackup from "@/features/settings/components/storage-backup";
 import EventLog from "@/features/settings/components/event-log";
 import ConfirmModal from "@/features/settings/components/confirm-modal";
 import { showSettingsToast } from "@/features/settings/components/settings-toast";
@@ -16,7 +16,6 @@ import { Trash2 } from "lucide-react";
 export default function Settings() {
   const [clearModalOpen, setClearModalOpen] = useState(false);
   const [clearLogModalOpen, setClearLogModalOpen] = useState(false);
-  const [eventLogKey, setEventLogKey] = useState(0);
 
   const handleClearAll = async () => {
     await clearAllData();
@@ -25,7 +24,6 @@ export default function Settings() {
 
   const handleClearLog = async () => {
     await clearFocusSessions();
-    setEventLogKey((k) => k + 1);
     showSettingsToast("Focus log cleared.");
   };
 
@@ -49,7 +47,7 @@ export default function Settings() {
         />
 
         {/* Pie chart + Import/Export buttons */}
-        <StorageBackup />
+        <PieChartStorageBackup />
 
         {/* Divider */}
         <HorizontalDivider />
@@ -94,7 +92,7 @@ export default function Settings() {
         </div>
         {/* Event Log */}
         <section className="dark:bg-dark-900/25 bg-brown-300/10 border-brown-200 dark:border-dark-900/75 my-6 rounded-xl border p-1 px-3">
-          <EventLog key={eventLogKey} />
+          <EventLog />
         </section>
       </div>
 
