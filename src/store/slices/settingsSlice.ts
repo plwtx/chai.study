@@ -14,6 +14,8 @@ export const DEFAULT_SETTINGS: Settings = {
   accentColor: "#a78bfa",
   backgroundImageKey: null,
   clockVariant: "slide",
+  reducedMotion: false,
+  dynamicTitlebar: true,
   timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
   lastActiveDate: new Date().toLocaleDateString("en-CA"),
   dailyFocusCount: 0,

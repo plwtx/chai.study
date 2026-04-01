@@ -4,10 +4,14 @@ import AnimatedRoutes from "@/features/router/AnimatedRoutes";
 import TimerIsland from "@/features/focus-timer/components/timer-island";
 import { useTimerBridge } from "@/features/focus-timer/hooks/useTimer";
 import { useThemeSync } from "@/features/settings/hooks/useThemeSync";
+import { useDynamicTitlebarSync } from "@/features/settings/hooks/useDynamicTitlebarSync";
+import { useReducedMotionSync } from "@/features/settings/hooks/useReducedMotionSync";
 
 export default function RootLayout() {
   useTimerBridge();
   useThemeSync();
+  useDynamicTitlebarSync();
+  useReducedMotionSync();
 
   return (
     <div className="bg-brown-50 relative h-screen w-full">
