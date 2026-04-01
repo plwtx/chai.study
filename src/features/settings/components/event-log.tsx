@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { liveQuery } from "dexie";
 import { AnimatePresence, motion } from "framer-motion";
 import { X } from "lucide-react";
@@ -29,9 +29,14 @@ function formatDuration(seconds: number): string {
   return s > 0 ? `${m}m ${s}s` : `${m}m`;
 }
 
+const MIN_SPINNER_MS = 600;
+
 export default function EventLog() {
   const [sessions, setSessions] = useState<Session[]>([]);
   const [loading, setLoading] = useState(true);
+  const mountedAt = useRef(Date.now());
+  const hideTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const isFirstEmission = useRef(true);
 
   useEffect(() => {
     const subscription = liveQuery(() =>
@@ -39,11 +44,20 @@ export default function EventLog() {
     ).subscribe({
       next: (result) => {
         setSessions(result);
-        setLoading(false);
+
+        if (isFirstEmission.current) {
+          isFirstEmission.current = false;
+          const elapsed = Date.now() - mountedAt.current;
+          const delay = Math.max(0, MIN_SPINNER_MS - elapsed);
+          hideTimerRef.current = setTimeout(() => setLoading(false), delay);
+        }
       },
     });
 
-    return () => subscription.unsubscribe();
+    return () => {
+      subscription.unsubscribe();
+      if (hideTimerRef.current !== null) clearTimeout(hideTimerRef.current);
+    };
   }, []);
 
   const handleDelete = async (id: string) => {
@@ -52,9 +66,27 @@ export default function EventLog() {
 
   if (loading) {
     return (
-      <p className="text-brown-400 dark:text-dark-100/50 py-4 text-xs">
-        Loading...
-      </p>
+      <div className="flex items-center justify-center py-6">
+        <svg
+          className="text-brown-300 dark:text-dark-100/20 size-6 animate-spin"
+          viewBox="0 0 24 24"
+          fill="none"
+        >
+          <circle
+            className="opacity-25"
+            cx="12"
+            cy="12"
+            r="10"
+            stroke="currentColor"
+            strokeWidth="3"
+          />
+          <path
+            className="opacity-75"
+            fill="currentColor"
+            d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"
+          />
+        </svg>
+      </div>
     );
   }
 

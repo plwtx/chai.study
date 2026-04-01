@@ -46,38 +46,44 @@ export function useStorageEstimate(): StorageEstimate {
     let totalMB = FALLBACK_TOTAL_MB;
     let quotaAvailable = false;
     let latestUsedMB = 0;
+    let subscription: { unsubscribe: () => void } | null = null;
 
-    const initQuota = async () => {
-      if (navigator.storage?.estimate) {
-        const { quota } = await navigator.storage.estimate();
-        if (quota && quota > 0) {
-          totalMB = quota / (1024 * 1024);
-          quotaAvailable = true;
+    const idleHandle = (window.requestIdleCallback ?? setTimeout)(() => {
+      const initQuota = async () => {
+        if (navigator.storage?.estimate) {
+          const { quota } = await navigator.storage.estimate();
+          if (quota && quota > 0) {
+            totalMB = quota / (1024 * 1024);
+            quotaAvailable = true;
 
+            setEstimate({
+              usedMB: latestUsedMB,
+              availableMB: Math.max(0, totalMB - latestUsedMB),
+              usedPercent: (latestUsedMB / totalMB) * 100,
+              quotaAvailable,
+            });
+          }
+        }
+      };
+      initQuota();
+
+      subscription = liveQuery(getActualDataSizeBytes).subscribe({
+        next: (bytes) => {
+          latestUsedMB = bytes / (1024 * 1024);
           setEstimate({
             usedMB: latestUsedMB,
             availableMB: Math.max(0, totalMB - latestUsedMB),
             usedPercent: (latestUsedMB / totalMB) * 100,
             quotaAvailable,
           });
-        }
-      }
-    };
-    initQuota();
-
-    const subscription = liveQuery(getActualDataSizeBytes).subscribe({
-      next: (bytes) => {
-        latestUsedMB = bytes / (1024 * 1024);
-        setEstimate({
-          usedMB: latestUsedMB,
-          availableMB: Math.max(0, totalMB - latestUsedMB),
-          usedPercent: (latestUsedMB / totalMB) * 100,
-          quotaAvailable,
-        });
-      },
+        },
+      });
     });
 
-    return () => subscription.unsubscribe();
+    return () => {
+      (window.cancelIdleCallback ?? clearTimeout)(idleHandle as number);
+      subscription?.unsubscribe();
+    };
   }, []);
 
   return estimate;

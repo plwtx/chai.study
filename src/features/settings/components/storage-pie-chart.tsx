@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { Pie, PieChart, Tooltip } from "recharts";
 import { cn } from "@/lib/utils";
 import { useStorageEstimate } from "@/features/settings/hooks/useStorageEstimate";
@@ -26,6 +27,12 @@ export default function StoragePieChart() {
   const { usedMB, availableMB, usedPercent, quotaAvailable } =
     useStorageEstimate();
 
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => {
+    const id = requestAnimationFrame(() => setMounted(true));
+    return () => cancelAnimationFrame(id);
+  }, []);
+
   const pieData = [
     { name: "Used", value: usedMB, fill: "var(--chart-used)" },
     { name: "Available", value: availableMB, fill: "var(--chart-avail)" },
@@ -33,21 +40,25 @@ export default function StoragePieChart() {
 
   return (
     <div className="mt-4 flex items-center gap-6">
-      <PieChart width={160} height={160} style={{ outline: "none" }}>
-        <Pie
-          data={pieData}
-          cx="50%"
-          cy="50%"
-          innerRadius={50}
-          outerRadius={72}
-          dataKey="value"
-          startAngle={90}
-          endAngle={-270}
-          stroke="none"
-        />
-
-        <Tooltip content={<StorageTooltip />} />
-      </PieChart>
+      {mounted ? (
+        <PieChart width={160} height={160} style={{ outline: "none" }}>
+          <Pie
+            data={pieData}
+            cx="50%"
+            cy="50%"
+            innerRadius={50}
+            outerRadius={72}
+            dataKey="value"
+            startAngle={90}
+            endAngle={-270}
+            stroke="none"
+            isAnimationActive={false} // Might make it true in future.
+          />
+          <Tooltip content={<StorageTooltip />} />
+        </PieChart>
+      ) : (
+        <div className="size-40 shrink-0" />
+      )}
 
       <div className="font-fragment-mono space-y-2 text-xs">
         <div className="flex items-center gap-2">
