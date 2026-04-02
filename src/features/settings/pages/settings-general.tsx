@@ -5,6 +5,7 @@ import HeaderDescription from "@/components/ui/header-description";
 import AutomationToggle from "../components/automation-toggle";
 import { showSettingsToast } from "../components/settings-toast";
 import { cn } from "@/lib/utils";
+import UserNotice from "../components/user-notice";
 
 export default function General() {
   const reducedMotion = useAppStore((s) => s.settings.reducedMotion);
@@ -17,6 +18,7 @@ export default function General() {
   return (
     <>
       <main>
+        <UserNotice />
         <HeaderDescription
           header={"General application settings"}
           description={
