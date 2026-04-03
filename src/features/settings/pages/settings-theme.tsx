@@ -23,6 +23,8 @@ export default function ThemeSettings() {
         {/* Turned off for time being because idk where to have accent colors ;-; */}
         {/* <AccentColorPicker /> */}
         <BackgroundImageUpload />
+        {/* Empty bottom spacing */}
+        <div className="h-9" />
       </div>
     </div>
   );
