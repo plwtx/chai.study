@@ -55,6 +55,7 @@ export interface Settings {
   backgroundImageKey: number | null;
   backgroundOpacity: number;
   backgroundSaturation: number;
+  backgroundContrast: number;
   clockVariant: ClockVariant;
   reducedMotion: boolean;
   dynamicTitlebar: boolean;

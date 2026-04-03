@@ -36,8 +36,9 @@ export default function FocusTimer() {
   const backgroundImageKey = useAppStore((s) => s.settings.backgroundImageKey);
   const backgroundOpacity = useAppStore((s) => s.settings.backgroundOpacity);
   const backgroundSaturation = useAppStore(
-    (s) => s.settings.backgroundSaturation
+    (s) => s.settings.backgroundSaturation,
   );
+  const backgroundContrast = useAppStore((s) => s.settings.backgroundContrast);
 
   return (
     <>
@@ -56,7 +57,7 @@ export default function FocusTimer() {
                 backgroundSize: "cover",
                 backgroundRepeat: "no-repeat",
                 backgroundPosition: "center",
-                filter: `saturate(${backgroundSaturation}%)`,
+                filter: `saturate(${backgroundSaturation}%) contrast(${backgroundContrast * 2}%)`,
               }}
             />
           )}

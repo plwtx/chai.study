@@ -15,6 +15,7 @@ export const DEFAULT_SETTINGS: Settings = {
   backgroundImageKey: null,
   backgroundOpacity: 84,
   backgroundSaturation: 100,
+  backgroundContrast: 50,
   clockVariant: "slide",
   reducedMotion: false,
   dynamicTitlebar: true,
