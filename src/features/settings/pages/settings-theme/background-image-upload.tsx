@@ -1,31 +1,99 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { Upload, X, Wallpaper } from "lucide-react";
+import { toast } from "sonner";
 import { useAppStore } from "@/store";
 import { db } from "@/db";
 import SubHeaderDescription from "@/components/ui/sub-header-description";
 import { showSettingsToast } from "../../components/settings-toast";
+import { cn } from "@/lib/utils";
+
+const MAX_FILE_SIZE = 2 * 1024 * 1024; // 2MB
 
 export default function BackgroundImageUpload() {
   const backgroundImageKey = useAppStore((s) => s.settings.backgroundImageKey);
+  const backgroundOpacity = useAppStore((s) => s.settings.backgroundOpacity);
+  const backgroundSaturation = useAppStore(
+    (s) => s.settings.backgroundSaturation
+  );
   const setBackgroundImageKey = useAppStore((s) => s.setBackgroundImageKey);
+  const updateSettings = useAppStore((s) => s.updateSettings);
+
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const [isDragging, setIsDragging] = useState(false);
+  const [isUploading, setIsUploading] = useState(false);
+  const [progress, setProgress] = useState(0);
 
-  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
+  const processFile = async (file: File) => {
+    if (!file.type.startsWith("image/")) {
+      toast.error("Please upload an image file.");
+      return;
+    }
+    if (file.size > MAX_FILE_SIZE) {
+      toast.error("Image must be under 2MB.");
+      return;
+    }
 
+    const startTime = Date.now();
+    setIsUploading(true);
+    setProgress(0);
+
+    // Progress animation (Ofcourse it is fake, because the app is local there is no upload dumbass :P)
+    const intervalId = setInterval(() => {
+      setProgress((p) => (p >= 90 ? p : p + 2));
+    }, 20);
+
+    // Delete old image if one exists
     if (backgroundImageKey) {
       await db.backgroundImages.delete(backgroundImageKey);
     }
 
+    // Store in IndexedDB
     const key = await db.backgroundImages.add({
       blob: file,
       createdAt: Date.now(),
     });
     await setBackgroundImageKey(key as number);
+
+    clearInterval(intervalId);
+
+    // 1 second of loading bar, why not.
+    const elapsed = Date.now() - startTime;
+    if (elapsed < 1000) {
+      await new Promise((r) => setTimeout(r, 1000 - elapsed));
+    }
+
+    setProgress(100);
+    await new Promise((r) => setTimeout(r, 300));
+    setIsUploading(false);
+    setProgress(0);
+
     showSettingsToast("Background image updated.");
 
     if (fileInputRef.current) fileInputRef.current.value = "";
+  };
+
+  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    processFile(file);
+  };
+
+  const handleDragOver = (e: React.DragEvent) => {
+    e.preventDefault();
+    setIsDragging(true);
+  };
+
+  const handleDragLeave = (e: React.DragEvent) => {
+    e.preventDefault();
+    setIsDragging(false);
+  };
+
+  const handleDrop = (e: React.DragEvent) => {
+    e.preventDefault();
+    setIsDragging(false);
+    const file = e.dataTransfer.files?.[0];
+    if (!file) return;
+    processFile(file);
   };
 
   const handleRemoveBackground = async () => {
@@ -35,6 +103,8 @@ export default function BackgroundImageUpload() {
       showSettingsToast("Background image removed.");
     }
   };
+
+  const fmtPct = (v: number) => String(v).padStart(2, "0") + "%";
 
   return (
     <section>
@@ -54,8 +124,16 @@ export default function BackgroundImageUpload() {
           className="hidden"
         />
         <button
-          onClick={() => fileInputRef.current?.click()}
-          className="border-brown-600 shadow-brown-300 group flex h-full w-full cursor-pointer flex-col items-center justify-center gap-3 rounded-lg border border-dashed p-2 px-4 shadow-inner dark:border-black dark:shadow-black"
+          onClick={() => !isUploading && fileInputRef.current?.click()}
+          onDragOver={handleDragOver}
+          onDragLeave={handleDragLeave}
+          onDrop={handleDrop}
+          className={cn(
+            "shadow-brown-300 group relative flex h-full w-full cursor-pointer flex-col items-center justify-center gap-3 overflow-hidden rounded-lg border border-dashed p-2 px-4 shadow-inner dark:shadow-black",
+            isDragging
+              ? "border-brown-500 bg-brown-100/50 dark:border-dark-100 dark:bg-dark-900/50"
+              : "border-brown-600 dark:border-black"
+          )}
         >
           <div className="-space-y-1">
             <Upload
@@ -67,7 +145,19 @@ export default function BackgroundImageUpload() {
               size={32}
             />
           </div>
-          Drop image here or click to browse.
+          {isDragging
+            ? "Drop to upload."
+            : "Drop image here or click to browse."}
+
+          {/* Loading progress bar */}
+          {isUploading && (
+            <div className="bg-brown-200 dark:bg-dark-100 absolute right-0 bottom-0 left-0 h-1 overflow-hidden rounded-b-lg">
+              <div
+                className="bg-brown-500 dark:bg-dark-600 h-full transition-[width] duration-75 ease-linear"
+                style={{ width: `${progress}%` }}
+              />
+            </div>
+          )}
         </button>
         {backgroundImageKey && (
           <>
@@ -84,26 +174,72 @@ export default function BackgroundImageUpload() {
                 />
                 {/* Sliders */}
                 <section className="bg-brown-100/75 border-brown-200/75 shadow-brown-200 font-fragment-mono dark:bg-dark-900 text-brown-700 dark:text-dark-100 flex h-32 w-full flex-col items-center justify-between gap-3 rounded-lg border px-6 py-9 shadow-xs dark:border-black dark:shadow-black">
-                  {/* Opacity */}
+                  {/* Opacity: controls the bg color (solid) */}
                   <div className="flex w-full items-center gap-1">
                     <p className="font-black">OPA.</p>
                     {/* Slider */}
-                    <div className="bg-brown-200 dark:bg-dark-100 relative ml-6 flex h-1 w-full items-center rounded-full pl-3">
-                      <div className="bg-brown-700 dark:border-dark-900 border-brown-100 h-5 w-5 rounded-full border-4 dark:bg-white" />
+                    <div className="relative ml-6 flex w-full items-center">
+                      <div className="bg-brown-200 dark:bg-dark-100 relative h-1 w-full rounded-full">
+                        <div
+                          className="bg-brown-500 dark:bg-dark-600 absolute left-0 h-full rounded-full"
+                          style={{ width: `${backgroundOpacity}%` }}
+                        />
+                        <div
+                          className="bg-brown-700 dark:border-dark-900 border-brown-100 pointer-events-none absolute h-5 w-5 -translate-x-1/2 -translate-y-1/2 rounded-full border-4 dark:bg-white"
+                          style={{ left: `${backgroundOpacity}%`, top: "50%" }}
+                        />
+                      </div>
+
+                      <input
+                        type="range"
+                        min="0"
+                        max="100"
+                        value={backgroundOpacity}
+                        onChange={(e) =>
+                          updateSettings({
+                            backgroundOpacity: Number(e.target.value),
+                          })
+                        }
+                        className="absolute inset-0 h-full w-full cursor-pointer opacity-0"
+                      />
                     </div>
                     <p className="dark:bg-dark-100 bg-brown-200 corner-l-bevel -translate-x-3 rounded-l-full px-2 pl-4 text-black">
-                      03%
+                      {fmtPct(backgroundOpacity)}
                     </p>
                   </div>
-                  {/* Saturation */}
+                  {/* Saturation: controls the image layer */}
                   <div className="flex w-full items-center gap-1">
                     <p className="font-black">SAT.</p>
                     {/* Slider */}
-                    <div className="bg-brown-200 dark:bg-dark-100 relative ml-6 flex h-1 w-full items-center rounded-full pl-32">
-                      <div className="bg-brown-700 dark:border-dark-900 border-brown-100 h-5 w-5 rounded-full border-4 dark:bg-white" />
+                    <div className="relative ml-6 flex w-full items-center">
+                      <div className="bg-brown-200 dark:bg-dark-100 relative h-1 w-full rounded-full">
+                        <div
+                          className="bg-brown-500 dark:bg-dark-600 absolute left-0 h-full rounded-full"
+                          style={{ width: `${backgroundSaturation}%` }}
+                        />
+                        <div
+                          className="bg-brown-700 dark:border-dark-900 border-brown-100 pointer-events-none absolute h-5 w-5 -translate-x-1/2 -translate-y-1/2 rounded-full border-4 dark:bg-white"
+                          style={{
+                            left: `${backgroundSaturation}%`,
+                            top: "50%",
+                          }}
+                        />
+                      </div>
+                      <input
+                        type="range"
+                        min="0"
+                        max="100"
+                        value={backgroundSaturation}
+                        onChange={(e) =>
+                          updateSettings({
+                            backgroundSaturation: Number(e.target.value),
+                          })
+                        }
+                        className="absolute inset-0 h-full w-full cursor-pointer opacity-0"
+                      />
                     </div>
                     <p className="dark:bg-dark-100 bg-brown-200 corner-l-bevel -translate-x-3 rounded-l-full px-2 pl-4 text-black">
-                      73%
+                      {fmtPct(backgroundSaturation)}
                     </p>
                   </div>
                 </section>
