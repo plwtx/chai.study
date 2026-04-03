@@ -31,7 +31,7 @@ export default function TimerIsland() {
           exit={{ opacity: 0, scale: 0.6, filter: "blur(4px)" }}
           transition={{ duration: 0.2, ease: "easeOut" }}
           onClick={() => navigate("/")}
-          className="bg-brown-700 dark:bg-dark-900 flex cursor-pointer items-center gap-2 rounded-full px-4 py-1.5 shadow-lg"
+          className="bg-brown-700 dark:bg-dark-900 z-40 flex cursor-pointer items-center gap-2 rounded-full px-4 py-1.5 shadow-lg"
         >
           <span
             className={cn(

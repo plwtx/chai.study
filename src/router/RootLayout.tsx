@@ -15,11 +15,12 @@ export default function RootLayout() {
 
   return (
     <div className="bg-brown-50 relative h-screen w-full">
-      <div className="absolute top-3 left-1/2 z-10 flex -translate-x-1/2 flex-col items-center gap-2">
+      <div className="absolute top-3 left-1/2 z-40 flex -translate-x-1/2 flex-col items-center gap-2">
         <TimerIsland />
         <Navbar />
       </div>
       <AnimatedRoutes />
+      {/* Notification toaster */}
       <Toaster position="bottom-center" />
     </div>
   );

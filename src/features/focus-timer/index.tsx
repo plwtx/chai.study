@@ -33,14 +33,45 @@ export default function FocusTimer() {
   const { seconds, status, mode, focusCount, start, pause, endCycle } =
     useTimer();
   const { hours, minutes } = useDailyTotal();
+  const backgroundImageKey = useAppStore((s) => s.settings.backgroundImageKey);
+  const backgroundOpacity = useAppStore((s) => s.settings.backgroundOpacity);
+  const backgroundSaturation = useAppStore(
+    (s) => s.settings.backgroundSaturation,
+  );
+  const backgroundContrast = useAppStore((s) => s.settings.backgroundContrast);
 
   return (
     <>
       <FinishedBanner />
       <DevSpeedToggle />
       {/* CLOCK SCREEN */}
-      <div className="bg-brown-50 dark:bg-dark-600 h-screen w-full">
-        <div className="flex h-full w-full flex-col items-center justify-center gap-4">
+      <main className="isolate z-0 h-full w-full overflow-hidden">
+        {/* BACKGROUND (Image + BG color) */}
+        <section className="z-0">
+          {/* Background image layer — sits below the color overlay */}
+          {backgroundImageKey && (
+            <div
+              className="absolute inset-0 isolate z-0"
+              style={{
+                backgroundImage: "var(--bg-image)",
+                backgroundSize: "cover",
+                backgroundRepeat: "no-repeat",
+                backgroundPosition: "center",
+                filter: `saturate(${backgroundSaturation}%) contrast(${backgroundContrast * 2}%)`,
+              }}
+            />
+          )}
+          {/* Background color overlay (opacity controlled by user when image is active) */}
+          <div
+            className="bg-brown-50 dark:bg-dark-600 absolute inset-0 isolate z-10 touch-none mix-blend-screen select-none dark:mix-blend-darken"
+            style={
+              backgroundImageKey
+                ? { opacity: backgroundOpacity / 100 }
+                : undefined
+            }
+          />
+        </section>
+        <div className="relative z-40 flex h-full w-full flex-col items-center justify-center gap-4">
           <DailyFocus hours={hours} minutes={minutes} />
 
           {/* Phase dots */}
@@ -60,7 +91,7 @@ export default function FocusTimer() {
           <Clock seconds={seconds} />
 
           {/* Controls */}
-          <div className="relative flex items-center justify-center">
+          <div className="relative z-40 flex items-center justify-center">
             <AnimatePresence mode="wait">
               {status === "idle" || status === "finished" ? (
                 <motion.button
@@ -181,7 +212,7 @@ export default function FocusTimer() {
             </AnimatePresence>
           </div>
         </div>
-      </div>
+      </main>
     </>
   );
 }

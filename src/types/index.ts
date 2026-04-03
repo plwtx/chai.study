@@ -53,6 +53,9 @@ export interface Settings {
   theme: Theme;
   accentColor: string;
   backgroundImageKey: number | null;
+  backgroundOpacity: number;
+  backgroundSaturation: number;
+  backgroundContrast: number;
   clockVariant: ClockVariant;
   reducedMotion: boolean;
   dynamicTitlebar: boolean;

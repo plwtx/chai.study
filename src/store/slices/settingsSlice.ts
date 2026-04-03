@@ -13,6 +13,9 @@ export const DEFAULT_SETTINGS: Settings = {
   theme: "system",
   accentColor: "#a78bfa",
   backgroundImageKey: null,
+  backgroundOpacity: 84,
+  backgroundSaturation: 100,
+  backgroundContrast: 50,
   clockVariant: "slide",
   reducedMotion: false,
   dynamicTitlebar: true,
@@ -36,9 +39,11 @@ export interface SettingsSliceActions {
   setClockVariant: (variant: ClockVariant) => Promise<void>;
   setDuration: (
     field: "focusDuration" | "shortBreakDuration" | "longBreakDuration",
-    seconds: number,
+    seconds: number
   ) => Promise<void>;
-  toggleAutoStart: (field: "autoStartBreak" | "autoStartFocus") => Promise<void>;
+  toggleAutoStart: (
+    field: "autoStartBreak" | "autoStartFocus"
+  ) => Promise<void>;
 }
 
 export type SettingsSlice = SettingsSliceState & SettingsSliceActions;
