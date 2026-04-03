@@ -8,7 +8,7 @@ export default function UserNotice() {
         {/* Header */}
         <section className="font-poppins text-brown-200 dark:text-dark-100/95 z-20 flex animate-pulse items-center gap-3 text-sm font-medium">
           <ShieldAlert size={16} />
-          <h1>v.0b3</h1>
+          <h1>ver.1-b.3</h1>
         </section>
         {/* Notice */}
         <p className="font-poppins flex items-center gap-3 text-xl font-semibold text-nowrap dark:text-white/85">
@@ -38,12 +38,14 @@ export default function UserNotice() {
         </section>
         {/* Styling  */}
         <div className="z-0">
+          {/* Glass Chainik */}
           <img
             src={ShuSheChaynik}
-            className="absolute top-1/2 -right-46 z-10 size-115 -translate-y-1/2 transition-transform duration-300 ease-linear group-hover:-rotate-45 dark:brightness-75 dark:saturate-0"
+            className="animate-wiggle pointer-events-none absolute top-1/2 -right-46 z-10 size-115 -translate-y-1/2 touch-none transition-transform duration-300 ease-linear select-none dark:brightness-75 dark:saturate-0"
             alt="Glass logo of Chaidoro"
           />
-          <div className="absolute top-1/2 -right-32 z-0 size-164 -translate-y-1/2 rounded-full bg-black/45 blur-3xl transition-all duration-300 ease-linear group-hover:-right-96 group-hover:size-237" />
+          {/* Background gradient */}
+          <div className="absolute top-1/2 -right-32 z-0 size-164 -translate-y-1/2 rounded-full bg-black/25 blur-3xl transition-all duration-300 ease-linear group-hover:-right-96 group-hover:size-237" />
         </div>
       </main>
     </>

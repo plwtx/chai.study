@@ -66,3 +66,41 @@
   -webkit-text-stroke: 1px #252525;
   -webkit-text-fill-color: transparent;
 }
+
+/* Custom animations */
+@theme {
+  /* Animations */
+  --animate-spin-slow: spin-slow 9s linear infinite;
+  --animate-pendulum: pendulum 3s cubic-bezier(0.455, 0.03, 0.515, 0.955)
+    infinite;
+  --animate-wiggle: wiggle 6s ease-in-out infinite;
+
+  /* Keyframes */
+  @keyframes spin-slow {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  @keyframes pendulum {
+    0%,
+    100% {
+      transform: rotate(25deg);
+    }
+    50% {
+      transform: rotate(-25deg);
+    }
+  }
+  @keyframes wiggle {
+    0%,
+    100% {
+      transform: rotate(-33deg);
+    }
+    50% {
+      transform: rotate(33deg);
+    }
+  }
+}
