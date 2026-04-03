@@ -1,5 +1,5 @@
 import { useRef } from "react";
-import { Upload, X, Trash2 } from "lucide-react";
+import { Upload, X, Wallpaper } from "lucide-react";
 import { useAppStore } from "@/store";
 import { db } from "@/db";
 import SubHeaderDescription from "@/components/ui/sub-header-description";
@@ -55,9 +55,18 @@ export default function BackgroundImageUpload() {
         />
         <button
           onClick={() => fileInputRef.current?.click()}
-          className="border-brown-600 shadow-brown-300 dark:border-dark-900 flex h-full w-full cursor-pointer flex-col items-center justify-center gap-3 rounded-lg border-2 border-dashed p-2 px-4 shadow-inner dark:shadow-black"
+          className="border-brown-600 shadow-brown-300 group flex h-full w-full cursor-pointer flex-col items-center justify-center gap-3 rounded-lg border border-dashed p-2 px-4 shadow-inner dark:border-black dark:shadow-black"
         >
-          <Upload size={20} />
+          <div className="-space-y-1">
+            <Upload
+              className="-translate-y-9 stroke-[1px] opacity-0 transition-all duration-300 ease-in-out group-hover:translate-y-6 group-hover:opacity-100"
+              size={32}
+            />
+            <Wallpaper
+              className="stroke-[1px] opacity-100 transition-all duration-300 ease-in-out group-hover:translate-y-9 group-hover:opacity-0"
+              size={32}
+            />
+          </div>
           Drop image here or click to browse.
         </button>
         {backgroundImageKey && (
