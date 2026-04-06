@@ -5,16 +5,13 @@ export default function Information() {
   return (
     <>
       <main className="font-fragment-mono dark:text-dark-100/80 text-brown-800/80">
-        <section className="flex h-fit w-full items-center justify-between gap-9">
-          <Circle className="min-h-24 min-w-24 stroke-[0.3px] p-1" />
-          <HeaderDescription
-            header={"Hey there !"}
-            description={
-              "My name is Len / Pluwia whatever you prefer and I am the developer of Chaidoro. Below is my small documentation section for the app."
-            }
-            kaomoji={"o( ❛ᴗ❛ ) <3"}
-          />
-        </section>
+        <HeaderDescription
+          header={"Hey there !"}
+          description={
+            "My name is Len / Pluwia whatever you prefer and I am the developer of Chaidoro. Below is my small documentation section for the app."
+          }
+          kaomoji={"o( ❛ᴗ❛ ) <3"}
+        />
         <HorizontalDivider />
         {/* Text */}
         <section className="flex flex-col gap-3">
@@ -28,30 +25,18 @@ export default function Information() {
             Chaidoro is open for contributions and would welcome any input on
             direction of development.
           </p>
+          <p>
+            I made this app because I did not find focus timer that I liked.
+            Hence I made this app for myself and thats why it has features and
+            style that I chose. I added small customization such as custom
+            wallpaper. However I know that it is too little... in the future I
+            will add more stuff such as custom colors, fonts, widgets and etc.
+            Alternatively if you want to do it yourself then you are free to
+            modify any piece of Chaidoro.
+          </p>
         </section>
-        {/* Benefits */}
-        <section className="my-9 flex flex-col items-start justify-start gap-3 text-sm">
-          <div className="border-brown-800 dark:border-dark-100 flex h-fit w-fit items-center justify-center gap-3 rounded-3xl border p-3">
-            {/* ICON: */}
-            <ServerOff className="stroke-brown-700 dark:stroke-dark-100 min-h-24 min-w-24 stroke-[0.3px] p-1" />
-            {/* DIVIDER */}
-            <div className="bg-brown-700 dark:bg-dark-100 min-h-20 min-w-px" />
-            {/* TEXT */}
-            <p>
-              Runs on your device. <br /> No network required.
-            </p>
-          </div>
-          <div className="border-brown-800 dark:border-dark-100 flex h-fit w-fit items-center justify-center gap-3 rounded-3xl border p-3">
-            {/* ICON: */}
-            <Coffee className="stroke-brown-700 dark:stroke-dark-100 min-h-24 min-w-24 stroke-[0.3px] p-1" />
-            {/* DIVIDER */}
-            <div className="bg-brown-700 dark:bg-dark-100 min-h-20 min-w-px" />
-            {/* TEXT */}
-            <p>
-              100% Open source <br /> with a GPL (v3) license.
-            </p>
-          </div>
-        </section>
+        {/* Social media banner */}
+        {/* GitHub */}
       </main>
     </>
   );

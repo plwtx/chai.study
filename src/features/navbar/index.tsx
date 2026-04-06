@@ -10,7 +10,7 @@ export default function Navbar() {
         {/* Clock */}
         <NavItem icon={Clock} to="/" />
         {/* Tasks */}
-        {/* <NavItem icon={CircleCheckBig} to="/tasks" /> */}
+        <NavItem icon={CircleCheckBig} to="/statistics" />
         {/* Settings */}
         <NavItem icon={Settings} to="/settings" variant="icon" />
       </div>
