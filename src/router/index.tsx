@@ -9,7 +9,7 @@ export const router = createBrowserRouter([
     errorElement: <ErrorBoundary />,
     children: [
       { index: true, element: null },
-      { path: "tasks", element: null },
+      { path: "statistics", element: null },
       { path: "settings", element: null },
     ],
   },
