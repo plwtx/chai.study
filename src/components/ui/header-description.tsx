@@ -22,9 +22,9 @@ export default function HeaderDescription({
           {description}
 
           {kaomoji && (
-            <p className="bg-brown-200 dark:bg-dark-900 dark:text-dark-100 text-brown-900 border-brown-700 mx-3 inline rounded-lg border p-1 px-3 text-xs text-nowrap dark:border-black">
+            <span className="bg-brown-200 dark:bg-dark-900 dark:text-dark-100 text-brown-900 border-brown-700 mx-3 inline rounded-lg border p-1 px-3 text-xs text-nowrap dark:border-black">
               {kaomoji}
-            </p>
+            </span>
           )}
         </p>
       </div>
