@@ -10,7 +10,6 @@ const LEVEL_COLORS: Record<0 | 1 | 2 | 3 | 4, string> = {
   4: "var(--heatmap-4)",
 };
 
-// Short month names for labels
 const MONTH_ABBR = [
   "Jan",
   "Feb",
@@ -44,8 +43,11 @@ function buildWeeks(days: HeatmapDay[]): (HeatmapDay | null)[][] {
     ...days,
   ];
 
+  while (padded.length % 7 !== 0) padded.push(null);
+
+  const numWeeks = padded.length / 7;
   const weeks: (HeatmapDay | null)[][] = [];
-  for (let col = 0; col < 52; col++) {
+  for (let col = 0; col < numWeeks; col++) {
     weeks.push(padded.slice(col * 7, col * 7 + 7));
   }
   return weeks;
@@ -123,7 +125,10 @@ export default function FocusHeatmap() {
       <div>
         <div
           className="mb-0.75 grid"
-          style={{ gridTemplateColumns: "repeat(52, 13px)", gap: "3px" }}
+          style={{
+            gridTemplateColumns: `repeat(${weeks?.length ?? 52}, 13px)`,
+            gap: "3px",
+          }}
         >
           {monthLabels.map((label, i) => (
             <div
@@ -139,7 +144,7 @@ export default function FocusHeatmap() {
         <div
           className="grid"
           style={{
-            gridTemplateColumns: "repeat(52, 13px)",
+            gridTemplateColumns: `repeat(${weeks?.length ?? 52}, 13px)`,
             gridTemplateRows: "repeat(7, 13px)",
             gap: "3px",
             gridAutoFlow: "column",
