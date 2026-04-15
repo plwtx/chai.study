@@ -5,7 +5,7 @@ export default function OtherStat() {
   return (
     <>
       {/* Other stats */}
-      <main className="flex flex-col gap-1">
+      <main className="bg-brown-400/90 corner-bevel text-brown-50 flex w-full flex-col gap-1 rounded-3xl p-12">
         {/* Other stats */}
         <section className="flex flex-col gap-1">
           <h6>Focus cycles:</h6>

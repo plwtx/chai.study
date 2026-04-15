@@ -1,23 +1,23 @@
 import FocusHeatmap from "./components/heatmap-calendar";
 import OtherStats from "./components/other-stats";
-import DailyFocusBanner from "./components/daily-focus-page";
+import DailyFocusPage from "./components/daily-focus-page";
 import DayStreak from "./components/day-streak";
 export default function Statistics() {
   return (
     <>
-      <div className="bg-brown-50 dark:bg-dark-600 text-brown-800 dark:text-dark-100 font-poppins flex h-fit w-full items-center justify-center p-9">
-        <div className="flex h-full w-full max-w-6xl flex-col gap-9">
+      <div className="bg-brown-50 dark:bg-dark-600 text-brown-800 dark:text-dark-100 font-poppins flex h-fit w-full items-center justify-center">
+        <div className="flex h-full w-full max-w-6xl flex-col items-center justify-center">
           {/* Statistics and streak */}
           {/* <h1 className="text-3xl font-semibold">Statistics</h1> */}
           {/* General stats */}
-          <DailyFocusBanner />
-          {/* Focus heatmap */}
-          <section className="flex h-fit w-full items-center justify-between gap-2">
-            <FocusHeatmap />
+          <DailyFocusPage />
+          {/* Heatmap and Other stats: */}
+          <section className="bg-brown-100/45 dark:bg-dark-900 border-brown-200/75 flex h-full w-fit flex-col items-center justify-center gap-9 rounded-t-3xl border border-b-0 p-12 dark:border-black">
+            {/* Focus heatmap */}
             <DayStreak />
+            <FocusHeatmap />
+            <OtherStats />
           </section>
-          {/* Other stats */}
-          <OtherStats />
         </div>
       </div>
     </>
