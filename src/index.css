@@ -54,11 +54,24 @@
   --bg-image: none;
   --chart-used: #735f59;
   --chart-avail: #dbcbc6;
+
+  /* Light Heatmap */
+  --heatmap-0: #dbcbc6; /* brown-200 */
+  --heatmap-1: #735f59; /* brown-500 */
+  --heatmap-2: #453632; /* brown-600 */
+  --heatmap-3: #372e2c; /* brown-700 */
+  --heatmap-4: #262423; /* brown-800 */
 }
 
 .dark {
   --chart-used: #bba6a0;
   --chart-avail: #1b1a19;
+  /* Dark Heatmap */
+  --heatmap-0: #262423; /* brown-800 */
+  --heatmap-1: #453632; /* brown-600 */
+  --heatmap-2: #735f59; /* brown-500 */
+  --heatmap-3: #98817a; /* brown-400 */
+  --heatmap-4: #bba6a0; /* brown-300 */
 }
 
 /* Custom CSS */
