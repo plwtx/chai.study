@@ -188,7 +188,7 @@ export default function FocusHeatmap() {
     <main className="bg-brown-100 corner-scoop dark:bg-dark-900 border-brown-300 shadow-brown-400 relative z-20 w-fit rounded-xl px-7 pt-8 pb-6 shadow-xs dark:border-black dark:shadow-black">
       {/* Absolut title */}
       <div className="bg-brown-100 dark:bg-dark-900 border-brown-300 shadow-brown-400 corner-b-scoop absolute -top-3 left-6 flex h-6 w-fit items-center justify-center rounded-full border px-9 text-xs font-medium shadow-xs dark:border-black dark:shadow-black">
-        <h3>Calendar focus heatmap</h3>
+        <h3>Focus heatmap</h3>
       </div>
 
       {days === undefined ? (
