@@ -52,7 +52,6 @@ export default function DailyFocusPage() {
         <section>
           {/* Date and switch view mode (future update) */}
           <CurrentDate />
-          {/* button */}
         </section>
         {/* Main Statistics */}
         <div className="mt-6 mb-12 flex flex-col">
@@ -66,7 +65,11 @@ export default function DailyFocusPage() {
               <span className="rounded-full p-1 px-9">Monthly</span>
               <span className="rounded-full p-1 px-9">Yearly</span>
             </div>
-            <ScrollText className="bg-brown-600 stroke-brown-50 dark:bg-dark-900 shadow-brown-600 flex size-12 gap-3 rounded-full stroke-[1px] p-3 shadow-sm dark:shadow-black" />
+            {/* View logs button */}
+            <div className="bg-brown-600 dark:bg-dark-900 shadow-brown-600 flex gap-3 rounded-full p-3 shadow-sm dark:shadow-black">
+              <ScrollText className="stroke-brown-50 stroke-[1px]" />
+              <ChevronDown className="rotate-270 stroke-[1px]" />
+            </div>
           </section>
 
           {/* Daily Stats & Graph */}

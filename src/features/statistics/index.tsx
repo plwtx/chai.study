@@ -15,9 +15,9 @@ export default function Statistics() {
           {/* Heatmap and Other stats: */}
           <section className="bg-brown-100/45 dark:bg-dark-900/45 border-brown-200/75 flex h-full w-fit flex-col items-center justify-center gap-9 rounded-t-3xl border border-b-0 p-12 dark:border-black">
             {/* Focus heatmap */}
-            {/* <DayStreak /> */}
+            <DayStreak />
             <FocusHeatmap />
-            {/* <OtherStats /> */}
+            <OtherStats />
           </section>
         </div>
       </div>
