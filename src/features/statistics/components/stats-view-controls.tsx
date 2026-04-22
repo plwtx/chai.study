@@ -41,7 +41,7 @@ export default function StatsViewControls({
       {/* View logs button */}
       <div className="bg-brown-600 dark:bg-dark-900 shadow-brown-600 flex gap-3 rounded-full p-3 shadow-sm dark:shadow-black">
         <ScrollText className="stroke-brown-50 stroke-[1px]" />
-        <ChevronDown className="rotate-270 stroke-[1px]" />
+        <ChevronDown className="stroke-brown-50 rotate-270 stroke-[1px]" />
       </div>
     </section>
   );
