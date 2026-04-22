@@ -4,9 +4,11 @@ import StatsDateHeader from "./stats-date-header";
 import StatsViewControls, { type ViewMode } from "./stats-view-controls";
 import StatsDailyMetrics from "./stats-daily-metrics";
 import StatsGraphPanel from "./stats-graph-panel";
+import SessionLogsPanel from "./session-logs-panel";
 
 export default function StatsGraphPage() {
   const [viewMode, setViewMode] = useState<ViewMode>("daily");
+  const [showLogs, setShowLogs] = useState(false);
   const { totalMinutes, sessionCount } = useDailyStats();
 
   return (
@@ -18,7 +20,12 @@ export default function StatsGraphPage() {
       {/* Main Statistics */}
       <div className="mt-6 mb-12 flex flex-col">
         {/* View mode toggle & see logs button */}
-        <StatsViewControls viewMode={viewMode} onViewModeChange={setViewMode} />
+        <StatsViewControls
+          viewMode={viewMode}
+          onViewModeChange={setViewMode}
+          onViewLogs={() => setShowLogs(true)}
+        />
+        <SessionLogsPanel open={showLogs} onClose={() => setShowLogs(false)} />
 
         {/* Daily Stats & Graph */}
         <section className="relative flex h-fit w-full px-9">
