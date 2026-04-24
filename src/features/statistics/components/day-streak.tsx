@@ -1,17 +1,21 @@
 import { Bubbles } from "lucide-react";
+import { useDayStreak } from "@/features/statistics/hooks/useDayStreak";
 export default function OtherStat() {
+  const streak = useDayStreak();
   return (
     <>
       {/* Day streak */}
       <section className="bg-brown-600 group dark:bg-dark-900/75 border-brown-900/75 shadow-brown-800 corner-scoop relative z-30 flex h-full w-full flex-col items-center justify-center overflow-clip rounded-xl border p-3 px-6 font-semibold shadow-sm dark:shadow-black">
         <div className="flex w-full items-center justify-center gap-1">
-          <Bubbles className="stroke-brown-50 z-0 size-6 stroke-1 transition-discrete duration-200 group-hover:size-0" />
+          {streak > 0 && (
+            <Bubbles className="stroke-brown-50 z-0 size-6 stroke-1 transition-discrete duration-200 group-hover:size-0" />
+          )}
           <span className="text-brown-50 dark:text-brown-200 z-20 text-6xl">
-            33
+            {streak > 0 ? streak : null}
           </span>
         </div>
         <span className="text-brown-200 dark:text-brown-400 z-20 text-xs">
-          day streak
+          {streak > 0 ? "day streak" : "No streak yet..."}
         </span>
         {/* Absolutes (decoration) */}
         <section className="border-brown-">
