@@ -1,4 +1,4 @@
-import { ChevronDown, ScrollText } from "lucide-react";
+import { ChevronDown, Pencil } from "lucide-react";
 
 export type ViewMode = "daily" | "weekly" | "monthly" | "yearly";
 
@@ -43,9 +43,10 @@ export default function StatsViewControls({
       {/* View logs button */}
       <button
         onClick={onViewLogs}
-        className="bg-brown-600 dark:bg-dark-900 shadow-brown-600 flex gap-3 rounded-full p-3 shadow-sm transition-all active:scale-95 dark:shadow-black"
+        className="bg-brown-600 dark:bg-dark-900 shadow-brown-600 text-brown-100 flex items-center gap-3 rounded-full p-3 px-6 shadow-sm transition-all active:scale-95 dark:shadow-black"
       >
-        <ScrollText className="stroke-brown-50 stroke-[1px]" />
+        {/* <Pencil className="stroke-brown-50 size-6 stroke-[1px]" /> */}
+        <span>See sessions</span>
         <ChevronDown className="stroke-brown-50 rotate-270 stroke-[1px]" />
       </button>
     </section>

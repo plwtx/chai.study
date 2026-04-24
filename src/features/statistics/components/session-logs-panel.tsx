@@ -138,7 +138,7 @@ export default function SessionLogsPanel({
 
           {/* Sliding panel */}
           <motion.aside
-            className="bg-brown-50 dark:bg-dark-600 border-brown-200 dark:border-dark-900 fixed top-0 right-0 z-50 flex h-full w-full max-w-sm flex-col border-l shadow-2xl"
+            className="bg-brown-50 dark:bg-dark-600 font-poppins border-brown-200 dark:border-dark-900 fixed top-0 right-0 z-50 flex h-full w-full max-w-sm flex-col border-l shadow-2xl"
             initial={{ x: "100%" }}
             animate={{ x: 0 }}
             exit={{ x: "100%" }}
@@ -146,7 +146,7 @@ export default function SessionLogsPanel({
           >
             {/* Header */}
             <div className="border-brown-200 dark:border-dark-900 flex shrink-0 items-center justify-between border-b px-6 py-4">
-              <h2 className="text-brown-900 dark:text-dark-100 text-sm font-semibold">
+              <h2 className="text-brown-900 dark:text-dark-100 text-lg font-semibold">
                 All Sessions
               </h2>
               <div className="flex items-center gap-2">
@@ -244,26 +244,32 @@ export default function SessionLogsPanel({
                 </p>
               )}
               {groups.map(({ dayKey, dayLabel, items }) => (
-                <div key={dayKey} className="mb-6">
-                  <p className="text-brown-500 dark:text-dark-400 mb-2 text-xs font-medium">
+                <div key={dayKey} className="mb-9">
+                  <p className="text-brown-500 dark:text-dark-400 mb-2 text-sm font-semibold">
                     {dayLabel}
                   </p>
-                  <div className="flex flex-col gap-1">
+                  <div className="flex flex-col gap-3">
                     {items.map((s) => {
                       const isEditing = editingId === s.id;
                       const isDeleting = deletingId === s.id;
                       return (
                         <div
                           key={s.id}
-                          className="border-brown-200/70 dark:border-dark-900/70 rounded-lg border"
+                          className="bg-brown-100 shadow-brown-300 rounded-lg shadow-sm"
                         >
                           {/* Session row */}
-                          <div className="flex items-center justify-between px-3 py-2">
-                            <span className="text-brown-400 dark:text-dark-400 text-xs">
+                          <div className="flex items-center justify-between p-4">
+                            <div className="flex w-full flex-col">
+                              <span className="text-xs">Focus</span>
+                              <h3 className="text-brown-700 dark:text-dark-200text-left text-xl font-semibold">
+                                {toMins(s.actualDuration)}{" "}
+                                <span className="text-brown-500 text-xs font-normal">
+                                  min.
+                                </span>
+                              </h3>
+                            </div>
+                            <span className="text-brown-400 dark:text-dark-400 px-3 text-xs text-nowrap">
                               {formatTime(s.completedAt)}
-                            </span>
-                            <span className="text-brown-700 dark:text-dark-200 text-xs font-medium">
-                              Focus · {toMins(s.actualDuration)} min
                             </span>
                             <button
                               onClick={() => {
