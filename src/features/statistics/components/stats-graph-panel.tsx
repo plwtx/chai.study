@@ -18,11 +18,11 @@ const STAGGER_VARIANTS = {
 const INSTANT_VARIANTS = { hidden: {}, visible: {} };
 
 function barColorClass(ratio: number): string {
-  if (ratio >= 0.85) return "bg-brown-700";
-  if (ratio >= 0.65) return "bg-brown-600";
-  if (ratio >= 0.4) return "bg-brown-500";
-  if (ratio >= 0.15) return "bg-brown-400";
-  return "bg-brown-300";
+  if (ratio >= 0.85) return "bg-brown-700 dark:bg-brown-300/75";
+  if (ratio >= 0.65) return "bg-brown-600 dark:bg-brown-300";
+  if (ratio >= 0.4) return "bg-brown-500 dark:bg-brown-400/75";
+  if (ratio >= 0.15) return "bg-brown-400 dark:bg-brown-400";
+  return "bg-brown-300 dark:bg-brown-500/75";
 }
 
 export default function StatsGraphPanel({ viewMode }: StatsGraphPanelProps) {
