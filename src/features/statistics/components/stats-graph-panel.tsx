@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { ChevronDown } from "lucide-react";
 import { motion } from "motion/react";
 import { cn } from "@/lib/utils";
@@ -17,12 +17,69 @@ const STAGGER_VARIANTS = {
 };
 const INSTANT_VARIANTS = { hidden: {}, visible: {} };
 
+type BarTransition = { duration: number; ease: "easeOut" };
+
 function barColorClass(ratio: number): string {
   if (ratio >= 0.85) return "bg-brown-700 dark:bg-brown-300/75";
   if (ratio >= 0.65) return "bg-brown-600 dark:bg-brown-300";
   if (ratio >= 0.4) return "bg-brown-500 dark:bg-brown-400/75";
   if (ratio >= 0.15) return "bg-brown-400 dark:bg-brown-400";
   return "bg-brown-300 dark:bg-brown-500/75";
+}
+
+interface EmptyGraphBarProps {
+  stubHeight: string;
+  transition: BarTransition;
+}
+
+function EmptyGraphBar({ stubHeight, transition }: EmptyGraphBarProps) {
+  return (
+    <motion.div
+      className="flex h-full flex-1 items-end justify-center"
+      style={{ transformOrigin: "bottom" }}
+      variants={BAR_VARIANTS}
+      transition={transition}
+    >
+      <div className="bg-brown-300/40 w-0.5" style={{ height: stubHeight }} />
+    </motion.div>
+  );
+}
+
+interface GraphBarProps {
+  minutes: number;
+  ratio: number;
+  widthClass: string;
+  transition: BarTransition;
+}
+
+function GraphBar({ minutes, ratio, widthClass, transition }: GraphBarProps) {
+  const [showLabel, setShowLabel] = useState(false);
+  const barHeight = `${Math.max(ratio * 100, 0.2)}%`;
+
+  return (
+    <motion.div
+      className="relative flex h-full flex-1 cursor-pointer items-end justify-center"
+      style={{ transformOrigin: "bottom" }}
+      variants={BAR_VARIANTS}
+      transition={transition}
+      onMouseEnter={() => setShowLabel(true)}
+      onMouseLeave={() => setShowLabel(false)}
+      onClick={() => setShowLabel((v) => !v)}
+    >
+      {showLabel && (
+        <span
+          className="text-brown-600 dark:text-brown-400 pointer-events-none absolute text-[10px]"
+          style={{ bottom: barHeight }}
+        >
+          {Math.round(minutes)}m
+        </span>
+      )}
+      <div
+        className={cn("rounded-full", barColorClass(ratio), widthClass)}
+        style={{ height: barHeight, minHeight: "2px" }}
+      />
+    </motion.div>
+  );
 }
 
 export default function StatsGraphPanel({ viewMode }: StatsGraphPanelProps) {
@@ -36,9 +93,15 @@ export default function StatsGraphPanel({ viewMode }: StatsGraphPanelProps) {
   const graphMode: GraphViewMode = viewMode === "daily" ? "weekly" : viewMode;
   const { bars, periodLabel, maxMinutes } = useGraphStats(graphMode, offset);
 
-  const barTransition = {
+  const stubHeights = useMemo(
+    () => bars.map(() => `${Math.random() * 40 + 15}%`),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [graphMode, offset]
+  );
+
+  const barTransition: BarTransition = {
     duration: reducedMotion ? 0 : 0.3,
-    ease: "easeOut" as const,
+    ease: "easeOut",
   };
   const containerVariants = reducedMotion ? INSTANT_VARIANTS : STAGGER_VARIANTS;
   const barWidthClass =
@@ -70,48 +133,23 @@ export default function StatsGraphPanel({ viewMode }: StatsGraphPanelProps) {
           initial="hidden"
           animate="visible"
         >
-          {bars.map((bar, i) => {
-            if (bar.isEmpty) {
-              const stubH = `${Math.random() * 40 + 15}%`;
-              return (
-                <motion.div
-                  key={i}
-                  className="flex h-full flex-1 items-end justify-center"
-                  style={{ transformOrigin: "bottom" }}
-                  variants={BAR_VARIANTS}
-                  transition={barTransition}
-                >
-                  <div
-                    className="bg-brown-300/40 w-0.5"
-                    style={{ height: stubH }}
-                  />
-                </motion.div>
-              );
-            }
-
-            const ratio = bar.minutes / maxMinutes;
-            return (
-              <motion.div
+          {bars.map((bar, i) =>
+            bar.isEmpty ? (
+              <EmptyGraphBar
                 key={i}
-                className="flex h-full flex-1 items-end justify-center"
-                style={{ transformOrigin: "bottom" }}
-                variants={BAR_VARIANTS}
+                stubHeight={stubHeights[i] ?? "25%"}
                 transition={barTransition}
-              >
-                <div
-                  className={cn(
-                    "rounded-full",
-                    barColorClass(ratio),
-                    barWidthClass
-                  )}
-                  style={{
-                    height: `${Math.max(ratio * 100, 0.2)}%`,
-                    minHeight: "2px",
-                  }}
-                />
-              </motion.div>
-            );
-          })}
+              />
+            ) : (
+              <GraphBar
+                key={i}
+                minutes={bar.minutes}
+                ratio={bar.minutes / maxMinutes}
+                widthClass={barWidthClass}
+                transition={barTransition}
+              />
+            )
+          )}
         </motion.div>
 
         {/* X-axis labels */}
