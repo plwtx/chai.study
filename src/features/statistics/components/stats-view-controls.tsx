@@ -33,7 +33,7 @@ export default function StatsViewControls({
             className={
               viewMode === mode
                 ? "bg-brown-600 shadow-brown-900 text-brown-50 dark:text-dark-900 dark:bg-dark-100 rounded-full p-1 px-9 font-semibold shadow-xs"
-                : "rounded-full p-1 px-9"
+                : "cursor-pointer rounded-full p-1 px-9"
             }
           >
             {VIEW_MODE_LABELS[mode]}
@@ -43,7 +43,7 @@ export default function StatsViewControls({
       {/* View logs button */}
       <button
         onClick={onViewLogs}
-        className="bg-brown-600 dark:bg-dark-900 shadow-brown-600 text-brown-100 flex items-center gap-3 rounded-full p-3 px-6 shadow-sm transition-all active:scale-95 dark:shadow-black"
+        className="bg-brown-600 dark:bg-dark-900 shadow-brown-600 text-brown-100 flex cursor-pointer items-center gap-3 rounded-full p-3 px-6 shadow-sm transition-all active:scale-95 dark:shadow-black"
       >
         {/* <Pencil className="stroke-brown-50 size-6 stroke-[1px]" /> */}
         <span>See sessions</span>

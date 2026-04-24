@@ -181,12 +181,12 @@ export default function SessionLogsPanel({
                   transition={{ duration: 0.18 }}
                 >
                   <div className="px-6 py-4">
-                    <p className="text-brown-600 dark:text-dark-300 mb-3 text-xs font-medium">
+                    <p className="text-brown-600 dark:text-dark-100 mb-3 text-xs font-medium">
                       Add Focus Session
                     </p>
                     <div className="flex flex-col gap-2">
                       <div className="flex items-center gap-3">
-                        <label className="text-brown-500 dark:text-dark-400 w-16 shrink-0 text-xs">
+                        <label className="text-brown-500 dark:text-dark-100 w-16 shrink-0 text-xs">
                           Date
                         </label>
                         <input
@@ -194,11 +194,11 @@ export default function SessionLogsPanel({
                           max={maxDate}
                           value={addDate}
                           onChange={(e) => setAddDate(e.target.value)}
-                          className="border-brown-200 dark:border-dark-900 dark:bg-dark-700 text-brown-800 dark:text-dark-100 flex-1 rounded-lg border bg-white px-3 py-1.5 text-xs focus:outline-none"
+                          className="border-brown-200 dark:border-dark-900 text-brown-800 flex-1 rounded-lg border bg-white px-3 py-1.5 text-xs focus:outline-none dark:bg-black dark:text-white/75"
                         />
                       </div>
                       <div className="flex items-center gap-3">
-                        <label className="text-brown-500 dark:text-dark-400 w-16 shrink-0 text-xs">
+                        <label className="text-brown-500 dark:text-dark-100 w-16 shrink-0 text-xs">
                           Duration
                         </label>
                         <div className="flex flex-1 items-center gap-2">
@@ -209,9 +209,9 @@ export default function SessionLogsPanel({
                             value={addMinutes}
                             onChange={(e) => setAddMinutes(e.target.value)}
                             placeholder="25"
-                            className="border-brown-200 dark:border-dark-900 dark:bg-dark-700 text-brown-800 dark:text-dark-100 w-20 rounded-lg border bg-white px-3 py-1.5 text-xs focus:outline-none"
+                            className="border-brown-200 dark:border-dark-900 text-brown-800 w-20 rounded-lg border bg-white px-3 py-1.5 text-xs focus:outline-none dark:bg-black dark:text-white/75"
                           />
-                          <span className="text-brown-400 dark:text-dark-400 text-xs">
+                          <span className="text-brown-400 dark:text-dark-100 text-xs">
                             min
                           </span>
                         </div>
@@ -219,13 +219,13 @@ export default function SessionLogsPanel({
                       <div className="flex justify-end gap-2 pt-1">
                         <button
                           onClick={() => setShowAdd(false)}
-                          className="text-brown-400 dark:text-dark-400 text-xs hover:underline"
+                          className="text-brown-400 dark:text-dark-100 cursor-pointer text-xs hover:underline"
                         >
                           Cancel
                         </button>
                         <button
                           onClick={addSession}
-                          className="bg-brown-600 dark:bg-dark-900 text-brown-50 dark:text-dark-100 rounded-lg px-3 py-1 text-xs transition-all active:scale-95"
+                          className="bg-brown-600 text-brown-50 dark:text-dark-100 cursor-pointer rounded-lg px-3 py-1 text-xs transition-all active:scale-95 dark:bg-black"
                         >
                           Add
                         </button>
@@ -239,13 +239,13 @@ export default function SessionLogsPanel({
             {/* Session list */}
             <div className="flex-1 overflow-y-auto px-6 py-4">
               {groups.length === 0 && (
-                <p className="text-brown-400 dark:text-dark-400 mt-16 text-center text-sm">
+                <p className="text-brown-400 dark:text-dark-100 mt-16 text-center text-sm">
                   No sessions recorded yet.
                 </p>
               )}
               {groups.map(({ dayKey, dayLabel, items }) => (
                 <div key={dayKey} className="mb-9">
-                  <p className="text-brown-500 dark:text-dark-400 mb-2 text-sm font-semibold">
+                  <p className="text-brown-500 dark:text-dark-100 dark:text-dark-400 mb-2 text-sm font-semibold">
                     {dayLabel}
                   </p>
                   <div className="flex flex-col gap-3">
@@ -255,20 +255,22 @@ export default function SessionLogsPanel({
                       return (
                         <div
                           key={s.id}
-                          className="bg-brown-100 shadow-brown-300 rounded-lg shadow-sm"
+                          className="bg-brown-100/45 dark:bg-dark-900 shadow-brown-300 rounded-lg shadow-sm dark:shadow-black"
                         >
                           {/* Session row */}
                           <div className="flex items-center justify-between p-4">
                             <div className="flex w-full flex-col">
-                              <span className="text-xs">Focus</span>
-                              <h3 className="text-brown-700 dark:text-dark-200text-left text-xl font-semibold">
+                              <span className="text-brown-500 dark:text-dark-100 text-xs font-light">
+                                Focus
+                              </span>
+                              <h3 className="text-brown-700 text-left text-xl font-semibold dark:text-white/75">
                                 {toMins(s.actualDuration)}{" "}
-                                <span className="text-brown-500 text-xs font-normal">
+                                <span className="text-brown-500 dark:text-dark-100 text-xs font-normal">
                                   min.
                                 </span>
                               </h3>
                             </div>
-                            <span className="text-brown-400 dark:text-dark-400 px-3 text-xs text-nowrap">
+                            <span className="text-brown-400 dark:text-dark-100 px-3 text-xs text-nowrap">
                               {formatTime(s.completedAt)}
                             </span>
                             <button
@@ -284,7 +286,7 @@ export default function SessionLogsPanel({
                                   setDeletingId(null);
                                 }
                               }}
-                              className="text-brown-300 dark:text-dark-500 hover:text-brown-600 dark:hover:text-dark-200 transition-colors"
+                              className="text-brown-900 dark:hover:text-dark-100 cursor-pointer transition-colors hover:text-black dark:text-white"
                             >
                               <Pencil className="size-3" />
                             </button>
@@ -309,14 +311,14 @@ export default function SessionLogsPanel({
                                     onChange={(e) =>
                                       setEditMinutes(e.target.value)
                                     }
-                                    className="border-brown-200 dark:border-dark-900 dark:bg-dark-700 text-brown-800 dark:text-dark-100 w-16 rounded-lg border bg-white px-2 py-1 text-xs focus:outline-none"
+                                    className="border-brown-200 dark:border-dark-900 dark:bg-dark-600 text-brown-800 dark:text-dark-100 w-16 rounded-lg border bg-white px-2 py-1 text-xs focus:outline-none"
                                   />
                                   <span className="text-brown-400 dark:text-dark-400 text-xs">
                                     min
                                   </span>
                                   <button
                                     onClick={() => saveEdit(s)}
-                                    className="bg-brown-600 dark:bg-dark-900 ml-1 flex size-5 items-center justify-center rounded-full transition-all active:scale-95"
+                                    className="bg-brown-600 ml-1 flex size-5 items-center justify-center rounded-full transition-all active:scale-95 dark:bg-black"
                                   >
                                     <Check className="stroke-brown-50 dark:stroke-dark-100 size-3" />
                                   </button>
