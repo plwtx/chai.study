@@ -1,35 +1,19 @@
-import type { ViewMode } from "./stats-view-controls";
+import { formatTimeSplit } from "../utils/formatTime";
 
-interface StatsDailyMetricsProps {
+interface StatsMetricsProps {
   totalMinutes: number;
   sessionCount: number;
-  viewMode: ViewMode;
-}
-
-const PERIOD_LABELS: Record<ViewMode, string> = {
-  daily: "today",
-  weekly: "this week",
-  monthly: "this month",
-  yearly: "this year",
-};
-
-function formatTime(minutes: number): { value: number; topLabel: string } {
-  if (minutes < 60) {
-    return { value: Math.round(minutes), topLabel: "min" };
-  }
-  const hrs = Math.floor(minutes / 60);
-  const mins = Math.round(minutes % 60);
-  return { value: hrs, topLabel: mins > 0 ? `hr ${mins} min` : "hr" };
+  periodLabel: string;
 }
 
 function FocusedTime({
   minutes,
-  viewMode,
+  periodLabel,
 }: {
   minutes: number;
-  viewMode: ViewMode;
+  periodLabel: string;
 }) {
-  const { value, topLabel } = formatTime(minutes);
+  const { value, topLabel } = formatTimeSplit(minutes);
   return (
     <section className="flex w-64 items-center justify-between gap-9">
       <h3 className="text-7xl">{value}</h3>
@@ -37,7 +21,7 @@ function FocusedTime({
         <p className="font-semibold">{topLabel}</p>
         <p>focused</p>
         <p className="text-brown-500 dark:text-dark-400 mt-1 text-sm">
-          {PERIOD_LABELS[viewMode]}
+          {periodLabel}
         </p>
       </div>
     </section>
@@ -46,10 +30,10 @@ function FocusedTime({
 
 function SessionsCompleted({
   count,
-  viewMode,
+  periodLabel,
 }: {
   count: number;
-  viewMode: ViewMode;
+  periodLabel: string;
 }) {
   return (
     <section className="flex w-64 items-center justify-between gap-9">
@@ -58,22 +42,22 @@ function SessionsCompleted({
         <p className="font-semibold">sessions</p>
         <p>completed</p>
         <p className="text-brown-500 dark:text-dark-400 mt-1 text-sm">
-          {PERIOD_LABELS[viewMode]}
+          {periodLabel}
         </p>
       </div>
     </section>
   );
 }
 
-export default function StatsDailyMetrics({
+export default function StatsMetrics({
   totalMinutes,
   sessionCount,
-  viewMode,
-}: StatsDailyMetricsProps) {
+  periodLabel,
+}: StatsMetricsProps) {
   return (
     <div className="flex w-1/2 flex-col items-start justify-center gap-12">
-      <FocusedTime minutes={totalMinutes} viewMode={viewMode} />
-      <SessionsCompleted count={sessionCount} viewMode={viewMode} />
+      <FocusedTime minutes={totalMinutes} periodLabel={periodLabel} />
+      <SessionsCompleted count={sessionCount} periodLabel={periodLabel} />
     </div>
   );
 }
