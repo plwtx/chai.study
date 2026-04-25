@@ -91,11 +91,14 @@ export default function StatsGraphPanel({ viewMode }: StatsGraphPanelProps) {
   }, [viewMode]);
 
   const graphMode: GraphViewMode = viewMode === "daily" ? "weekly" : viewMode;
-  const { bars, periodLabel, maxMinutes } = useGraphStats(graphMode, offset);
+  const { bars, periodLabel, maxMinutes, isLoaded } = useGraphStats(
+    graphMode,
+    offset
+  );
 
   const stubHeights = useMemo(
     () => bars.map(() => `${Math.random() * 40 + 15}%`),
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+
     [graphMode, offset]
   );
 
@@ -126,33 +129,36 @@ export default function StatsGraphPanel({ viewMode }: StatsGraphPanelProps) {
 
       {/* Bar chart */}
       <div className="flex w-full flex-col px-4">
-        <motion.div
-          key={`${periodLabel}-${viewMode}`}
-          className="flex h-48 w-full items-end"
-          variants={containerVariants}
-          initial="hidden"
-          animate="visible"
-        >
-          {bars.map((bar, i) =>
-            bar.isEmpty ? (
-              <EmptyGraphBar
-                key={i}
-                stubHeight={stubHeights[i] ?? "25%"}
-                transition={barTransition}
-              />
-            ) : (
-              <GraphBar
-                key={i}
-                minutes={bar.minutes}
-                ratio={bar.minutes / maxMinutes}
-                widthClass={barWidthClass}
-                transition={barTransition}
-              />
-            )
-          )}
-        </motion.div>
+        {isLoaded ? (
+          <motion.div
+            key={`${periodLabel}-${viewMode}`}
+            className="flex h-48 w-full items-end"
+            variants={containerVariants}
+            initial="hidden"
+            animate="visible"
+          >
+            {bars.map((bar, i) =>
+              bar.isEmpty ? (
+                <EmptyGraphBar
+                  key={i}
+                  stubHeight={stubHeights[i] ?? "25%"}
+                  transition={barTransition}
+                />
+              ) : (
+                <GraphBar
+                  key={i}
+                  minutes={bar.minutes}
+                  ratio={bar.minutes / maxMinutes}
+                  widthClass={barWidthClass}
+                  transition={barTransition}
+                />
+              )
+            )}
+          </motion.div>
+        ) : (
+          <div className="h-48" />
+        )}
 
-        {/* X-axis labels */}
         <div className="mt-1 flex w-full">
           {bars.map((bar, i) => (
             <div
