@@ -14,6 +14,7 @@ export interface GraphStats {
   bars: GraphBar[];
   periodLabel: string;
   maxMinutes: number;
+  isLoaded: boolean;
 }
 
 const MONTH_ABBR = [
@@ -102,6 +103,7 @@ export function useGraphStats(
   offset: number,
 ): GraphStats {
   const [sessions, setSessions] = useState<Session[]>([]);
+  const [isLoaded, setIsLoaded] = useState(false);
 
   const range = useMemo(() => {
     if (viewMode === "weekly") return weekRange(offset);
@@ -110,11 +112,24 @@ export function useGraphStats(
   }, [viewMode, offset]);
 
   useEffect(() => {
+    let cancelled = false;
+    setIsLoaded(false);
+    setSessions([]);
+
     db.sessions
       .where("[mode+completedAt]")
       .between(["focus", range.startTs], ["focus", range.endTs], true, true)
       .toArray()
-      .then(setSessions);
+      .then((data) => {
+        if (!cancelled) {
+          setSessions(data);
+          setIsLoaded(true);
+        }
+      });
+
+    return () => {
+      cancelled = true;
+    };
   }, [range.startTs, range.endTs]);
 
   return useMemo((): GraphStats => {
@@ -159,6 +174,6 @@ export function useGraphStats(
 
     const bars = computeBars();
     const maxMinutes = Math.max(...bars.map((b) => b.minutes), 1);
-    return { bars, periodLabel: range.periodLabel, maxMinutes };
-  }, [sessions, range]);
+    return { bars, periodLabel: range.periodLabel, maxMinutes, isLoaded };
+  }, [sessions, range, isLoaded]);
 }

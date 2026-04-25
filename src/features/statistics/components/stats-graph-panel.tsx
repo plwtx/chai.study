@@ -1,13 +1,16 @@
-import { useState, useEffect, useMemo } from "react";
+import { useState, useMemo } from "react";
 import { ChevronDown } from "lucide-react";
 import { motion } from "motion/react";
 import { cn } from "@/lib/utils";
 import { useAppStore } from "@/store";
 import { useGraphStats, type GraphViewMode } from "../hooks/useGraphStats";
+import { formatTime } from "../utils/formatTime";
 import type { ViewMode } from "./stats-view-controls";
 
 interface StatsGraphPanelProps {
   viewMode: ViewMode;
+  offset: number;
+  onOffsetChange: (newOffset: number) => void;
 }
 
 const BAR_VARIANTS = { hidden: { scaleY: 0 }, visible: { scaleY: 1 } };
@@ -71,7 +74,7 @@ function GraphBar({ minutes, ratio, widthClass, transition }: GraphBarProps) {
           className="text-brown-600 dark:text-brown-400 pointer-events-none absolute text-[10px]"
           style={{ bottom: barHeight }}
         >
-          {Math.round(minutes)}m
+          {formatTime(minutes)}
         </span>
       )}
       <div
@@ -82,21 +85,22 @@ function GraphBar({ minutes, ratio, widthClass, transition }: GraphBarProps) {
   );
 }
 
-export default function StatsGraphPanel({ viewMode }: StatsGraphPanelProps) {
-  const [offset, setOffset] = useState(0);
+export default function StatsGraphPanel({
+  viewMode,
+  offset,
+  onOffsetChange,
+}: StatsGraphPanelProps) {
   const reducedMotion = useAppStore((s) => s.settings.reducedMotion);
 
-  useEffect(() => {
-    setOffset(0);
-  }, [viewMode]);
-
   const graphMode: GraphViewMode = viewMode === "daily" ? "weekly" : viewMode;
-  const { bars, periodLabel, maxMinutes } = useGraphStats(graphMode, offset);
+  const { bars, periodLabel, maxMinutes, isLoaded } = useGraphStats(
+    graphMode,
+    offset,
+  );
 
   const stubHeights = useMemo(
     () => bars.map(() => `${Math.random() * 40 + 15}%`),
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [graphMode, offset]
+    [graphMode, offset],
   );
 
   const barTransition: BarTransition = {
@@ -111,12 +115,12 @@ export default function StatsGraphPanel({ viewMode }: StatsGraphPanelProps) {
     <div className="flex h-full w-full flex-col items-center justify-center py-3">
       {/* Date range navigation */}
       <div className="flex w-full items-center justify-between px-12 py-2 font-light">
-        <button onClick={() => setOffset((o) => o - 1)}>
+        <button onClick={() => onOffsetChange(offset - 1)}>
           <ChevronDown className="rotate-90 cursor-pointer stroke-[1px]" />
         </button>
         <p className="text-sm">{periodLabel}</p>
         <button
-          onClick={() => setOffset((o) => o + 1)}
+          onClick={() => onOffsetChange(offset + 1)}
           disabled={offset === 0}
           className={cn(offset === 0 && "cursor-not-allowed opacity-30")}
         >
@@ -126,33 +130,36 @@ export default function StatsGraphPanel({ viewMode }: StatsGraphPanelProps) {
 
       {/* Bar chart */}
       <div className="flex w-full flex-col px-4">
-        <motion.div
-          key={`${periodLabel}-${viewMode}`}
-          className="flex h-48 w-full items-end"
-          variants={containerVariants}
-          initial="hidden"
-          animate="visible"
-        >
-          {bars.map((bar, i) =>
-            bar.isEmpty ? (
-              <EmptyGraphBar
-                key={i}
-                stubHeight={stubHeights[i] ?? "25%"}
-                transition={barTransition}
-              />
-            ) : (
-              <GraphBar
-                key={i}
-                minutes={bar.minutes}
-                ratio={bar.minutes / maxMinutes}
-                widthClass={barWidthClass}
-                transition={barTransition}
-              />
-            )
-          )}
-        </motion.div>
+        {isLoaded ? (
+          <motion.div
+            key={`${periodLabel}-${viewMode}`}
+            className="flex h-48 w-full items-end"
+            variants={containerVariants}
+            initial="hidden"
+            animate="visible"
+          >
+            {bars.map((bar, i) =>
+              bar.isEmpty ? (
+                <EmptyGraphBar
+                  key={i}
+                  stubHeight={stubHeights[i] ?? "25%"}
+                  transition={barTransition}
+                />
+              ) : (
+                <GraphBar
+                  key={i}
+                  minutes={bar.minutes}
+                  ratio={bar.minutes / maxMinutes}
+                  widthClass={barWidthClass}
+                  transition={barTransition}
+                />
+              ),
+            )}
+          </motion.div>
+        ) : (
+          <div className="h-48" />
+        )}
 
-        {/* X-axis labels */}
         <div className="mt-1 flex w-full">
           {bars.map((bar, i) => (
             <div
