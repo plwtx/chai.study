@@ -6,8 +6,9 @@ import DayStreak from "./components/day-streak";
 export default function Statistics() {
   return (
     <>
-      <div className="bg-brown-50 dark:bg-dark-600 text-brown-800 dark:text-dark-100 font-poppins flex h-fit w-full items-center justify-center">
-        <div className="flex h-full w-full max-w-5xl flex-col items-center justify-center pt-32">
+      <div className="bg-brown-50 dark:bg-dark-600 text-brown-800 dark:text-dark-100 font-poppins flex h-screen w-full justify-center overflow-y-auto">
+        {/* Container */}
+        <section className="mt-55 flex h-full w-full max-w-5xl flex-col items-center justify-center">
           {/* Statistics and streak */}
           {/* <h1 className="text-3xl font-semibold">Statistics</h1> */}
           {/* General stats */}
@@ -19,7 +20,7 @@ export default function Statistics() {
             <FocusHeatmap />
             <OtherStats />
           </section>
-        </div>
+        </section>
       </div>
     </>
   );
