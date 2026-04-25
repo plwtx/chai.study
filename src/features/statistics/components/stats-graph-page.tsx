@@ -9,7 +9,7 @@ import SessionLogsPanel from "./session-logs-panel";
 export default function StatsGraphPage() {
   const [viewMode, setViewMode] = useState<ViewMode>("daily");
   const [showLogs, setShowLogs] = useState(false);
-  const { totalMinutes, sessionCount } = useDailyStats();
+  const { totalMinutes, sessionCount } = useDailyStats(viewMode);
 
   return (
     <div className="font-poppins h-full w-full">
@@ -33,6 +33,7 @@ export default function StatsGraphPage() {
           <StatsDailyMetrics
             totalMinutes={totalMinutes}
             sessionCount={sessionCount}
+            viewMode={viewMode}
           />
           {/* Dividing line */}
           <div className="bg-brown-700 dark:bg-dark-100 mx-3 my-auto h-32 w-px" />
