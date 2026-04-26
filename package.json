@@ -12,6 +12,8 @@
     "test:watch": "vitest"
   },
   "dependencies": {
+    "@fontsource/fragment-mono": "^5.2.8",
+    "@fontsource/poppins": "^5.2.7",
     "@toolwind/corner-shape": "^0.0.8-3",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
