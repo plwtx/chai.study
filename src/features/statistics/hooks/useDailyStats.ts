@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useTransition } from "react";
 import { useAppStore } from "@/store";
 import { db } from "@/db";
 import type { ViewMode } from "../components/stats-view-controls";
@@ -113,8 +113,10 @@ export function usePeriodStats(
   });
 
   const status = useAppStore((s) => s.status);
+  const [, startTransition] = useTransition();
 
   useEffect(() => {
+    let cancelled = false;
     const { startTs, endTs, periodLabel } = getRange(viewMode, offset);
 
     db.sessions
@@ -122,10 +124,17 @@ export function usePeriodStats(
       .between(["focus", startTs], ["focus", endTs], true, true)
       .toArray()
       .then((sessions) => {
+        if (cancelled) return;
         const totalMinutes =
           sessions.reduce((sum, s) => sum + s.actualDuration, 0) / 60;
-        setStats({ totalMinutes, sessionCount: sessions.length, periodLabel });
+        startTransition(() =>
+          setStats({ totalMinutes, sessionCount: sessions.length, periodLabel })
+        );
       });
+
+    return () => {
+      cancelled = true;
+    };
   }, [status, viewMode, offset]);
 
   return stats;

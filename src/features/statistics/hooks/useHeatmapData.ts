@@ -1,5 +1,5 @@
 import { useAppStore } from "@/store";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState, useTransition } from "react";
 import type { Session } from "@/types";
 
 export interface HeatmapDay {
@@ -18,6 +18,7 @@ function toDateKey(date: Date): string {
 export function useHeatmapData(): HeatmapDay[] | undefined {
   const getSessionsInRange = useAppStore((s) => s.getSessionsInRange);
   const [sessions, setSessions] = useState<Session[] | undefined>(undefined);
+  const [, startTransition] = useTransition();
 
   const { startTs, endTs } = useMemo(() => {
     const end = new Date();
@@ -29,7 +30,14 @@ export function useHeatmapData(): HeatmapDay[] | undefined {
   }, []);
 
   useEffect(() => {
-    getSessionsInRange(startTs, endTs).then(setSessions);
+    let cancelled = false;
+    getSessionsInRange(startTs, endTs).then((data) => {
+      if (cancelled) return;
+      startTransition(() => setSessions(data));
+    });
+    return () => {
+      cancelled = true;
+    };
   }, [getSessionsInRange, startTs, endTs]);
 
   return useMemo(() => {
