@@ -1,12 +1,18 @@
 import HeaderDescription from "@/components/ui/header-description";
 import HorizontalDivider from "@/components/ui/horizontal-divider-line";
 import { Circle, ServerOff, Coffee } from "lucide-react";
+import { useOverallStats } from "../hooks/useOverallStats";
 export default function OtherStat() {
+  const overall = useOverallStats();
   const stats: { id: number; name: string; amount: string }[] = [
-    { id: 1, name: "Average daily focused hour", amount: "~ 2.3" },
-    { id: 2, name: "Hours focused", amount: "9.32" },
-    { id: 3, name: "Sessions completed", amount: "35" },
-    { id: 4, name: "Days focused", amount: "17" },
+    {
+      id: 1,
+      name: "Average daily focused hour",
+      amount: `~ ${overall.averageDailyHours}`,
+    },
+    { id: 2, name: "Hours focused", amount: overall.hoursFocused },
+    { id: 3, name: "Sessions completed", amount: overall.sessionsCompleted },
+    { id: 4, name: "Days focused", amount: overall.daysFocused },
   ];
 
   return (
