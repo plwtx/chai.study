@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect, useMemo, useTransition } from "react";
 import { db } from "@/db";
 import type { Session } from "@/types";
 
@@ -104,6 +104,7 @@ export function useGraphStats(
 ): GraphStats {
   const [sessions, setSessions] = useState<Session[]>([]);
   const [isLoaded, setIsLoaded] = useState(false);
+  const [, startTransition] = useTransition();
 
   const range = useMemo(() => {
     if (viewMode === "weekly") return weekRange(offset);
@@ -121,10 +122,11 @@ export function useGraphStats(
       .between(["focus", range.startTs], ["focus", range.endTs], true, true)
       .toArray()
       .then((data) => {
-        if (!cancelled) {
+        if (cancelled) return;
+        startTransition(() => {
           setSessions(data);
           setIsLoaded(true);
-        }
+        });
       });
 
     return () => {

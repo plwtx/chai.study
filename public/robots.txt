@@ -1,0 +1,49 @@
+# Search engines:
+User-agent: *
+Allow: /
+
+# No AI Training No Bots:
+
+# OpenAI (ChatGPT, DALL·E training)
+User-agent: GPTBot
+Disallow: /
+
+# OpenAI web browsing plugin
+User-agent: ChatGPT-User
+Disallow: /
+
+# Google's AI training crawler (separate from Googlebot)
+User-agent: Google-Extended
+Disallow: /
+
+# Common Crawl — large dataset used by many AI models
+User-agent: CCBot
+Disallow: /
+
+# Anthropic (Claude training)
+User-agent: anthropic-ai
+Disallow: /
+User-agent: ClaudeBot
+Disallow: /
+
+# Meta AI
+User-agent: FacebookBot
+Disallow: /
+
+# Apple
+User-agent: Applebot-Extended
+Disallow: /
+
+# Cohere
+User-agent: cohere-ai
+Disallow: /
+
+# Bytedance / TikTok
+User-agent: Bytespider
+Disallow: /
+
+# Amazon Alexa
+User-agent: Amazonbot
+Disallow: /
+
+# Sitemap: https://chai.study/sitemap.xml

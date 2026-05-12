@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useTransition } from "react";
 import { useAppStore } from "@/store";
 import { db } from "@/db";
 
@@ -12,13 +12,16 @@ function toDateKey(d: Date): string {
 export function useDayStreak(): number {
   const [streak, setStreak] = useState(0);
   const status = useAppStore((s) => s.status);
+  const [, startTransition] = useTransition();
 
   useEffect(() => {
+    let cancelled = false;
     async function compute() {
       const sessions = await db.sessions
         .where("mode")
         .equals("focus")
         .toArray();
+      if (cancelled) return;
 
       const daySet = new Set<string>();
       for (const s of sessions) {
@@ -39,7 +42,7 @@ export function useDayStreak(): number {
       } else if (daySet.has(yesterdayKey)) {
         startDate = yesterday;
       } else {
-        setStreak(0);
+        startTransition(() => setStreak(0));
         return;
       }
 
@@ -50,10 +53,13 @@ export function useDayStreak(): number {
         cursor.setDate(cursor.getDate() - 1);
       }
 
-      setStreak(count);
+      startTransition(() => setStreak(count));
     }
 
     compute();
+    return () => {
+      cancelled = true;
+    };
   }, [status]);
 
   return streak;

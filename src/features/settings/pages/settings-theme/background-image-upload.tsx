@@ -1,5 +1,5 @@
 import { useRef, useState, useEffect } from "react";
-import { Upload, X, Wallpaper } from "lucide-react";
+import { Upload, X, Wallpaper, RotateCcw } from "lucide-react";
 import { toast } from "sonner";
 import { useAppStore } from "@/store";
 import { db } from "@/db";
@@ -233,7 +233,7 @@ export default function BackgroundImageUpload() {
           className="hidden"
         />
 
-        {/* Drop zone — or preview when an image is loaded */}
+        {/* D&Drop zone  preview when an image is loaded */}
         {previewUrl ? (
           <div
             onClick={() => !isUploading && fileInputRef.current?.click()}
@@ -322,15 +322,31 @@ export default function BackgroundImageUpload() {
           <>
             {/* Opacity slider and remove background button. */}
             <section className="flex h-full w-150 flex-col items-start justify-between gap-3 pl-3">
-              {/* Opacity Slider */}
               <div className="flex w-full flex-col gap-3">
-                {/* Info */}
-                <SubHeaderDescription
-                  header={"Opacity & Saturation"}
-                  description={
-                    "Adjust opacity and saturation of the uploaded background."
-                  }
-                />
+                {/* O.S.C title and reset to default button. */}
+                <section className="flex w-full items-center justify-between gap-9 py-3">
+                  <SubHeaderDescription
+                    header={"Opacity, Saturation & Contrast"}
+                    description={
+                      "Adjust opacity and saturation of the uploaded background."
+                    }
+                  />
+                  {/* Reset to default settings button */}
+                  <button
+                    onClick={() =>
+                      updateSettings({
+                        backgroundOpacity: 84,
+                        backgroundSaturation: 100,
+                        backgroundContrast: 50,
+                      })
+                    }
+                    title="Reset to defaults"
+                    className="cursor-pointer opacity-60 transition-opacity hover:opacity-100"
+                  >
+                    <RotateCcw className="size-6" />
+                  </button>
+                </section>
+
                 {/* Sliders */}
                 <section className="bg-brown-100/75 border-brown-200/75 shadow-brown-200 font-fragment-mono dark:bg-dark-900 text-brown-700 dark:text-dark-100 flex w-full flex-col items-center justify-between gap-5 rounded-lg border px-6 py-6 shadow-xs dark:border-black dark:shadow-black">
                   {/* Opacity: controls the bg color (solid) */}
