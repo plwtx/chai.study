@@ -68,6 +68,22 @@
   --heatmap-2: #453632; /* brown-600 */
   --heatmap-3: #372e2c; /* brown-700 */
   --heatmap-4: #262423; /* brown-800 */
+
+  --loading-bg: #fbf8f7;
+  --loading-fg: #735f59;
+  --loading-muted: #98817a;
+  --loading-track: #dbcbc6;
+  --loading-fill: #453632;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --loading-bg: #262524;
+    --loading-fg: #9b9191;
+    --loading-muted: #735f59;
+    --loading-track: #1b1a19;
+    --loading-fill: #bba6a0;
+  }
 }
 
 .dark {
