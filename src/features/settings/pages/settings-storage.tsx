@@ -58,7 +58,7 @@ export default function Settings() {
             <SubHeaderDescription
               header={"Clear storage"}
               description={
-                "Delete ALL DATA (NOT JUST FOCUS LOG) from your browser's local storage. Including your client settings, themes and more.This action is irreversible, please be carefull and back up your data prior deletion."
+                "Delete ALL DATA (NOT JUST FOCUS LOG) from your browser's local storage. Including your client settings, themes and more.This action is irreversible, please be careful and if necessary back up your data prior deletion."
               }
             />
           </div>
