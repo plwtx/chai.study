@@ -8,15 +8,13 @@ export default function UserNotice() {
         {/* Header */}
         <section className="font-poppins text-brown-200 dark:text-dark-100/95 z-20 flex animate-pulse items-center gap-3 text-sm font-medium">
           <ShieldAlert size={16} />
-          <h1>ver.1-b.3</h1>
+          <h1>Stage - I (Initial release)</h1>
         </section>
         {/* Notice */}
         <p className="font-poppins flex items-center gap-3 text-xl font-semibold text-nowrap dark:text-white/85">
           <FlaskConical className="size-16 rotate-12 stroke-[0.5px]" />
-          You are on beta{" "}
-          <span className="-ml-3 pb-3 text-xs font-light italic">
-            (test)
-          </span>{" "}
+          You are on <span className="underline">Stage I</span>{" "}
+          <span className="-ml-3 pb-3 text-xs font-light italic">(beta)</span>{" "}
           version.
         </p>
         {/* Description */}
