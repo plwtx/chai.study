@@ -1,4 +1,7 @@
 import SectionHeading from "./section-heading";
+import DevelopmentRoadmap from "./development-roadmap";
+import StageDetail from "./stage-detail";
+import { ROADMAP } from "./roadmap";
 
 const GITHUB_ISSUES_URL = "https://github.com/plwtx/chai.study/issues";
 const CONTACT_EMAIL = "dev@chai.study";
@@ -30,10 +33,18 @@ export default function DevelopmentSection() {
           ) mail me any bugs issues you encounter so I can fix them. Thank you
           in advance.
         </p>
-        <p>
-          Chaidoro is open for contributions and would welcome any input on
-          direction of development.
-        </p>
+        <DevelopmentRoadmap />
+        {/* Stage informations */}
+        {ROADMAP.map((stage) => (
+          <StageDetail key={stage.number} stage={stage} />
+        ))}
+        <section>
+          <SectionHeading>Contribution</SectionHeading>
+          <p>
+            Chaidoro is open for contributions and would welcome any input on
+            direction of development.
+          </p>
+        </section>
       </div>
     </section>
   );

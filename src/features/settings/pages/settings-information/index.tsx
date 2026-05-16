@@ -30,7 +30,7 @@ export default function Information() {
             {/* !!! Don't forget to add license information later !!! */}
           </div>
           {/* Empty bottom spacing */}
-          <div className="h-9" />
+          <div className="h-96" />
         </article>
         <ScrollspyToc />
       </div>
