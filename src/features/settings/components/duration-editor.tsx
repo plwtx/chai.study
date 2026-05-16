@@ -36,7 +36,7 @@ export default function DurationEditor({
             if (e.key === "Escape") onCancel();
           }}
           autoFocus
-          className="bg-brown-500 shadow-brown-900 dark:bg-dark-600 border-brown-500 dark:border-dark-900 font-poppins text-brown-50 dark:text-dark-100 z-20 flex-1 [appearance:textfield] self-stretch overflow-clip rounded-lg border p-1 text-center text-3xl font-bold shadow-inner outline-none dark:shadow-black [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
+          className="bg-brown-500 shadow-brown-900 dark:bg-dark-600 border-brown-500 dark:border-dark-900 font-poppins text-brown-50 dark:text-dark-100 z-20 flex-1 [appearance:textfield] self-stretch overflow-clip rounded-lg border p-1 text-center text-3xl font-extrabold shadow-inner outline-none dark:shadow-black [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
         />
         <span className="font-fragment-mono text-brown-600 dark:text-dark-100/45 text-sm">
           minutes

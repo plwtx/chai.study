@@ -14,7 +14,7 @@ export default function RootLayout() {
   useReducedMotionSync();
 
   return (
-    <div className="bg-brown-50 relative h-screen w-full">
+    <div className="bg-brown-50 relative h-screen w-full selection:bg-black/75 selection:text-white">
       <div className="absolute top-3 left-1/2 z-40 flex -translate-x-1/2 flex-col items-center gap-2">
         <TimerIsland />
         <Navbar />

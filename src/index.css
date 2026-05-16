@@ -1,11 +1,9 @@
-@import "@fontsource/fragment-mono/400.css";
-@import "@fontsource/poppins/300.css";
-@import "@fontsource/poppins/400.css";
-@import "@fontsource/poppins/500.css";
-@import "@fontsource/poppins/600.css";
-@import "@fontsource/poppins/700.css";
-@import "@fontsource/poppins/800.css";
-@import "@fontsource/poppins/900.css";
+@import "@fontsource/fragment-mono/latin-400.css";
+@import "@fontsource/poppins/latin-300.css";
+@import "@fontsource/poppins/latin-400.css";
+@import "@fontsource/poppins/latin-500.css";
+@import "@fontsource/poppins/latin-600.css";
+@import "@fontsource/poppins/latin-800.css";
 
 @import "tailwindcss";
 @plugin "@toolwind/corner-shape";
@@ -68,6 +66,22 @@
   --heatmap-2: #453632; /* brown-600 */
   --heatmap-3: #372e2c; /* brown-700 */
   --heatmap-4: #262423; /* brown-800 */
+
+  --loading-bg: #fbf8f7;
+  --loading-fg: #735f59;
+  --loading-muted: #98817a;
+  --loading-track: #dbcbc6;
+  --loading-fill: #453632;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --loading-bg: #262524;
+    --loading-fg: #9b9191;
+    --loading-muted: #735f59;
+    --loading-track: #1b1a19;
+    --loading-fill: #bba6a0;
+  }
 }
 
 .dark {
