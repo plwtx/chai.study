@@ -74,7 +74,7 @@ I hope Chaidoro can be of use to you.
 
 ## LICENSE
 
-This project is licensed under the **GNU Affero General Public License v3.0 (AGPL-3.0)**.
+Chaidoro is licensed under the **GNU Affero General Public License v3.0 (AGPL-3.0)**.
 
 This means:
 - You are free to use, modify, and distribute this software.
