@@ -3,6 +3,3 @@ Chaidoro is a pomodoro style focus timer with built in tools such as to-do / tas
 
 
 ---
-
-### Temporary dependencies:
-Google Fonts - Temporary only for development and testing stage, will not be released under production.
