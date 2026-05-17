@@ -75,15 +75,6 @@ const INITIAL_STATE = {
   settings: DEFAULT_SETTINGS,
 };
 
-// ─── Helpers ─────────────────────────────────────────────────────────────────
-
-/**
- * Simulate `count` worker tick events.
- *
- * Each tick fires the hook's onTick callback which calls store.tick()
- * (incrementing `elapsed` by 1).  The argument to fireTick is ignored by
- * the new hook — we pass 0 as a dummy.
- */
 function simulateTicks(count: number) {
   vi.advanceTimersByTime(count * 1000);
   for (let i = 0; i < count; i++) {
@@ -93,7 +84,7 @@ function simulateTicks(count: number) {
 
 // ─── Tests ───────────────────────────────────────────────────────────────────
 
-describe("useTimer — start → pause (9:31 left) → resume → finish × 3", () => {
+describe("useTimer - start → pause (9:31 left) → resume → finish × 3", () => {
   beforeEach(() => {
     vi.useFakeTimers();
     vi.setSystemTime(new Date("2026-03-14T10:00:00.000Z"));
@@ -123,7 +114,7 @@ describe("useTimer — start → pause (9:31 left) → resume → finish × 3", 
     result: ReturnType<
       typeof renderHook<ReturnType<typeof useTimer>, unknown>
     >["result"],
-    expectedFocusCount: number,
+    expectedFocusCount: number
   ) {
     vi.clearAllMocks();
 
@@ -183,12 +174,12 @@ describe("useTimer — start → pause (9:31 left) → resume → finish × 3", 
         targetDuration: FOCUS_SEC,
         actualDuration: FOCUS_SEC,
         interrupted: false,
-      }),
+      })
     );
     expect(mockDb.sessionDraft.delete).toHaveBeenCalledWith("current");
     expect(useAppStore.getState().focusCount).toBe(expectedFocusCount);
 
-    // ── End cycle (already finished — no double save) ───────────────────
+    // ── End cycle (already finished = no double save) ───────────────────
     act(() => {
       result.current.endCycle();
     });

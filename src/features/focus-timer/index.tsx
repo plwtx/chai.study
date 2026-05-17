@@ -36,7 +36,7 @@ export default function FocusTimer() {
   const backgroundImageKey = useAppStore((s) => s.settings.backgroundImageKey);
   const backgroundOpacity = useAppStore((s) => s.settings.backgroundOpacity);
   const backgroundSaturation = useAppStore(
-    (s) => s.settings.backgroundSaturation,
+    (s) => s.settings.backgroundSaturation
   );
   const backgroundContrast = useAppStore((s) => s.settings.backgroundContrast);
 
@@ -48,7 +48,7 @@ export default function FocusTimer() {
       <main className="isolate z-0 h-full w-full overflow-hidden">
         {/* BACKGROUND (Image + BG color) */}
         <section className="z-0">
-          {/* Background image layer — sits below the color overlay */}
+          {/* Background image layer sits below the color overlay */}
           {backgroundImageKey && (
             <div
               className="absolute inset-0 isolate z-0"

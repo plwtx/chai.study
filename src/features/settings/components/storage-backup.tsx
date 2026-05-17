@@ -19,7 +19,7 @@ export default function StorageBackup() {
       await importJSON(file);
       showSettingsToast("Backup imported successfully.");
     } catch {
-      showSettingsToast("Import failed — invalid file format.");
+      showSettingsToast("Import failed: invalid file format.");
     }
     e.target.value = "";
   };
