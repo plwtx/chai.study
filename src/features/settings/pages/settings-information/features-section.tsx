@@ -7,31 +7,30 @@ interface FeatureGroup {
 
 const FEATURE_GROUPS: FeatureGroup[] = [
   {
-    title: "Basic Features",
+    title: "Basic Features (Current version)",
     items: [
-      "Change the focus timer to fit your daily use.",
-      "Customize the app with your choice of wallpapers.",
       "Log your progress into charts and calendar heatmap.",
       "Analyze your weekly / monthly / yearly productivity.",
+      "Change the focus timer to fit your daily use.",
+      "Customize the app with your choice of wallpapers.",
       "Back-up your data to keep it safe.",
-      "No ads, no premium mode, no tracking or data storing.",
     ],
   },
   {
-    title: "Expected Future Updates",
+    title: "Expected Future Updates (Expected on stage II)",
     items: [
       "Custom theme and accent colors.",
+      "Tagging system for cycles (advanced graphs).",
+    ],
+  },
+  {
+    title: "Future Updates (Expected after stage III)",
+    items: [
+      "Built in task manager.",
+      "Markdown notes.",
       "Option to hook into Nextcloud and multi device synchronization.",
       "Webhook / API integration (Telegram / Discord use).",
       "Export in CSV format.",
-    ],
-  },
-  {
-    title: "Future Updates",
-    items: [
-      "Built in task manager.",
-      "Tagging system for cycles (advanced graphs).",
-      "Markdown notes.",
     ],
   },
 ];

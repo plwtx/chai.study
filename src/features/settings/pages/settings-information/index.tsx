@@ -16,16 +16,23 @@ export default function Information() {
           <HeaderDescription
             header={"Information"}
             description={
-              "Documentation, features, and notes about Chaidoro - your local-first focus timer."
+              "Documentation, guide, features, development and other notes."
             }
-            kaomoji={"o( ❛ᴗ❛ ) <3"}
           />
           <HorizontalDivider />
           <div className="mt-6 flex flex-col gap-9">
             <IntroductionSection />
+            <HorizontalDivider />
+
             <HowItWorksSection />
+            <HorizontalDivider />
+
             <FeaturesSection />
+            <HorizontalDivider />
+
             <DevelopmentSection />
+            <HorizontalDivider />
+
             <AboutDeveloperSection />
             {/* !!! Don't forget to add license information later !!! */}
           </div>

@@ -16,11 +16,11 @@ Disallow: /
 User-agent: Google-Extended
 Disallow: /
 
-# Common Crawl — large dataset used by many AI models
+# Common Crawl (datasets)
 User-agent: CCBot
 Disallow: /
 
-# Anthropic (Claude training)
+# Anthropic (Claude)
 User-agent: anthropic-ai
 Disallow: /
 User-agent: ClaudeBot
@@ -46,4 +46,3 @@ Disallow: /
 User-agent: Amazonbot
 Disallow: /
 
-# Sitemap: https://chai.study/sitemap.xml
