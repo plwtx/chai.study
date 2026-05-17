@@ -71,4 +71,18 @@ Alternatively if you want to do it yourself then you are free to modify any piec
 I hope Chaidoro can be of use to you.
 
 ---
+
+## LICENSE
+
+Chaidoro is licensed under the **GNU Affero General Public License v3.0 (AGPL-3.0)**.
+
+This means:
+- You are free to use, modify, and distribute this software.
+- Any modifications or derivative works must also be released under AGPL-3.0.
+- If you run this software as a network service, you **must** make the complete source code available to users.
+
+For full license details, see the [LICENSE](./LICENSE) file or visit https://www.gnu.org/licenses/agpl-3.0.html.
+
 ###### THIS APP & DEVELOPER(s) DOES NOT PERMIT ANY (AI) AGENTS / CRAWLERS / BOTS / ANYONE USE OF IT'S DATA, CODE OR ANY RELATED INFORMATION FOR ANY PURPOSES OTHER THAN IT'S INITIAL PURPOSE (WHICH IS LISTED IN LICENSE) OF THE APP. USE OF THIS SOFTWARE OR ANY DERIVATIVE TO TRAIN MACHINE LEARNING MODELS OR PRIVATE CLOSED SOURCE SOFTWARE IS FORBIDDEN.
+
+
